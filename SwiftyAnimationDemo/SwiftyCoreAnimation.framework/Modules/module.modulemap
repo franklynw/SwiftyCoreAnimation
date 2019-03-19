@@ -1,0 +1,11 @@
+framework module SwiftyCoreAnimation {
+  umbrella header "SwiftyCoreAnimation.h"
+
+  export *
+  module * { export * }
+}
+
+module SwiftyCoreAnimation.Swift {
+    header "SwiftyCoreAnimation-Swift.h"
+    requires objc
+}
