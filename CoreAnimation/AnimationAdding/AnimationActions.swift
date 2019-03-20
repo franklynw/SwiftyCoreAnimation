@@ -9,19 +9,20 @@
 import UIKit
 
 
-public extension CALayer {
+//public extension CALayer {
+//
+//    public func addAction(_ action: @escaping () -> ()) {
+//        AnimationActions.addAction(to: self, action: action)
+//    }
+//}
 
-    public func addAction(_ action: @escaping () -> ()) {
-        AnimationActions.addAction(to: self, action: action)
-    }
-}
 
+class AnimationActions {
 
-public class AnimationActions {
+    static let animationKey: String = "animationProgress"
+    static let animationActionKey: String = "animationAction"
 
     class ActionLayer: CALayer {
-
-        private static let animationKey: String = "animationProgress"
 
         private var action: (() -> ())?
         @NSManaged private(set) var animationProgress: CGFloat
@@ -38,13 +39,6 @@ public class AnimationActions {
             super.init(layer: layer)
 
             self.frame = CGRect.zero
-
-            let animation: CABasicAnimation = CABasicAnimation(keyPath: ActionLayer.animationKey)
-            animation.fromValue = 0
-            animation.toValue = 1
-            animation.beginTime = CACurrentMediaTime()
-
-            self.add(animation, forKey: nil)
         }
 
         required init?(coder aDecoder: NSCoder) {
@@ -52,7 +46,7 @@ public class AnimationActions {
         }
 
         override class func needsDisplay(forKey key: String) -> Bool {
-            guard key == ActionLayer.animationKey else {
+            guard key == AnimationActions.animationKey else {
                 return super.needsDisplay(forKey: key)
             }
             return true
@@ -67,8 +61,17 @@ public class AnimationActions {
     }
 
 
-    class func addAction(to layer: CALayer, action: @escaping () -> ()) {
+    class func addActionAnimation(_ animation: CABasicAnimation, to layer: CALayer, beginTime: TimeInterval, action: @escaping () -> ()) {
+
         let actionLayer: ActionLayer = ActionLayer(layer: layer, action: action)
         layer.insertSublayer(actionLayer, at: 0)
+
+//        let animation: CABasicAnimation = CABasicAnimation(keyPath: AnimationActions.animationKey)
+//        animation.fromValue = 0
+//        animation.toValue = 1
+        animation.beginTime = CACurrentMediaTime() + beginTime
+        animation.setValue(action, forKey: AnimationActions.animationActionKey)
+
+        actionLayer.add(animation, forKey: nil)
     }
 }

@@ -209,11 +209,11 @@ public extension LayerAnimationAdding where Self: CALayer {
     ///   - animationFinished: invoked when the animation completes - any animationFinished actions on the individual descriptors will be ignored
     /// - Returns: the CAAnimationGroup object
     @discardableResult
-    public func addSequentialAnimationsGroup(describedBy animationDescriptors: [Descriptor.Root],
-                                             forKey key: String? = nil,
-                                             applyingOtherProperties properties: [PropertiesApplicableToAnimationGroups] = [],
-                                             removeExistingAnimations: Bool = false,
-                                             animationFinished: AnimationFinishedAction? = nil) throws -> CAAnimationGroup {
+    public func addSequentialAnimations(describedBy animationDescriptors: [Descriptor.Root],
+                                        forKey key: String? = nil,
+                                        applyingOtherProperties properties: [PropertiesApplicableToAnimationGroups] = [],
+                                        removeExistingAnimations: Bool = false,
+                                        animationFinished: AnimationFinishedAction? = nil) throws -> CAAnimation? {
 
         try animationDescriptors.forEach {
             try $0.propertyTypes.forEach {
@@ -223,10 +223,10 @@ public extension LayerAnimationAdding where Self: CALayer {
             }
         }
 
-        return self.addSequentialAnimationsGroup(animationDescriptors,
-                                                 forKey: key,
-                                                 applyingProperties: properties,
-                                                 removeExistingAnimations: removeExistingAnimations,
-                                                 animationFinished: animationFinished)
+        return self.addSequentialAnimations(animationDescriptors,
+                                            forKey: key,
+                                            applyingProperties: properties,
+                                            removeExistingAnimations: removeExistingAnimations,
+                                            animationFinished: animationFinished)
     }
 }

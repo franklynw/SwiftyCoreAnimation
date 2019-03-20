@@ -52,6 +52,7 @@
 		792A37812232C6E70024FC6E /* AlignmentMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792A377F2232C6E70024FC6E /* AlignmentMode.swift */; };
 		792A37842232C7390024FC6E /* TruncationMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792A37822232C7390024FC6E /* TruncationMode.swift */; };
 		7943914C224240B5008346DD /* AnimationActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7943914B224240B5008346DD /* AnimationActions.swift */; };
+		794391502242808D008346DD /* Descriptor.Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7943914F2242808D008346DD /* Descriptor.Action.swift */; };
 		796D7C51223823C8005A049B /* InstanceColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796D7C4F223823C8005A049B /* InstanceColor.swift */; };
 		796D7CAC223AAE5D005A049B /* Descriptor.Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796D7CAB223AAE5D005A049B /* Descriptor.Group.swift */; };
 		7988B87722205A6E0093DF65 /* SwiftyCoreAnimation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7988B86E22205A6E0093DF65 /* SwiftyCoreAnimation.framework */; };
@@ -207,6 +208,7 @@
 		792A377F2232C6E70024FC6E /* AlignmentMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlignmentMode.swift; sourceTree = "<group>"; };
 		792A37822232C7390024FC6E /* TruncationMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TruncationMode.swift; sourceTree = "<group>"; };
 		7943914B224240B5008346DD /* AnimationActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationActions.swift; sourceTree = "<group>"; };
+		7943914F2242808D008346DD /* Descriptor.Action.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Descriptor.Action.swift; sourceTree = "<group>"; };
 		796D7C4F223823C8005A049B /* InstanceColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstanceColor.swift; sourceTree = "<group>"; };
 		796D7CAB223AAE5D005A049B /* Descriptor.Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Descriptor.Group.swift; sourceTree = "<group>"; };
 		7978ACC02220525F006AA6E3 /* Descriptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Descriptor.swift; sourceTree = "<group>"; };
@@ -614,6 +616,7 @@
 				7978C0B4221DB7E20019EE2C /* Descriptor.Spring.swift */,
 				798A55F52227E3FC0086F0F9 /* Descriptor.Transition.swift */,
 				796D7CAB223AAE5D005A049B /* Descriptor.Group.swift */,
+				7943914F2242808D008346DD /* Descriptor.Action.swift */,
 			);
 			path = "Animation Descriptors";
 			sourceTree = "<group>";
@@ -845,6 +848,7 @@
 				7988B89522205ADD0093DF65 /* Descriptor.Basic.swift in Sources */,
 				7988B89622205ADD0093DF65 /* Descriptor.KeyFrame.swift in Sources */,
 				7988B89722205ADD0093DF65 /* Descriptor.Spring.swift in Sources */,
+				794391502242808D008346DD /* Descriptor.Action.swift in Sources */,
 				7988B89822205ADD0093DF65 /* KeyValueDescribing.swift in Sources */,
 				79200E8F22294310008257D9 /* Properties.KeyFrameAnimation.swift in Sources */,
 				7988B89922205ADD0093DF65 /* LayerProperties.swift in Sources */,
