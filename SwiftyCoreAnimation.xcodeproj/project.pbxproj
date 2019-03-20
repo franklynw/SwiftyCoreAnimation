@@ -51,6 +51,7 @@
 		792A377E2232C6BA0024FC6E /* Wrapped.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792A377C2232C6BA0024FC6E /* Wrapped.swift */; };
 		792A37812232C6E70024FC6E /* AlignmentMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792A377F2232C6E70024FC6E /* AlignmentMode.swift */; };
 		792A37842232C7390024FC6E /* TruncationMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792A37822232C7390024FC6E /* TruncationMode.swift */; };
+		7943914C224240B5008346DD /* AnimationActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7943914B224240B5008346DD /* AnimationActions.swift */; };
 		796D7C51223823C8005A049B /* InstanceColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796D7C4F223823C8005A049B /* InstanceColor.swift */; };
 		796D7CAC223AAE5D005A049B /* Descriptor.Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796D7CAB223AAE5D005A049B /* Descriptor.Group.swift */; };
 		7988B87722205A6E0093DF65 /* SwiftyCoreAnimation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7988B86E22205A6E0093DF65 /* SwiftyCoreAnimation.framework */; };
@@ -205,6 +206,7 @@
 		792A377C2232C6BA0024FC6E /* Wrapped.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wrapped.swift; sourceTree = "<group>"; };
 		792A377F2232C6E70024FC6E /* AlignmentMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlignmentMode.swift; sourceTree = "<group>"; };
 		792A37822232C7390024FC6E /* TruncationMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TruncationMode.swift; sourceTree = "<group>"; };
+		7943914B224240B5008346DD /* AnimationActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationActions.swift; sourceTree = "<group>"; };
 		796D7C4F223823C8005A049B /* InstanceColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstanceColor.swift; sourceTree = "<group>"; };
 		796D7CAB223AAE5D005A049B /* Descriptor.Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Descriptor.Group.swift; sourceTree = "<group>"; };
 		7978ACC02220525F006AA6E3 /* Descriptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Descriptor.swift; sourceTree = "<group>"; };
@@ -627,6 +629,7 @@
 				7978C0C5221EA9A00019EE2C /* TextLayerAnimationAdding.swift */,
 				7978C0BB221DB90A0019EE2C /* CALayer+Extensions.swift */,
 				79C4C01F2223E3B900037B4B /* AnimationFinishedActions.swift */,
+				7943914B224240B5008346DD /* AnimationActions.swift */,
 			);
 			path = AnimationAdding;
 			sourceTree = "<group>";
@@ -910,6 +913,7 @@
 				7988B8B822205ADE0093DF65 /* StrokeEnd.swift in Sources */,
 				7988B8B922205ADE0093DF65 /* EmitterSize.swift in Sources */,
 				7988B8BA22205ADE0093DF65 /* Colors.swift in Sources */,
+				7943914C224240B5008346DD /* AnimationActions.swift in Sources */,
 				792A373D2232B3800024FC6E /* NeedsDisplayOnBoundsChange.swift in Sources */,
 				7988B8BB22205ADE0093DF65 /* Locations.swift in Sources */,
 				792A37552232B7B90024FC6E /* EmitterCells.swift in Sources */,

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		790BF7D7223BF19A0004E9D4 /* Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = 790BF7D6223BF19A0004E9D4 /* Async.swift */; };
+		7943914E224252E5008346DD /* ActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7943914D224252E5008346DD /* ActionView.swift */; };
 		796D7C65223965E8005A049B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796D7C64223965E8005A049B /* AppDelegate.swift */; };
 		796D7C67223965E8005A049B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796D7C66223965E8005A049B /* ViewController.swift */; };
 		796D7C6A223965E8005A049B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 796D7C68223965E8005A049B /* Main.storyboard */; };
@@ -52,6 +53,7 @@
 
 /* Begin PBXFileReference section */
 		790BF7D6223BF19A0004E9D4 /* Async.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Async.swift; sourceTree = "<group>"; };
+		7943914D224252E5008346DD /* ActionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionView.swift; sourceTree = "<group>"; };
 		796D7C61223965E8005A049B /* SwiftyAnimationDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftyAnimationDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		796D7C64223965E8005A049B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		796D7C66223965E8005A049B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -125,6 +127,7 @@
 				796D7CAD223B9B26005A049B /* IntroTableViewController.swift */,
 				796D7C66223965E8005A049B /* ViewController.swift */,
 				796D7C9B2239666B005A049B /* HelloView.swift */,
+				7943914D224252E5008346DD /* ActionView.swift */,
 				796D7C9C2239666B005A049B /* NSAttributedString+Extensions.swift */,
 				790BF7D6223BF19A0004E9D4 /* Async.swift */,
 				796D7C68223965E8005A049B /* Main.storyboard */,
@@ -299,6 +302,7 @@
 				796D7CAE223B9B26005A049B /* IntroTableViewController.swift in Sources */,
 				790BF7D7223BF19A0004E9D4 /* Async.swift in Sources */,
 				796D7C65223965E8005A049B /* AppDelegate.swift in Sources */,
+				7943914E224252E5008346DD /* ActionView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
