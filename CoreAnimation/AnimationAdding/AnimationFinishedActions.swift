@@ -43,7 +43,7 @@ fileprivate class AnimationFinishedActions {
 
     private typealias ActionWithID = (id: Int, animatonDelegate: AnimationDelegate)
 
-    private static let animationDelegates: NSMapTable<CAAnimation, AnimationDelegate> = NSMapTable<CAAnimation, AnimationDelegate>(keyOptions: .weakMemory, valueOptions: .strongMemory)
+    private static let animationDelegates: NSMapTable<CAAnimation, AnimationDelegate> = NSMapTable<CAAnimation, AnimationDelegate>(keyOptions: .weakMemory, valueOptions: .weakMemory)
     private static var _animationID: Int = 0
     private static var animationID: Int {
         get {

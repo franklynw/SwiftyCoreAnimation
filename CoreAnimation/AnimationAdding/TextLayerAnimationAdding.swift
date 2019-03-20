@@ -30,7 +30,7 @@ public extension TextLayerAnimationAdding where Self: CATextLayer {
         return T.toKeyValueType(value)
     }
 
-    /// Adds a CABasicAnimation to a CALayer
+    /// Adds a CABasicAnimation to a CATextLayer
     ///
     /// - Parameters:
     ///   - animationDescriptor: Descriptor.Basic<T> animation descriptor, where T conforms to TextLayerProperty
@@ -39,7 +39,7 @@ public extension TextLayerAnimationAdding where Self: CATextLayer {
     ///             these will be over-ridden by the values passed in here
     ///   - removeExistingAnimations: removes any existing layer animations if true
     ///   - animationFinished: invoked when the animation completes
-    /// - Returns: the animation object
+    /// - Returns: the CABasicAnimation object
     @discardableResult
     public func addBasicAnimation<T: TextLayerProperty & Animatable>(describedBy animationDescriptor: Descriptor.Basic<T>,
                                                                      forKey key: String? = nil,
@@ -54,7 +54,7 @@ public extension TextLayerAnimationAdding where Self: CATextLayer {
                                       animationFinished: animationFinished)
     }
 
-    /// Adds a CAKeyFrameAnimation to a CALayer
+    /// Adds a CAKeyFrameAnimation to a CATextLayer
     ///
     /// - Parameters:
     ///   - animationDescriptor: Descriptor.KeyFrame<T> animation descriptor, where T conforms to TextLayerProperty
@@ -63,7 +63,7 @@ public extension TextLayerAnimationAdding where Self: CATextLayer {
     ///             these will be over-ridden by the values passed in here
     ///   - removeExistingAnimations: removes any existing layer animations if true
     ///   - animationFinished: invoked when the animation completes
-    /// - Returns: the animation object
+    /// - Returns: the CAKeyframeAnimation object
     @discardableResult
     public func addKeyFrameAnimation<T: TextLayerProperty & Animatable>(describedBy animationDescriptor: Descriptor.KeyFrame<T>,
                                                                         forKey key: String? = nil,
@@ -78,7 +78,7 @@ public extension TextLayerAnimationAdding where Self: CATextLayer {
                                          animationFinished: animationFinished)
     }
 
-    /// Adds a CASpringAnimation to a CALayer
+    /// Adds a CASpringAnimation to a CATextLayer
     ///
     /// - Parameters:
     ///   - animationDescriptor: Descriptor.Spring<T> animation descriptor, where T conforms to TextLayerProperty
@@ -87,7 +87,7 @@ public extension TextLayerAnimationAdding where Self: CATextLayer {
     ///             these will be over-ridden by the values passed in here
     ///   - removeExistingAnimations: removes any existing layer animations if true
     ///   - animationFinished: invoked when the animation completes
-    /// - Returns: the animation object
+    /// - Returns: the CASpringAnimation object
     @discardableResult
     public func addSpringAnimation<T: TextLayerProperty & Animatable>(describedBy animationDescriptor: Descriptor.Spring<T>,
                                                                       forKey key: String? = nil,
@@ -100,5 +100,109 @@ public extension TextLayerAnimationAdding where Self: CATextLayer {
                                        applyingProperties: properties,
                                        removeExistingAnimations: removeExistingAnimations,
                                        animationFinished: animationFinished)
+    }
+
+    /// Adds an animation group to a CATextLayer
+    /// The animations will run concurrently
+    /// throws if any of the descriptors describe animations on properties not applicabale to CATextLayer
+    ///
+    /// - Parameters:
+    ///   - animationDescriptor: a Group Animation descriptor - whether it is concurrent or sequential is determined by the descriptor
+    ///   - key: key for the animation
+    ///   - properties: an array of Descriptor.Properties applicable to CAAnimationGroups; if the Descriptor already has animation properties,
+    ///             these will be over-ridden by the values passed in here
+    ///   - removeExistingAnimations: removes any existing layer animations if true
+    ///   - animationFinished: invoked when the animation completes - any animationFinished actions on the individual descriptors will be ignored
+    /// - Returns: the CAAnimationGroup object
+    @discardableResult
+    public func addAnimationsGroup(describedBy animationDescriptor: Descriptor.Group,
+                                   forKey key: String? = nil,
+                                   applyingOtherProperties properties: [PropertiesApplicableToAnimationGroups] = [],
+                                   removeExistingAnimations: Bool = false,
+                                   animationFinished: AnimationFinishedAction? = nil) throws -> CAAnimationGroup {
+
+        try animationDescriptor.propertyTypes.forEach {
+            guard $0 is LayerProperty.Type || $0 is TextLayerProperty.Type else {
+                throw GroupAnimationCreationError.invalidDescriptor(.notTextLayerProperty($0))
+            }
+        }
+
+        return self.addAnimationsGroup(animationDescriptor,
+                                       forKey: key,
+                                       applyingProperties: properties,
+                                       removeExistingAnimations: removeExistingAnimations,
+                                       animationFinished: animationFinished)
+    }
+
+    /// Adds an animation group to a CATextLayer
+    /// The animations will run concurrently
+    /// throws if any of the descriptors describe animations on properties not applicabale to CATextLayer
+    ///
+    /// - Parameters:
+    ///   - animationDescriptors: Animation descriptors for CATextLayer animations
+    ///   - key: key for the animation
+    ///   - duration: the animation duration - if the descriptors specify a longer duration than this, the animation duration will be clipped, not scaled
+    ///   - properties: an array of Descriptor.Properties applicable to CAAnimationGroups; if the Descriptor already has animation properties,
+    ///             these will be over-ridden by the values passed in here
+    ///   - removeExistingAnimations: removes any existing layer animations if true
+    ///   - animationFinished: invoked when the animation completes - any animationFinished actions on the individual descriptors will be ignored
+    /// - Returns: the CAAnimationGroup object
+    @discardableResult
+    public func addConcurrentAnimationsGroup(describedBy animationDescriptors: [Descriptor.Root],
+                                             forKey key: String? = nil,
+                                             duration: TimeInterval,
+                                             applyingOtherProperties properties: [PropertiesApplicableToAnimationGroups] = [],
+                                             removeExistingAnimations: Bool = false,
+                                             animationFinished: AnimationFinishedAction? = nil) throws -> CAAnimationGroup {
+
+        try animationDescriptors.forEach {
+            try $0.propertyTypes.forEach {
+                guard $0 is LayerProperty.Type || $0 is TextLayerProperty.Type else {
+                    throw GroupAnimationCreationError.invalidDescriptor(.notTextLayerProperty($0))
+                }
+            }
+        }
+
+        return self.addConcurrentAnimationsGroup(animationDescriptors,
+                                                 forKey: key,
+                                                 duration: duration,
+                                                 applyingProperties: properties,
+                                                 removeExistingAnimations: removeExistingAnimations,
+                                                 animationFinished: animationFinished)
+    }
+
+    /// Adds an animation group to a CATextLayer
+    /// The animations in the group will run in the order they're in in the array,
+    /// and the animation's duration is the added durations of the animations created by the descriptors.
+    /// throws if any of the descriptors describe animations on properties not applicabale to CATextLayer
+    ///
+    /// - Parameters:
+    ///   - animationDescriptors: Animation descriptors for CATextLayer animations; these should have durations, which are used for timing the sequence
+    ///   - key: key for the animation
+    ///   - properties: an array of Descriptor.Properties applicable to CAAnimationGroups; if the Descriptor already has animation properties,
+    ///             these will be over-ridden by the values passed in here
+    ///   - removeExistingAnimations: removes any existing layer animations if true
+    ///   - animationFinished: invoked when the animation completes - any animationFinished actions on the individual descriptors will be ignored
+    /// - Returns: the CAAnimationGroup object
+    @discardableResult
+    public func addSequentialAnimationsGroup(describedBy animationDescriptors: [Descriptor.Root],
+                                             forKey key: String? = nil,
+                                             applyingOtherProperties properties: [PropertiesApplicableToAnimationGroups] = [],
+                                             removeExistingAnimations: Bool = false,
+                                             animationFinished: AnimationFinishedAction? = nil) throws -> CAAnimationGroup {
+
+        try animationDescriptors.forEach {
+            try $0.propertyTypes.forEach {
+                guard $0 is LayerProperty.Type || $0 is TextLayerProperty.Type else {
+                    throw GroupAnimationCreationError.invalidDescriptor(.notTextLayerProperty($0))
+                }
+            }
+        }
+
+        return self.addSequentialAnimationsGroup(animationDescriptors,
+                                                 forKey: key,
+                                                 applyingProperties: properties,
+                                                 removeExistingAnimations: removeExistingAnimations,
+                                                 animationFinished: animationFinished)
     }
 }

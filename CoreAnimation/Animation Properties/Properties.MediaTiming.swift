@@ -24,6 +24,7 @@ extension Properties {
         PropertiesApplicableToKeyFrameAnimations,
         PropertiesApplicableToSpringAnimations,
         PropertiesApplicableToTransitions,
+        PropertiesApplicableToAnimationGroups,
         AnimationPropertiesApplying,
         InternalAnimationPropertiesApplying {
 

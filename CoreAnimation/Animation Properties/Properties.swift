@@ -13,6 +13,7 @@ public enum Properties: PropertiesApplicableToBasicAnimations,
     PropertiesApplicableToKeyFrameAnimations,
     PropertiesApplicableToSpringAnimations,
     PropertiesApplicableToTransitions,
+    PropertiesApplicableToAnimationGroups,
     AnimationPropertiesApplying,
     InternalAnimationPropertiesApplying {
 

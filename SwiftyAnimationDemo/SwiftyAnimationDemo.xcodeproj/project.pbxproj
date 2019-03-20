@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		790BF7D7223BF19A0004E9D4 /* Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = 790BF7D6223BF19A0004E9D4 /* Async.swift */; };
 		796D7C65223965E8005A049B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796D7C64223965E8005A049B /* AppDelegate.swift */; };
 		796D7C67223965E8005A049B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796D7C66223965E8005A049B /* ViewController.swift */; };
 		796D7C6A223965E8005A049B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 796D7C68223965E8005A049B /* Main.storyboard */; };
@@ -16,8 +17,8 @@
 		796D7C85223965EB005A049B /* SwiftyAnimationDemoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796D7C84223965EB005A049B /* SwiftyAnimationDemoUITests.swift */; };
 		796D7C9E2239666B005A049B /* HelloView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796D7C9B2239666B005A049B /* HelloView.swift */; };
 		796D7C9F2239666B005A049B /* NSAttributedString+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796D7C9C2239666B005A049B /* NSAttributedString+Extensions.swift */; };
-		796D7CA02239666B005A049B /* ResettableLazy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796D7C9D2239666B005A049B /* ResettableLazy.swift */; };
 		796D7CAA22396C1E005A049B /* SwiftyCoreAnimation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 796D7CA922396C1E005A049B /* SwiftyCoreAnimation.framework */; };
+		796D7CAE223B9B26005A049B /* IntroTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796D7CAD223B9B26005A049B /* IntroTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +51,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		790BF7D6223BF19A0004E9D4 /* Async.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Async.swift; sourceTree = "<group>"; };
 		796D7C61223965E8005A049B /* SwiftyAnimationDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftyAnimationDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		796D7C64223965E8005A049B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		796D7C66223965E8005A049B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -65,8 +67,8 @@
 		796D7C86223965EB005A049B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		796D7C9B2239666B005A049B /* HelloView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelloView.swift; sourceTree = "<group>"; };
 		796D7C9C2239666B005A049B /* NSAttributedString+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+Extensions.swift"; sourceTree = "<group>"; };
-		796D7C9D2239666B005A049B /* ResettableLazy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResettableLazy.swift; sourceTree = "<group>"; };
 		796D7CA922396C1E005A049B /* SwiftyCoreAnimation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SwiftyCoreAnimation.framework; sourceTree = "<group>"; };
+		796D7CAD223B9B26005A049B /* IntroTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,10 +122,11 @@
 			isa = PBXGroup;
 			children = (
 				796D7C64223965E8005A049B /* AppDelegate.swift */,
+				796D7CAD223B9B26005A049B /* IntroTableViewController.swift */,
 				796D7C66223965E8005A049B /* ViewController.swift */,
 				796D7C9B2239666B005A049B /* HelloView.swift */,
 				796D7C9C2239666B005A049B /* NSAttributedString+Extensions.swift */,
-				796D7C9D2239666B005A049B /* ResettableLazy.swift */,
+				790BF7D6223BF19A0004E9D4 /* Async.swift */,
 				796D7C68223965E8005A049B /* Main.storyboard */,
 				796D7C6B223965EB005A049B /* Assets.xcassets */,
 				796D7C6D223965EB005A049B /* LaunchScreen.storyboard */,
@@ -290,10 +293,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				796D7CA02239666B005A049B /* ResettableLazy.swift in Sources */,
 				796D7C9E2239666B005A049B /* HelloView.swift in Sources */,
 				796D7C9F2239666B005A049B /* NSAttributedString+Extensions.swift in Sources */,
 				796D7C67223965E8005A049B /* ViewController.swift in Sources */,
+				796D7CAE223B9B26005A049B /* IntroTableViewController.swift in Sources */,
+				790BF7D7223BF19A0004E9D4 /* Async.swift in Sources */,
 				796D7C65223965E8005A049B /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

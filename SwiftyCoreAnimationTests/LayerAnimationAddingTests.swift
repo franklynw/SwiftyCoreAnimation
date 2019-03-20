@@ -133,6 +133,306 @@ class LayerAnimationAddingTests: XCTestCase {
         }
     }
 
+    func testConcurrentAnimationGroupAdding() {
+
+        let duration: TimeInterval = 2
+        let basicAnchorPointDescriptor = SwiftyCoreAnimation.Descriptor.Basic<SwiftyCoreAnimation.AnchorPoint.X>()
+        let path = CGPath(ellipseIn: CGRect(x: 0, y: 0, width: 400, height: 250), transform: nil)
+        let keyFramePositionDescriptor = SwiftyCoreAnimation.Descriptor.KeyFrame<SwiftyCoreAnimation.Position>.path(path, duration: 4)
+
+        let groupDescriptor = Descriptor.Group.concurrent(using: [basicAnchorPointDescriptor, keyFramePositionDescriptor], duration: duration)
+
+        var animations: [CAAnimationGroup] = []
+
+        do {
+            try animations.append(self.layer.addAnimationsGroup(describedBy: groupDescriptor))
+            try animations.append(self.shapeLayer.addAnimationsGroup(describedBy: groupDescriptor))
+            try animations.append(self.emitterLayer.addAnimationsGroup(describedBy: groupDescriptor))
+            try animations.append(self.gradientLayer.addAnimationsGroup(describedBy: groupDescriptor))
+            try animations.append(self.replicatorLayer.addAnimationsGroup(describedBy: groupDescriptor))
+            try animations.append(self.textLayer.addAnimationsGroup(describedBy: groupDescriptor))
+        } catch {
+            XCTFail("Animation groups should have been created")
+        }
+
+        animations.forEach {
+            XCTAssertEqual($0.duration, duration, "Should be equal for group \($0)")
+            XCTAssertEqual($0.animations?.count, 2, "Should be 2 animations in group \($0)")
+        }
+
+        // also test that we can't add group animations to layers without the animating properties
+
+        let fillColorDescriptor = Descriptor.Basic<FillColor>.from(.red, to: .green)
+        let gradientColorsDescriptor = Descriptor.Basic<Colors>.from([.red, .green], to: [.blue, .yellow])
+
+        let groupDescriptor2 = Descriptor.Group.concurrent(using: [fillColorDescriptor, keyFramePositionDescriptor], duration: duration)
+        let groupDescriptor3 = Descriptor.Group.concurrent(using: [gradientColorsDescriptor, keyFramePositionDescriptor], duration: duration)
+
+        do {
+            try self.layer.addAnimationsGroup(describedBy: groupDescriptor2)
+            XCTFail("Shouldn't be able to add fillColor animation to CALayer")
+        } catch {
+            // success
+        }
+
+        do {
+            try self.shapeLayer.addAnimationsGroup(describedBy: groupDescriptor3)
+            XCTFail("Shouldn't be able to add gradient colors animation to CAShapeLayer")
+        } catch {
+            // success
+        }
+
+        do {
+            try self.emitterLayer.addAnimationsGroup(describedBy: groupDescriptor2)
+            XCTFail("Shouldn't be able to add fillColor animation to CAEmitterLayer")
+        } catch {
+            // success
+        }
+
+        do {
+            try self.gradientLayer.addAnimationsGroup(describedBy: groupDescriptor2)
+            XCTFail("Shouldn't be able to add fillColor animation to CAGradientLayer")
+        } catch {
+            // success
+        }
+
+        do {
+            try self.replicatorLayer.addAnimationsGroup(describedBy: groupDescriptor2)
+            XCTFail("Shouldn't be able to add fillColor animation to CAReplicatorLayer")
+        } catch {
+            // success
+        }
+
+        do {
+            try self.textLayer.addAnimationsGroup(describedBy: groupDescriptor2)
+            XCTFail("Shouldn't be able to add fillColor animation to CATextLayer")
+        } catch {
+            // success
+        }
+    }
+
+    func testConcurrentAnimationGroupAddingVersion2() {
+
+        let duration: TimeInterval = 2
+        let basicAnchorPointDescriptor = SwiftyCoreAnimation.Descriptor.Basic<SwiftyCoreAnimation.AnchorPoint.X>()
+        let path = CGPath(ellipseIn: CGRect(x: 0, y: 0, width: 400, height: 250), transform: nil)
+        let keyFramePositionDescriptor = SwiftyCoreAnimation.Descriptor.KeyFrame<SwiftyCoreAnimation.Position>.path(path, duration: 4)
+
+        var animations: [CAAnimationGroup] = []
+
+        do {
+            try animations.append(self.layer.addConcurrentAnimationsGroup(describedBy: [basicAnchorPointDescriptor, keyFramePositionDescriptor], duration: duration))
+            try animations.append(self.shapeLayer.addConcurrentAnimationsGroup(describedBy: [basicAnchorPointDescriptor, keyFramePositionDescriptor], duration: duration))
+            try animations.append(self.emitterLayer.addConcurrentAnimationsGroup(describedBy: [basicAnchorPointDescriptor, keyFramePositionDescriptor], duration: duration))
+            try animations.append(self.gradientLayer.addConcurrentAnimationsGroup(describedBy: [basicAnchorPointDescriptor, keyFramePositionDescriptor], duration: duration))
+            try animations.append(self.replicatorLayer.addConcurrentAnimationsGroup(describedBy: [basicAnchorPointDescriptor, keyFramePositionDescriptor], duration: duration))
+            try animations.append(self.textLayer.addConcurrentAnimationsGroup(describedBy: [basicAnchorPointDescriptor, keyFramePositionDescriptor], duration: duration))
+        } catch {
+            XCTFail("Animation groups should have been created")
+        }
+
+        animations.forEach {
+            XCTAssertEqual($0.duration, duration, "Should be equal for group \($0)")
+            XCTAssertEqual($0.animations?.count, 2, "Should be 2 animations in group \($0)")
+        }
+
+        // also test that we can't add group animations to layers without the animating properties
+
+        let fillColorDescriptor = Descriptor.Basic<FillColor>.from(.red, to: .green)
+        let gradientColorsDescriptor = Descriptor.Basic<Colors>.from([.red, .green], to: [.blue, .yellow])
+
+        do {
+            try self.layer.addConcurrentAnimationsGroup(describedBy: [fillColorDescriptor, keyFramePositionDescriptor])
+            XCTFail("Shouldn't be able to add fillColor animation to CALayer")
+        } catch {
+            // success
+        }
+
+        do {
+            try self.shapeLayer.addConcurrentAnimationsGroup(describedBy: [gradientColorsDescriptor, keyFramePositionDescriptor])
+            XCTFail("Shouldn't be able to add gradient colors animation to CAShapeLayer")
+        } catch {
+            // success
+        }
+
+        do {
+            try self.emitterLayer.addConcurrentAnimationsGroup(describedBy: [fillColorDescriptor, keyFramePositionDescriptor])
+            XCTFail("Shouldn't be able to add fillColor animation to CAEmitterLayer")
+        } catch {
+            // success
+        }
+
+        do {
+            try self.gradientLayer.addConcurrentAnimationsGroup(describedBy: [fillColorDescriptor, keyFramePositionDescriptor])
+            XCTFail("Shouldn't be able to add fillColor animation to CAGradientLayer")
+        } catch {
+            // success
+        }
+
+        do {
+            try self.replicatorLayer.addConcurrentAnimationsGroup(describedBy: [fillColorDescriptor, keyFramePositionDescriptor])
+            XCTFail("Shouldn't be able to add fillColor animation to CAReplicatorLayer")
+        } catch {
+            // success
+        }
+
+        do {
+            try self.textLayer.addConcurrentAnimationsGroup(describedBy: [fillColorDescriptor, keyFramePositionDescriptor])
+            XCTFail("Shouldn't be able to add fillColor animation to CATextLayer")
+        } catch {
+            // success
+        }
+    }
+
+    func testSequentialAnimationGroupAdding() {
+
+        let basicAnchorPointDescriptor = SwiftyCoreAnimation.Descriptor.Basic<SwiftyCoreAnimation.AnchorPoint.X>(duration: 2)
+        let path = CGPath(ellipseIn: CGRect(x: 0, y: 0, width: 400, height: 250), transform: nil)
+        let keyFramePositionDescriptor = SwiftyCoreAnimation.Descriptor.KeyFrame<SwiftyCoreAnimation.Position>.path(path, duration: 4)
+
+        let groupDescriptor = Descriptor.Group.sequential(using: [basicAnchorPointDescriptor, keyFramePositionDescriptor])
+
+        var animations: [CAAnimationGroup] = []
+
+        do {
+            try animations.append(self.layer.addAnimationsGroup(describedBy: groupDescriptor))
+            try animations.append(self.shapeLayer.addAnimationsGroup(describedBy: groupDescriptor))
+            try animations.append(self.emitterLayer.addAnimationsGroup(describedBy: groupDescriptor))
+            try animations.append(self.gradientLayer.addAnimationsGroup(describedBy: groupDescriptor))
+            try animations.append(self.replicatorLayer.addAnimationsGroup(describedBy: groupDescriptor))
+            try animations.append(self.textLayer.addAnimationsGroup(describedBy: groupDescriptor))
+        } catch {
+            XCTFail("Animation groups should have been created")
+        }
+
+        animations.forEach {
+            XCTAssertEqual($0.duration, 6, "Should be equal for group \($0)")
+            XCTAssertEqual($0.animations?.count, 2, "Should be 2 animations in group \($0)")
+        }
+
+        // also test that we can't add group animations to layers without the animating properties
+
+        let fillColorDescriptor = Descriptor.Basic<FillColor>.from(.red, to: .green)
+        let gradientColorsDescriptor = Descriptor.Basic<Colors>.from([.red, .green], to: [.blue, .yellow])
+
+        let groupDescriptor2 = Descriptor.Group.sequential(using: [fillColorDescriptor, keyFramePositionDescriptor])
+        let groupDescriptor3 = Descriptor.Group.sequential(using: [gradientColorsDescriptor, keyFramePositionDescriptor])
+
+        do {
+            try self.layer.addAnimationsGroup(describedBy: groupDescriptor2)
+            XCTFail("Shouldn't be able to add fillColor animation to CALayer")
+        } catch {
+            // success
+        }
+
+        do {
+            try self.shapeLayer.addAnimationsGroup(describedBy: groupDescriptor3)
+            XCTFail("Shouldn't be able to add gradient colors animation to CAShapeLayer")
+        } catch {
+            // success
+        }
+
+        do {
+            try self.emitterLayer.addAnimationsGroup(describedBy: groupDescriptor2)
+            XCTFail("Shouldn't be able to add fillColor animation to CAEmitterLayer")
+        } catch {
+            // success
+        }
+
+        do {
+            try self.gradientLayer.addAnimationsGroup(describedBy: groupDescriptor2)
+            XCTFail("Shouldn't be able to add fillColor animation to CAGradientLayer")
+        } catch {
+            // success
+        }
+
+        do {
+            try self.replicatorLayer.addAnimationsGroup(describedBy: groupDescriptor2)
+            XCTFail("Shouldn't be able to add fillColor animation to CAReplicatorLayer")
+        } catch {
+            // success
+        }
+
+        do {
+            try self.textLayer.addAnimationsGroup(describedBy: groupDescriptor2)
+            XCTFail("Shouldn't be able to add fillColor animation to CATextLayer")
+        } catch {
+            // success
+        }
+    }
+
+    func testSequentialAnimationGroupAddingVersion2() {
+
+        let basicAnchorPointDescriptor = SwiftyCoreAnimation.Descriptor.Basic<SwiftyCoreAnimation.AnchorPoint.X>(duration: 2)
+        let path = CGPath(ellipseIn: CGRect(x: 0, y: 0, width: 400, height: 250), transform: nil)
+        let keyFramePositionDescriptor = SwiftyCoreAnimation.Descriptor.KeyFrame<SwiftyCoreAnimation.Position>.path(path, duration: 4)
+
+        var animations: [CAAnimationGroup] = []
+
+        do {
+            try animations.append(self.layer.addSequentialAnimationsGroup(describedBy: [basicAnchorPointDescriptor, keyFramePositionDescriptor]))
+            try animations.append(self.shapeLayer.addSequentialAnimationsGroup(describedBy: [basicAnchorPointDescriptor, keyFramePositionDescriptor]))
+            try animations.append(self.emitterLayer.addSequentialAnimationsGroup(describedBy: [basicAnchorPointDescriptor, keyFramePositionDescriptor]))
+            try animations.append(self.gradientLayer.addSequentialAnimationsGroup(describedBy: [basicAnchorPointDescriptor, keyFramePositionDescriptor]))
+            try animations.append(self.replicatorLayer.addSequentialAnimationsGroup(describedBy: [basicAnchorPointDescriptor, keyFramePositionDescriptor]))
+            try animations.append(self.textLayer.addSequentialAnimationsGroup(describedBy: [basicAnchorPointDescriptor, keyFramePositionDescriptor]))
+        } catch {
+            XCTFail("Animation groups should have been created")
+        }
+
+        animations.forEach {
+            XCTAssertEqual($0.duration, 6, "Should be equal for group \($0)")
+            XCTAssertEqual($0.animations?.count, 2, "Should be 2 animations in group \($0)")
+        }
+
+        // also test that we can't add group animations to layers without the animating properties
+
+        let fillColorDescriptor = Descriptor.Basic<FillColor>.from(.red, to: .green)
+        let gradientColorsDescriptor = Descriptor.Basic<Colors>.from([.red, .green], to: [.blue, .yellow])
+
+        do {
+            try self.layer.addSequentialAnimationsGroup(describedBy: [fillColorDescriptor, keyFramePositionDescriptor])
+            XCTFail("Shouldn't be able to add fillColor animation to CALayer")
+        } catch {
+            // success
+        }
+
+        do {
+            try self.shapeLayer.addSequentialAnimationsGroup(describedBy: [gradientColorsDescriptor, keyFramePositionDescriptor])
+            XCTFail("Shouldn't be able to add gradient colors animation to CAShapeLayer")
+        } catch {
+            // success
+        }
+
+        do {
+            try self.emitterLayer.addSequentialAnimationsGroup(describedBy: [fillColorDescriptor, keyFramePositionDescriptor])
+            XCTFail("Shouldn't be able to add fillColor animation to CAEmitterLayer")
+        } catch {
+            // success
+        }
+
+        do {
+            try self.gradientLayer.addSequentialAnimationsGroup(describedBy: [fillColorDescriptor, keyFramePositionDescriptor])
+            XCTFail("Shouldn't be able to add fillColor animation to CAGradientLayer")
+        } catch {
+            // success
+        }
+
+        do {
+            try self.replicatorLayer.addSequentialAnimationsGroup(describedBy: [fillColorDescriptor, keyFramePositionDescriptor])
+            XCTFail("Shouldn't be able to add fillColor animation to CAReplicatorLayer")
+        } catch {
+            // success
+        }
+
+        do {
+            try self.textLayer.addSequentialAnimationsGroup(describedBy: [fillColorDescriptor, keyFramePositionDescriptor])
+            XCTFail("Shouldn't be able to add fillColor animation to CATextLayer")
+        } catch {
+            // success
+        }
+    }
+
     func testCALayerAnimationAdding() {
 
         let from: UIColor = .red

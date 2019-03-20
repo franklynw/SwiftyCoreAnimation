@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		790BF7D9223C05F40004E9D4 /* GroupDescriptorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 790BF7D8223C05F40004E9D4 /* GroupDescriptorTests.swift */; };
 		79200E8222292396008257D9 /* Array+AnimationProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79200E8022292396008257D9 /* Array+AnimationProperties.swift */; };
 		79200E86222940FA008257D9 /* Properties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79200E84222940FA008257D9 /* Properties.swift */; };
 		79200E892229413D008257D9 /* Properties.PropertyAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79200E872229413D008257D9 /* Properties.PropertyAnimation.swift */; };
@@ -51,6 +52,7 @@
 		792A37812232C6E70024FC6E /* AlignmentMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792A377F2232C6E70024FC6E /* AlignmentMode.swift */; };
 		792A37842232C7390024FC6E /* TruncationMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792A37822232C7390024FC6E /* TruncationMode.swift */; };
 		796D7C51223823C8005A049B /* InstanceColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796D7C4F223823C8005A049B /* InstanceColor.swift */; };
+		796D7CAC223AAE5D005A049B /* Descriptor.Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796D7CAB223AAE5D005A049B /* Descriptor.Group.swift */; };
 		7988B87722205A6E0093DF65 /* SwiftyCoreAnimation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7988B86E22205A6E0093DF65 /* SwiftyCoreAnimation.framework */; };
 		7988B87E22205A6E0093DF65 /* BasicAnimationDescriptorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7988B87D22205A6E0093DF65 /* BasicAnimationDescriptorTests.swift */; };
 		7988B88022205A6E0093DF65 /* SwiftyCoreAnimation.h in Headers */ = {isa = PBXBuildFile; fileRef = 7988B87022205A6E0093DF65 /* SwiftyCoreAnimation.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -159,6 +161,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		790BF7D8223C05F40004E9D4 /* GroupDescriptorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDescriptorTests.swift; sourceTree = "<group>"; };
 		79200E8022292396008257D9 /* Array+AnimationProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+AnimationProperties.swift"; sourceTree = "<group>"; };
 		79200E84222940FA008257D9 /* Properties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Properties.swift; sourceTree = "<group>"; };
 		79200E872229413D008257D9 /* Properties.PropertyAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Properties.PropertyAnimation.swift; sourceTree = "<group>"; };
@@ -203,6 +206,7 @@
 		792A377F2232C6E70024FC6E /* AlignmentMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlignmentMode.swift; sourceTree = "<group>"; };
 		792A37822232C7390024FC6E /* TruncationMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TruncationMode.swift; sourceTree = "<group>"; };
 		796D7C4F223823C8005A049B /* InstanceColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstanceColor.swift; sourceTree = "<group>"; };
+		796D7CAB223AAE5D005A049B /* Descriptor.Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Descriptor.Group.swift; sourceTree = "<group>"; };
 		7978ACC02220525F006AA6E3 /* Descriptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Descriptor.swift; sourceTree = "<group>"; };
 		7978C0132218938B0019EE2C /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		7978C021221AB67D0019EE2C /* AnchorPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnchorPoint.swift; sourceTree = "<group>"; };
@@ -607,6 +611,7 @@
 				7978C0B2221DB7C50019EE2C /* Descriptor.KeyFrame.swift */,
 				7978C0B4221DB7E20019EE2C /* Descriptor.Spring.swift */,
 				798A55F52227E3FC0086F0F9 /* Descriptor.Transition.swift */,
+				796D7CAB223AAE5D005A049B /* Descriptor.Group.swift */,
 			);
 			path = "Animation Descriptors";
 			sourceTree = "<group>";
@@ -644,6 +649,7 @@
 				79D4DE5B222EC10B005160A0 /* KeyFrameDescriptorTests.swift */,
 				79D4DE5D222ED71A005160A0 /* SpringDescriptorTests.swift */,
 				79D4DE5F222FB6CF005160A0 /* TransitionDescriptorTests.swift */,
+				790BF7D8223C05F40004E9D4 /* GroupDescriptorTests.swift */,
 				79D4DE61222FC50D005160A0 /* AnimationPropertiesTests.swift */,
 				79D4DE692231099E005160A0 /* LayerAnimationAddingTests.swift */,
 				79D4DE6B223126AF005160A0 /* AnimationFinishedActionsTests.swift */,
@@ -919,6 +925,7 @@
 				79C0BA6F2232A695001A601D /* GradientType.swift in Sources */,
 				79200E9222294359008257D9 /* Properties.SpringAnimation.swift in Sources */,
 				7988B8C022205ADE0093DF65 /* InstanceRedOffset.swift in Sources */,
+				796D7CAC223AAE5D005A049B /* Descriptor.Group.swift in Sources */,
 				7988B8C122205ADE0093DF65 /* InstanceGreenOffset.swift in Sources */,
 				792A37612232B9A30024FC6E /* Scale.swift in Sources */,
 				79200E9522294389008257D9 /* Properties.SceneKit.swift in Sources */,
@@ -939,6 +946,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				790BF7D9223C05F40004E9D4 /* GroupDescriptorTests.swift in Sources */,
 				79D4DE5E222ED71A005160A0 /* SpringDescriptorTests.swift in Sources */,
 				79D4DE6A2231099E005160A0 /* LayerAnimationAddingTests.swift in Sources */,
 				79D4DE58222D853E005160A0 /* LayerPropertiesSettingAndGettingTests.swift in Sources */,

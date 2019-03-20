@@ -17,21 +17,19 @@ class HelloView: UIView {
 
     private var attributedText: NSAttributedString = HelloView.helloText
 
-    private lazy var textPath: ResettableLazy<CGPath?> = {
-        return ResettableLazy {
+    private var textPath: CGPath? {
 
-            let path: CGPath? = self.attributedText.cgPath
+        let path: CGPath? = self.attributedText.cgPath
 
-            let textSize: CGSize = self.attributedText.size()
-            let xOffset: CGFloat = self.layer.bounds.width / 2
-            let yOffset: CGFloat = self.layer.bounds.height / 2
-            var translation = CGAffineTransform(translationX: textSize.width / -2 + xOffset, y: textSize.height / 2 + yOffset)
+        let textSize: CGSize = self.attributedText.size()
+        let xOffset: CGFloat = self.layer.bounds.width / 2
+        let yOffset: CGFloat = self.layer.bounds.height / 2
+        var translation = CGAffineTransform(translationX: textSize.width / -2 + xOffset, y: textSize.height / 2 + yOffset)
 
-            let textPath: CGPath? = path?.copy(using: &translation)
+        let textPath: CGPath? = path?.copy(using: &translation)
 
-            return textPath
-        }
-    }()
+        return textPath
+    }
 
     private lazy var backgroundGradientLayer: CAGradientLayer = {
 
@@ -44,32 +42,10 @@ class HelloView: UIView {
         self.layer.addSublayer(layer)
         self.positionLayer(layer)
 
-        func animate() {
-
-            guard let startPoint = layer.get(StartPoint.self), let endPoint = layer.get(EndPoint.self) else { return }
-
-            let newStartPoint = CGPoint(x: abs(startPoint.x - 1), y: 0)
-            let newEndPoint = CGPoint(x: abs(endPoint.x - 1), y: 1)
-
-            let startPointDescriptor = Descriptor.Basic<StartPoint>.from(startPoint, to: newStartPoint, duration: 2)
-            let endPointDescriptor = Descriptor.Basic<EndPoint>.from(endPoint, to: newEndPoint, duration: 2)
-
-            layer.set(StartPoint(newStartPoint))
-            layer.set(EndPoint(newEndPoint))
-
-            layer.addBasicAnimation(describedBy: startPointDescriptor, animationFinished: { [weak self] _, _ in
-                guard self != nil else { return }
-                animate()
-            })
-            layer.addBasicAnimation(describedBy: endPointDescriptor)
-        }
-
-        animate()
-
         return layer
     }()
 
-    private lazy var backgroundLayer: CALayer = {
+    private lazy var containerLayer: CALayer = {
 
         let layer = CALayer()
 
@@ -87,7 +63,7 @@ class HelloView: UIView {
         shapeLayer.set(FillColor(.clear))
         shapeLayer.set(LineWidth(3))
 
-        self.backgroundLayer.addSublayer(shapeLayer)
+        self.containerLayer.addSublayer(shapeLayer)
 
         self.positionLayer(shapeLayer)
         shapeLayer.anchorPoint = CGPoint(x: 0.5, y: 0.5)
@@ -102,7 +78,7 @@ class HelloView: UIView {
         gradientLayer.set(Colors([.red, .purple, .orange, .green, .blue]))
         gradientLayer.set(Mask(self.maskLayer))
 
-        self.backgroundLayer.insertSublayer(gradientLayer, below: self.textLayer)
+        self.containerLayer.insertSublayer(gradientLayer, below: self.textLayer)
         self.positionLayer(gradientLayer)
 
         return gradientLayer
@@ -148,131 +124,142 @@ class HelloView: UIView {
 
         emitterLayer.set(EmitterCells([cell1, cell2, cell3]))
 
-        self.backgroundLayer.addSublayer(emitterLayer)
+        self.containerLayer.addSublayer(emitterLayer)
         self.positionLayer(emitterLayer)
 
         return emitterLayer
+    }()
+
+    private lazy var setup: () -> Void = {
+        // effectively dispatch_once each time the view appears... (has to be a lazy var rather than a let because accessing self)
+
+        self.layer.masksToBounds = true
+
+        _ = self.backgroundGradientLayer
+        _ = self.containerLayer
+
+        self.animateBackground()
+        self.hello(2)
+
+        let tapGestureRecognizer: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(hello))
+        self.addGestureRecognizer(tapGestureRecognizer)
+
+        return {}
     }()
 
     private var animationCount: Int = 0
     private var isInProgress: Bool = false
 
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-
-        _ = self.backgroundGradientLayer
-        _ = self.backgroundLayer
-
-        self.hello()
-
-        let tapGestureRecognizer: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(hello))
-        self.addGestureRecognizer(tapGestureRecognizer)
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        self.setup() // now that our bounds is right
     }
 
     @objc
-    private func hello() {
+    private func hello(_ startTime: TimeInterval = 0) {
         guard self.isInProgress == false else { return }
 
         self.isInProgress = true
         self.animationCount = 0
 
-        self.textPath.reset()
         self.attributedText = HelloView.helloText
 
-        guard let textPath: CGPath = self.textPath.value else { return }
+        guard let textPath: CGPath = self.textPath else { return }
 
         let duration: TimeInterval = 5
 
-        self.textLayer.set(Opacity(1))
+        self.containerLayer.set(Transform.Scale(1))
+        self.containerLayer.set(Opacity(1))
         self.gradientLayer.set(Opacity(0))
-        self.emitterLayer.set(Opacity(1))
-        self.backgroundLayer.set(Transform.Scale(1))
-        self.backgroundLayer.set(Opacity(1))
-
-        self.textLayer.set(Path(textPath))
         self.maskLayer.set(Path(textPath))
+        self.textLayer.set(Opacity(0))
+        self.textLayer.set(Path(textPath))
+        self.emitterLayer.set(Opacity(0))
 
-        let strokeDescriptor = Descriptor.Basic<StrokeEnd>.from(0, to: 1, duration: duration)
-        self.textLayer.addBasicAnimation(describedBy: strokeDescriptor)
+        Async.after(startTime) {
 
-        if let path = self.textPath.value {
+            self.emitterLayer.set(Opacity(1))
+            self.textLayer.set(Opacity(1))
+
+            let strokeDescriptor = Descriptor.Basic<StrokeEnd>.from(0, to: 1)
             let properties: [Properties.KeyFrameAnimation] = [.calculationMode(.paced)]
-            let emitterFollowingDescriptor = Descriptor.KeyFrame<EmitterPosition>.path(path, duration: duration, otherAnimationProperties: properties)
-            self.emitterLayer.addKeyFrameAnimation(describedBy: emitterFollowingDescriptor)
-        }
+            let emitterFollowingDescriptor = Descriptor.KeyFrame<EmitterPosition>.path(textPath, otherAnimationProperties: properties)
+            let rotationDescriptor = Descriptor.Basic<Transform.Rotation.Z>.from(0, to: CGFloat.pi * 4)
+            let scaleDescriptor = Descriptor.Basic<Transform.Scale>.from(5, to: 1)
 
-        let rotationDescriptor = Descriptor.Basic<Transform.Rotation.Z>.from(0, to: CGFloat.pi * 4, duration: duration)
-        self.textLayer.addBasicAnimation(describedBy: rotationDescriptor)
-        self.emitterLayer.addBasicAnimation(describedBy: rotationDescriptor)
+            do {
+                try self.emitterLayer.addConcurrentAnimationsGroup(describedBy: [emitterFollowingDescriptor, rotationDescriptor, scaleDescriptor], duration: duration)
 
-        let scaleDescriptor = Descriptor.Basic<Transform.Scale>.from(5, to: 1, duration: duration)
-        self.emitterLayer.addBasicAnimation(describedBy: scaleDescriptor)
-        self.textLayer.addBasicAnimation(describedBy: scaleDescriptor, animationFinished: { [weak self] _, _ in
-            guard let self = self else { return }
+                try self.textLayer.addConcurrentAnimationsGroup(describedBy: [strokeDescriptor, rotationDescriptor, scaleDescriptor], duration: duration, animationFinished: { [weak self] _, _ in
+                    guard let self = self else { return }
 
-            self.gradientLayer.set(Opacity(1))
-            let opacityDescriptor = Descriptor.Basic<Opacity>.from(0, to: 1, duration: 1)
-            self.gradientLayer.addBasicAnimation(describedBy: opacityDescriptor)
+                    self.gradientLayer.set(Opacity(1))
+                    let opacityDescriptor = Descriptor.Basic<Opacity>.from(0, to: 1, duration: 1)
+                    self.gradientLayer.addBasicAnimation(describedBy: opacityDescriptor)
 
-            self.emitterLayer.set(Opacity(0))
-            let fadeOutDescriptor = Descriptor.Basic<Opacity>.from(1, to: 0, duration: 1)
-            self.emitterLayer.addBasicAnimation(describedBy: fadeOutDescriptor)
+                    self.emitterLayer.set(Opacity(0))
+                    let fadeOutDescriptor = Descriptor.Basic<Opacity>.from(1, to: 0, duration: 1)
+                    self.emitterLayer.addBasicAnimation(describedBy: fadeOutDescriptor)
 
-            self.backgroundLayer.set(Transform.Scale(2))
-            let stretchDescriptor = Descriptor.Spring<Transform.Scale>.from(1, to: 2, duration: 0.5)
-            self.backgroundLayer.addSpringAnimation(describedBy: stretchDescriptor, animationFinished: { [weak self] _, _ in
+                    self.containerLayer.set(Transform.Scale(2))
+                    let stretchDescriptor = Descriptor.Spring<Transform.Scale>.from(1, to: 2, duration: 0.5)
+                    self.containerLayer.addSpringAnimation(describedBy: stretchDescriptor, animationFinished: { [weak self] _, _ in
 
-                self?.backgroundLayer.set(Transform.Scale.X(1))
-                let stretchDescriptor = Descriptor.Spring<Transform.Scale.X>.from(2, to: 1, duration: 0.5)
-                self?.backgroundLayer.addSpringAnimation(describedBy: stretchDescriptor, animationFinished: { [weak self] _, _ in
-                    self?.animateGradient()
+                        self?.containerLayer.set(Transform.Scale.X(1))
+                        let stretchDescriptor = Descriptor.Spring<Transform.Scale.X>.from(2, to: 1, duration: 0.5)
+                        self?.containerLayer.addSpringAnimation(describedBy: stretchDescriptor, animationFinished: { [weak self] _, _ in
+                            self?.animateGradient()
+                        })
+                    })
                 })
-            })
-        })
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
     }
 
     private func goodBye() {
 
         guard let currentPath: CGPath = self.textLayer.get(Path.self) else { return }
 
-        self.textPath.reset()
         self.attributedText = HelloView.goodbyeText
 
-        guard let textPath: CGPath = self.textPath.value else { return }
-
-        let pathChangeDescriptor = Descriptor.Basic<Path>.from(currentPath, to: textPath, duration: 0.5)
+        guard let textPath: CGPath = self.textPath else { return }
 
         self.textLayer.set(Path(textPath))
         self.maskLayer.set(Path(textPath))
+
+        let pathChangeDescriptor = Descriptor.Basic<Path>.from(currentPath, to: textPath, duration: 0.5)
 
         self.textLayer.addBasicAnimation(describedBy: pathChangeDescriptor)
         self.maskLayer.addBasicAnimation(describedBy: pathChangeDescriptor, animationFinished: { [weak self] _, _ in
             guard let self = self else { return }
 
-            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2, execute: {
+            Async.after(2) {
 
-                self.backgroundLayer.set(Transform.Scale(15))
-                self.backgroundLayer.set(Transform.Rotation(0))
-                self.backgroundLayer.set(Opacity(0))
+                self.containerLayer.set(Transform.Scale(15))
+                self.containerLayer.set(Transform.Rotation(0))
+                self.containerLayer.set(Opacity(0))
 
-                let rotationDescriptor = Descriptor.Basic<Transform.Rotation.Z>.from(0, to: CGFloat.pi * -2, duration: 1)
-                let scaleXDescriptor = Descriptor.Basic<Transform.Scale.X>.from(1, to: 15, duration: 1)
-                let scaleYDescriptor = Descriptor.Basic<Transform.Scale.Y>.from(2, to: 15, duration: 1)
-                let opacityDescriptor = Descriptor.Basic<Opacity>.from(1, to: 0, duration: 1)
+                let rotationDescriptor = Descriptor.Basic<Transform.Rotation.Z>.from(0, to: CGFloat.pi * -2)
+                let scaleXDescriptor = Descriptor.Basic<Transform.Scale.X>.from(1, to: 15)
+                let scaleYDescriptor = Descriptor.Basic<Transform.Scale.Y>.from(2, to: 15)
+                let opacityDescriptor = Descriptor.Basic<Opacity>.from(1, to: 0)
 
-                self.backgroundLayer.addBasicAnimation(describedBy: rotationDescriptor)
-                self.backgroundLayer.addBasicAnimation(describedBy: scaleXDescriptor)
-                self.backgroundLayer.addBasicAnimation(describedBy: scaleYDescriptor)
-                self.backgroundLayer.addBasicAnimation(describedBy: opacityDescriptor, animationFinished: { [weak self] _, _ in
-                    guard let self = self else { return }
+                do {
+                    try self.containerLayer.addConcurrentAnimationsGroup(describedBy: [rotationDescriptor, scaleXDescriptor, scaleYDescriptor, opacityDescriptor], duration: 1, animationFinished: { [weak self] _, _ in
+                        guard let self = self else { return }
 
-                    self.textLayer.set(Opacity(0))
-                    self.gradientLayer.set(Opacity(0))
+                        self.textLayer.set(Opacity(0))
+                        self.gradientLayer.set(Opacity(0))
 
-                    self.isInProgress = false
-                })
-            })
+                        self.isInProgress = false
+                    })
+                } catch {
+                    print(error.localizedDescription)
+                }
+            }
         })
     }
 
@@ -315,6 +302,26 @@ class HelloView: UIView {
                 }
             }
         }
+    }
+
+    private func animateBackground() {
+
+        guard let startPoint = self.backgroundGradientLayer.get(StartPoint.self), let endPoint = self.backgroundGradientLayer.get(EndPoint.self) else { return }
+
+        let newStartPoint = CGPoint(x: abs(startPoint.x - 1), y: 0)
+        let newEndPoint = CGPoint(x: abs(endPoint.x - 1), y: 1)
+
+        let startPointDescriptor = Descriptor.Basic<StartPoint>.from(startPoint, to: newStartPoint, duration: 2)
+        let endPointDescriptor = Descriptor.Basic<EndPoint>.from(endPoint, to: newEndPoint, duration: 2)
+
+        self.backgroundGradientLayer.set(StartPoint(newStartPoint))
+        self.backgroundGradientLayer.set(EndPoint(newEndPoint))
+
+        self.backgroundGradientLayer.addBasicAnimation(describedBy: startPointDescriptor, animationFinished: { [weak self] _, _ in
+            guard self != nil else { return }
+            self?.animateBackground()
+        })
+        self.backgroundGradientLayer.addBasicAnimation(describedBy: endPointDescriptor)
     }
 
     private func positionLayer(_ layer: CALayer) {

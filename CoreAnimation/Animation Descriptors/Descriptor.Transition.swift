@@ -45,11 +45,11 @@ extension Descriptor {
             self.startProgress = startProgress
             self.endProgress = endProgress
 
-            super.init(duration: duration, animationProperties: otherAnimationProperties, delegate: delegate)
+            super.init(duration: duration, animationProperties: otherAnimationProperties, propertyTypes: [], delegate: delegate)
         }
 
         /// Creates & returns an instance of the animation described by the class instance
-        public var animation: AnimationType {
+        override public var animation: AnimationType {
 
             let animation: CATransition = CATransition()
 

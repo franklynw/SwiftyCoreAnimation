@@ -20,6 +20,7 @@ extension Descriptor {
         private let by: Any?
         private let to: Any?
 
+
         /// Initializer for a Descriptor for a Spring Animation
         ///
         /// - Parameters:
@@ -49,11 +50,11 @@ extension Descriptor {
             self.by = by
             self.to = to
 
-            super.init(duration: duration, animationProperties: animationProperties, delegate: delegate)
+            super.init(duration: duration, animationProperties: animationProperties, propertyTypes: [T.self], delegate: delegate)
         }
 
         /// Creates & returns an instance of the animation described by the class instance
-        public var animation: AnimationType {
+        override public var animation: AnimationType {
 
             let animation: CASpringAnimation = CASpringAnimation(keyPath: T.keyPath)
 

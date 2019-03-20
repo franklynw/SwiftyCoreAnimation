@@ -29,11 +29,11 @@ extension Descriptor {
             self.values = values
             self.path = path
 
-            super.init(duration: duration, animationProperties: animationProperties, delegate: delegate)
+            super.init(duration: duration, animationProperties: animationProperties, propertyTypes: [T.self], delegate: delegate)
         }
 
         /// Creates & returns an instance of the animation described by the class instance
-        public var animation: AnimationType {
+        override public var animation: AnimationType {
 
             let animation: CAKeyframeAnimation = CAKeyframeAnimation(keyPath: T.keyPath)
 
