@@ -185,11 +185,11 @@ public extension GradientLayerAnimationAdding where Self: CAGradientLayer {
     ///   - animationFinished: invoked when the animation completes - any animationFinished actions on the individual descriptors will be ignored
     /// - Returns: the CAAnimationGroup object
     @discardableResult
-    public func addSequentialAnimations(describedBy animationDescriptors: [Descriptor.Root],
-                                        forKey key: String? = nil,
-                                        applyingOtherProperties properties: [PropertiesApplicableToAnimationGroups] = [],
-                                        removeExistingAnimations: Bool = false,
-                                        animationFinished: AnimationFinishedAction? = nil) throws -> CAAnimation? {
+    public func addAnimationSequence(describedBy animationDescriptors: [Descriptor.Root],
+                                     forKey key: String? = nil,
+                                     applyingOtherProperties properties: [PropertiesApplicableToAnimationGroups] = [],
+                                     removeExistingAnimations: Bool = false,
+                                     animationFinished: AnimationFinishedAction? = nil) throws -> CAAnimation? {
 
         try animationDescriptors.forEach {
             try $0.propertyTypes.forEach {
@@ -199,10 +199,10 @@ public extension GradientLayerAnimationAdding where Self: CAGradientLayer {
             }
         }
 
-        return self.addSequentialAnimations(animationDescriptors,
-                                            forKey: key,
-                                            applyingProperties: properties,
-                                            removeExistingAnimations: removeExistingAnimations,
-                                            animationFinished: animationFinished)
+        return self.addAnimationSequence(animationDescriptors,
+                                         forKey: key,
+                                         applyingProperties: properties,
+                                         removeExistingAnimations: removeExistingAnimations,
+                                         animationFinished: animationFinished)
     }
 }

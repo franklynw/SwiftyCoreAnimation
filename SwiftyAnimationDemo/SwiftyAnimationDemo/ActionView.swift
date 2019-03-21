@@ -48,8 +48,7 @@ class ActionView: UIView {
 //
 //        shapeLayer.add(animation, forKey: nil)
 
-//        try? shapeLayer.addSequentialAnimationsGroup(describedBy: [fillColorDescriptor, actionDescriptor, lineWidthDescriptor, action2Descriptor], applyingOtherProperties: properties)
-        try? shapeLayer.addSequentialAnimations(describedBy: [fillColorDescriptor, actionDescriptor, lineWidthDescriptor, action2Descriptor, fillColorDescriptor2], animationFinished: { _, _ in
+        try? shapeLayer.addAnimationSequence(describedBy: [fillColorDescriptor, actionDescriptor, lineWidthDescriptor, action2Descriptor, fillColorDescriptor2], animationFinished: { _, _ in
             print("All done")
         })
     }

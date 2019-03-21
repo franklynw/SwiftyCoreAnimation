@@ -53,12 +53,12 @@ public enum GroupAnimationCreationError: LocalizedError {
 extension Descriptor {
 
     // MARK: - Describes an Animation Group
-    public final class Group: Root, AnimationDescribing {
+    public final class Group: Root {
 
         public typealias AnimationType = CAAnimationGroup
 
-        private let descriptors: [Descriptor.Root]
-        private let isConcurrent: Bool
+        internal let descriptors: [Descriptor.Root]
+        internal let isConcurrent: Bool
 
         fileprivate init(_ descriptors: [Descriptor.Root],
                          duration: TimeInterval?,
@@ -71,20 +71,6 @@ extension Descriptor {
             let propertyTypes: [BaseLayerProperty.Type] = self.descriptors.flatMap { $0.propertyTypes }
 
             super.init(duration: duration, animationProperties: animationProperties, propertyTypes: propertyTypes, delegate: delegate)
-        }
-
-        /// Creates & returns an instance of the animation described by the class instance
-        override public var animation: AnimationType {
-
-            let animationGroup: CAAnimationGroup
-
-            if self.isConcurrent {
-                animationGroup = CALayer.concurrentAnimationsGroup(self.descriptors, forKey: nil, duration: self.duration, applyingProperties: self.animationProperties, animationFinished: nil)
-            } else {
-                animationGroup = CALayer.sequentialAnimationsGroup(self.descriptors, forKey: nil, applyingProperties: self.animationProperties, animationFinished: nil)
-            }
-
-            return animationGroup
         }
     }
 }

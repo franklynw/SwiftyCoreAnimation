@@ -49,7 +49,7 @@ extension Descriptor {
         }
 
         /// Creates & returns an instance of the animation described by the class instance
-        override public var animation: AnimationType {
+        override internal var animation: AnimationType {
 
             let animation: CATransition = CATransition()
 
