@@ -12,7 +12,7 @@ import UIKit
 extension Descriptor {
 
     // MARK: - Describes an Animation Action
-    public final class Action: Root, AnimationDescribing {
+    public final class Action: Root {
 
         public typealias AnimationType = CABasicAnimation
 
@@ -21,17 +21,6 @@ extension Descriptor {
         public init(action: @escaping () -> ()) {
             self.action = action
             super.init(duration: nil, animationProperties: [], propertyTypes: [], delegate: nil)
-        }
-
-        /// Creates & returns an instance of the animation described by the class instance
-        override public var animation: AnimationType {
-
-            let animation: CABasicAnimation = CABasicAnimation(keyPath: AnimationActions.animationKey)
-
-            animation.fromValue = 0
-            animation.toValue = 1
-
-            return animation
         }
     }
 }
