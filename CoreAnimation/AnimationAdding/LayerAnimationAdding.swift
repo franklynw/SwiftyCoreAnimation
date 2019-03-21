@@ -156,6 +156,8 @@ public extension LayerAnimationAdding where Self: CALayer {
     ///   - animationDescriptors: Animation descriptors for CALayer animations
     ///   - key: key for the animation
     ///   - duration: the animation duration - if the descriptors specify a longer duration than this, the animation duration will be clipped, not scaled
+    ///             NB - if an animation sequence is added, it isn't clipped & will run its full sequence; this means that any animationFinished action
+    ///             could be invoked BEFORE the sequence is ended, as it runs when the group finishes
     ///   - properties: an array of Descriptor.Properties applicable to CAAnimationGroups; if the Descriptor already has animation properties,
     ///             these will be over-ridden by the values passed in here
     ///   - removeExistingAnimations: removes any existing layer animations if true

@@ -210,6 +210,8 @@ extension CALayer {
 
         guard var descriptor = descriptors.first else { return nil }
 
+        descriptors.removeFirst()
+
         let animation: CAAnimation?
 
         if let groupAnimationDescriptor = descriptor as? Descriptor.Group {
@@ -227,6 +229,7 @@ extension CALayer {
                 performActions() // again, check that the start of the sequence isn't an action(s)
                 guard let firstDescriptor = descriptors.first else { return nil }
                 descriptor = firstDescriptor
+                descriptors.removeFirst()
                 animation = descriptor.animation
             }
         } else {
@@ -236,8 +239,6 @@ extension CALayer {
         guard let sequenceAnimation = animation else {
             return nil
         }
-
-        descriptors.removeFirst()
 
         CALayer.applyProperties(properties, to: sequenceAnimation)
 
@@ -263,27 +264,32 @@ extension CALayer {
         self.removeExistingAnimationsIfNecessary(removeExistingAnimations)
 
         var descriptors = animationDescriptors
+        var descriptorsToRemove: [Int] = []
 
-        repeat {
-            let descriptor = descriptors.first
+        descriptors.enumerated().forEach { pair in
+            let descriptor = pair.element
             if let actionDescriptor = descriptor as? Descriptor.Action {
                 actionDescriptor.action()
-                descriptors.removeFirst()
+                descriptorsToRemove.append(pair.offset)
             } else if let groupDescriptor = descriptor as? Descriptor.Group {
                 if groupDescriptor.isConcurrent {
                     self.addConcurrentAnimationsGroup([groupDescriptor], forKey: key, duration: duration, applyingProperties: properties, removeExistingAnimations: removeExistingAnimations, animationFinished: nil)
                 } else {
                     _ = self.addAnimationSequence([groupDescriptor], forKey: key, applyingProperties: properties, removeExistingAnimations: removeExistingAnimations, animationFinished: nil)
                 }
-                descriptors.removeFirst()
+                descriptorsToRemove.append(pair.offset)
             }
-        } while descriptors.first is Descriptor.Action || descriptors.first is Descriptor.Group
+        }
+
+        descriptorsToRemove.reversed().forEach {
+            descriptors.remove(at: $0)
+        }
 
         let groupAnimations: [CAAnimation]
 
         // if we've used up the descriptors because they were all actions & group descriptors, we'll need to add a dummy animation for the animationFinished action
         if descriptors.isEmpty, animationFinished != nil {
-            let animation: CABasicAnimation = CABasicAnimation(keyPath: ActionLayer.animationKey)
+            let animation: CABasicAnimation = CABasicAnimation(keyPath: "dummy")
             animation.fromValue = 0
             animation.toValue = 1
             groupAnimations = [animation]

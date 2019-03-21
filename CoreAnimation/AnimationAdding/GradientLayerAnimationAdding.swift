@@ -134,13 +134,15 @@ public extension GradientLayerAnimationAdding where Self: CAGradientLayer {
     ///   - animationDescriptors: Animation descriptors for CAGradientLayer animations
     ///   - key: key for the animation
     ///   - duration: the animation duration - if the descriptors specify a longer duration than this, the animation duration will be clipped, not scaled
+    ///             NB - if an animation sequence is added, it isn't clipped & will run its full sequence; this means that any animationFinished action
+    ///             could be invoked BEFORE the sequence is ended, as it runs when the group finishes
     ///   - properties: an array of Descriptor.Properties applicable to CAAnimationGroups; if the Descriptor already has animation properties,
     ///             these will be over-ridden by the values passed in here
     ///   - removeExistingAnimations: removes any existing layer animations if true
     ///   - animationFinished: invoked when the animation completes - any animationFinished actions on the individual descriptors will be ignored
     public func addConcurrentAnimationsGroup(describedBy animationDescriptors: [Descriptor.Root],
                                              forKey key: String? = nil,
-                                             duration: TimeInterval,
+                                             duration: TimeInterval? = nil,
                                              applyingOtherProperties properties: [PropertiesApplicableToAnimationGroups] = [],
                                              removeExistingAnimations: Bool = false,
                                              animationFinished: AnimationFinishedAction? = nil) throws {
