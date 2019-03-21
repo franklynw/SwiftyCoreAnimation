@@ -160,24 +160,25 @@ extension CALayer {
                                       removeExistingAnimations: Bool,
                                       animationFinished: AnimationFinishedAction?) {
 
-        let animationGroup = self.concurrentAnimationsGroup(animationDescriptors,
-                                                            forKey: key,
-                                                            duration: duration,
-                                                            applyingProperties: properties,
-                                                            removeExistingAnimations: removeExistingAnimations,
-                                                            animationFinished: animationFinished)
+        if let animationGroup = self.concurrentAnimationsGroup(animationDescriptors,
+                                                               forKey: key,
+                                                               duration: duration,
+                                                               applyingProperties: properties,
+                                                               removeExistingAnimations: removeExistingAnimations,
+                                                               animationFinished: animationFinished) {
 
-        if let animationFinished = animationFinished,
-            animationDescriptors.isEmpty == false,
-            (animationGroup.animations == nil || animationGroup.animations?.isEmpty == true) {
+            if let animationFinished = animationFinished,
+                animationDescriptors.isEmpty == false,
+                (animationGroup.animations == nil || animationGroup.animations?.isEmpty == true) {
 
-            // the descriptors must have all been group or action descriptors, so they've been handled separately, & not part of this group
-            // create a dummy animation with an animationFinished closure
-            let animation = self.addAction(duration: duration, action: nil)
-            animation.addAnimationFinishedAction(animationFinished)
+                // the descriptors must have all been group or action descriptors, so they've been handled separately, & not part of this group
+                // create a dummy animation with an animationFinished closure
+                let animation = self.addAction(duration: duration, action: nil)
+                animation.addAnimationFinishedAction(animationFinished)
 
-        } else {
-            self.add(animationGroup, forKey: key ?? self.defaultKey)
+            } else {
+                self.add(animationGroup, forKey: key ?? self.defaultKey)
+            }
         }
     }
 
@@ -259,7 +260,7 @@ extension CALayer {
                                            duration: TimeInterval?,
                                            applyingProperties properties: [AnimationPropertiesApplicable],
                                            removeExistingAnimations: Bool,
-                                           animationFinished: AnimationFinishedAction?) -> CAAnimationGroup {
+                                           animationFinished: AnimationFinishedAction?) -> CAAnimationGroup? {
 
         self.removeExistingAnimationsIfNecessary(removeExistingAnimations)
 
@@ -273,7 +274,7 @@ extension CALayer {
                 descriptorsToRemove.append(pair.offset)
             } else if let groupDescriptor = descriptor as? Descriptor.Group {
                 if groupDescriptor.isConcurrent {
-                    self.addConcurrentAnimationsGroup([groupDescriptor], forKey: key, duration: duration, applyingProperties: properties, removeExistingAnimations: removeExistingAnimations, animationFinished: nil)
+                    self.addConcurrentAnimationsGroup(groupDescriptor.descriptors, forKey: key, duration: duration, applyingProperties: properties, removeExistingAnimations: removeExistingAnimations, animationFinished: nil)
                 } else {
                     _ = self.addAnimationSequence([groupDescriptor], forKey: key, applyingProperties: properties, removeExistingAnimations: removeExistingAnimations, animationFinished: nil)
                 }
@@ -288,11 +289,15 @@ extension CALayer {
         let groupAnimations: [CAAnimation]
 
         // if we've used up the descriptors because they were all actions & group descriptors, we'll need to add a dummy animation for the animationFinished action
-        if descriptors.isEmpty, animationFinished != nil {
-            let animation: CABasicAnimation = CABasicAnimation(keyPath: "dummy")
-            animation.fromValue = 0
-            animation.toValue = 1
-            groupAnimations = [animation]
+        if descriptors.isEmpty {
+            if animationFinished != nil {
+                let animation: CABasicAnimation = CABasicAnimation(keyPath: "dummy")
+                animation.fromValue = 0
+                animation.toValue = 1
+                groupAnimations = [animation]
+            } else {
+                return nil
+            }
         } else {
             groupAnimations = descriptors.compactMap { $0.animation }
         }

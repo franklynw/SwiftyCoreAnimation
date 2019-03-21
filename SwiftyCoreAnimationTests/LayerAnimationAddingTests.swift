@@ -47,12 +47,18 @@ class LayerAnimationAddingTests: XCTestCase {
 
         // we can't use an array of CALayer because it won't call the functions specific to layer types
 
-        animations.append(self.layer.addBasicAnimation(describedBy: animationDescriptor))
-        animations.append(self.shapeLayer.addBasicAnimation(describedBy: animationDescriptor))
-        animations.append(self.emitterLayer.addBasicAnimation(describedBy: animationDescriptor))
-        animations.append(self.gradientLayer.addBasicAnimation(describedBy: animationDescriptor))
-        animations.append(self.replicatorLayer.addBasicAnimation(describedBy: animationDescriptor))
-        animations.append(self.textLayer.addBasicAnimation(describedBy: animationDescriptor))
+        self.layer.addBasicAnimation(describedBy: animationDescriptor, forKey: "animation")
+        animations.append(self.layer.animation(forKey: "animation") as! CABasicAnimation)
+        self.shapeLayer.addBasicAnimation(describedBy: animationDescriptor, forKey: "animation")
+        animations.append(self.shapeLayer.animation(forKey: "animation") as! CABasicAnimation)
+        self.emitterLayer.addBasicAnimation(describedBy: animationDescriptor, forKey: "animation")
+        animations.append(self.emitterLayer.animation(forKey: "animation") as! CABasicAnimation)
+        self.gradientLayer.addBasicAnimation(describedBy: animationDescriptor, forKey: "animation")
+        animations.append(self.gradientLayer.animation(forKey: "animation") as! CABasicAnimation)
+        self.replicatorLayer.addBasicAnimation(describedBy: animationDescriptor, forKey: "animation")
+        animations.append(self.replicatorLayer.animation(forKey: "animation") as! CABasicAnimation)
+        self.textLayer.addBasicAnimation(describedBy: animationDescriptor, forKey: "animation")
+        animations.append(self.textLayer.animation(forKey: "animation") as! CABasicAnimation)
 
         animations.forEach {
             XCTAssertEqual($0.fromValue as! CGColor, from.cgColor, "Should be equal for \($0)")
@@ -69,12 +75,18 @@ class LayerAnimationAddingTests: XCTestCase {
 
         var animations: [CAKeyframeAnimation] = []
 
-        animations.append(self.layer.addKeyFrameAnimation(describedBy: animationDescriptor))
-        animations.append(self.shapeLayer.addKeyFrameAnimation(describedBy: animationDescriptor))
-        animations.append(self.emitterLayer.addKeyFrameAnimation(describedBy: animationDescriptor))
-        animations.append(self.gradientLayer.addKeyFrameAnimation(describedBy: animationDescriptor))
-        animations.append(self.replicatorLayer.addKeyFrameAnimation(describedBy: animationDescriptor))
-        animations.append(self.textLayer.addKeyFrameAnimation(describedBy: animationDescriptor))
+        self.layer.addKeyFrameAnimation(describedBy: animationDescriptor, forKey: "animation")
+        animations.append(self.layer.animation(forKey: "animation") as! CAKeyframeAnimation)
+        self.shapeLayer.addKeyFrameAnimation(describedBy: animationDescriptor, forKey: "animation")
+        animations.append(self.shapeLayer.animation(forKey: "animation") as! CAKeyframeAnimation)
+        self.emitterLayer.addKeyFrameAnimation(describedBy: animationDescriptor, forKey: "animation")
+        animations.append(self.emitterLayer.animation(forKey: "animation") as! CAKeyframeAnimation)
+        self.gradientLayer.addKeyFrameAnimation(describedBy: animationDescriptor, forKey: "animation")
+        animations.append(self.gradientLayer.animation(forKey: "animation") as! CAKeyframeAnimation)
+        self.replicatorLayer.addKeyFrameAnimation(describedBy: animationDescriptor, forKey: "animation")
+        animations.append(self.replicatorLayer.animation(forKey: "animation") as! CAKeyframeAnimation)
+        self.textLayer.addKeyFrameAnimation(describedBy: animationDescriptor, forKey: "animation")
+        animations.append(self.textLayer.animation(forKey: "animation") as! CAKeyframeAnimation)
 
         animations.forEach {
             let animationValues: [UIColor] = ($0.values as! [CGColor]).map { UIColor(cgColor: $0) }
@@ -92,12 +104,18 @@ class LayerAnimationAddingTests: XCTestCase {
 
         var animations: [CASpringAnimation] = []
 
-        animations.append(self.layer.addSpringAnimation(describedBy: animationDescriptor))
-        animations.append(self.shapeLayer.addSpringAnimation(describedBy: animationDescriptor))
-        animations.append(self.emitterLayer.addSpringAnimation(describedBy: animationDescriptor))
-        animations.append(self.gradientLayer.addSpringAnimation(describedBy: animationDescriptor))
-        animations.append(self.replicatorLayer.addSpringAnimation(describedBy: animationDescriptor))
-        animations.append(self.textLayer.addSpringAnimation(describedBy: animationDescriptor))
+        self.layer.addSpringAnimation(describedBy: animationDescriptor, forKey: "animation")
+        animations.append(self.layer.animation(forKey: "animation") as! CASpringAnimation)
+        self.shapeLayer.addSpringAnimation(describedBy: animationDescriptor, forKey: "animation")
+        animations.append(self.shapeLayer.animation(forKey: "animation") as! CASpringAnimation)
+        self.emitterLayer.addSpringAnimation(describedBy: animationDescriptor, forKey: "animation")
+        animations.append(self.emitterLayer.animation(forKey: "animation") as! CASpringAnimation)
+        self.gradientLayer.addSpringAnimation(describedBy: animationDescriptor, forKey: "animation")
+        animations.append(self.gradientLayer.animation(forKey: "animation") as! CASpringAnimation)
+        self.replicatorLayer.addSpringAnimation(describedBy: animationDescriptor, forKey: "animation")
+        animations.append(self.replicatorLayer.animation(forKey: "animation") as! CASpringAnimation)
+        self.textLayer.addSpringAnimation(describedBy: animationDescriptor, forKey: "animation")
+        animations.append(self.textLayer.animation(forKey: "animation") as! CASpringAnimation)
 
         animations.forEach {
             XCTAssertEqual($0.fromValue as! CGColor, from.cgColor, "Should be equal for \($0)")
@@ -117,12 +135,18 @@ class LayerAnimationAddingTests: XCTestCase {
 
         var animations: [CATransition] = []
 
-        animations.append(self.layer.addTransition(describedBy: transitionDescriptor))
-        animations.append(self.shapeLayer.addTransition(describedBy: transitionDescriptor))
-        animations.append(self.emitterLayer.addTransition(describedBy: transitionDescriptor))
-        animations.append(self.gradientLayer.addTransition(describedBy: transitionDescriptor))
-        animations.append(self.replicatorLayer.addTransition(describedBy: transitionDescriptor))
-        animations.append(self.textLayer.addTransition(describedBy: transitionDescriptor))
+        self.layer.addTransition(describedBy: transitionDescriptor)
+        animations.append(self.layer.animation(forKey: "transition") as! CATransition)
+        self.shapeLayer.addTransition(describedBy: transitionDescriptor)
+        animations.append(self.shapeLayer.animation(forKey: "transition") as! CATransition)
+        self.emitterLayer.addTransition(describedBy: transitionDescriptor)
+        animations.append(self.emitterLayer.animation(forKey: "transition") as! CATransition)
+        self.gradientLayer.addTransition(describedBy: transitionDescriptor)
+        animations.append(self.gradientLayer.animation(forKey: "transition") as! CATransition)
+        self.replicatorLayer.addTransition(describedBy: transitionDescriptor)
+        animations.append(self.replicatorLayer.animation(forKey: "transition") as! CATransition)
+        self.textLayer.addTransition(describedBy: transitionDescriptor)
+        animations.append(self.textLayer.animation(forKey: "transition") as! CATransition)
 
         animations.forEach {
             XCTAssertEqual($0.type, type, "Should be equal for \($0)")
@@ -145,14 +169,20 @@ class LayerAnimationAddingTests: XCTestCase {
         var animations: [CAAnimationGroup] = []
 
         do {
-            try animations.append(self.layer.addAnimationsGroup(describedBy: groupDescriptor))
-            try animations.append(self.shapeLayer.addAnimationsGroup(describedBy: groupDescriptor))
-            try animations.append(self.emitterLayer.addAnimationsGroup(describedBy: groupDescriptor))
-            try animations.append(self.gradientLayer.addAnimationsGroup(describedBy: groupDescriptor))
-            try animations.append(self.replicatorLayer.addAnimationsGroup(describedBy: groupDescriptor))
-            try animations.append(self.textLayer.addAnimationsGroup(describedBy: groupDescriptor))
+            try self.layer.addAnimationsGroup(describedBy: groupDescriptor, forKey: "animation")
+            animations.append(self.layer.animation(forKey: "animation") as! CAAnimationGroup)
+            try self.shapeLayer.addAnimationsGroup(describedBy: groupDescriptor, forKey: "animation")
+            animations.append(self.shapeLayer.animation(forKey: "animation") as! CAAnimationGroup)
+            try self.emitterLayer.addAnimationsGroup(describedBy: groupDescriptor, forKey: "animation")
+            animations.append(self.emitterLayer.animation(forKey: "animation") as! CAAnimationGroup)
+            try self.gradientLayer.addAnimationsGroup(describedBy: groupDescriptor, forKey: "animation")
+            animations.append(self.gradientLayer.animation(forKey: "animation") as! CAAnimationGroup)
+            try self.replicatorLayer.addAnimationsGroup(describedBy: groupDescriptor, forKey: "animation")
+            animations.append(self.replicatorLayer.animation(forKey: "animation") as! CAAnimationGroup)
+            try self.textLayer.addAnimationsGroup(describedBy: groupDescriptor, forKey: "animation")
+            animations.append(self.textLayer.animation(forKey: "animation") as! CAAnimationGroup)
         } catch {
-            XCTFail("Animation groups should have been created")
+            XCTFail("Animation groups should have been created: " + error.localizedDescription)
         }
 
         animations.forEach {
@@ -221,14 +251,20 @@ class LayerAnimationAddingTests: XCTestCase {
         var animations: [CAAnimationGroup] = []
 
         do {
-            try animations.append(self.layer.addConcurrentAnimationsGroup(describedBy: [basicAnchorPointDescriptor, keyFramePositionDescriptor], duration: duration))
-            try animations.append(self.shapeLayer.addConcurrentAnimationsGroup(describedBy: [basicAnchorPointDescriptor, keyFramePositionDescriptor], duration: duration))
-            try animations.append(self.emitterLayer.addConcurrentAnimationsGroup(describedBy: [basicAnchorPointDescriptor, keyFramePositionDescriptor], duration: duration))
-            try animations.append(self.gradientLayer.addConcurrentAnimationsGroup(describedBy: [basicAnchorPointDescriptor, keyFramePositionDescriptor], duration: duration))
-            try animations.append(self.replicatorLayer.addConcurrentAnimationsGroup(describedBy: [basicAnchorPointDescriptor, keyFramePositionDescriptor], duration: duration))
-            try animations.append(self.textLayer.addConcurrentAnimationsGroup(describedBy: [basicAnchorPointDescriptor, keyFramePositionDescriptor], duration: duration))
+            try self.layer.addConcurrentAnimationsGroup(describedBy: [basicAnchorPointDescriptor, keyFramePositionDescriptor], forKey: "animation", duration: duration)
+            animations.append(self.layer.animation(forKey: "animation") as! CAAnimationGroup)
+            try self.shapeLayer.addConcurrentAnimationsGroup(describedBy: [basicAnchorPointDescriptor, keyFramePositionDescriptor], forKey: "animation", duration: duration)
+            animations.append(self.shapeLayer.animation(forKey: "animation") as! CAAnimationGroup)
+            try self.emitterLayer.addConcurrentAnimationsGroup(describedBy: [basicAnchorPointDescriptor, keyFramePositionDescriptor], forKey: "animation", duration: duration)
+            animations.append(self.emitterLayer.animation(forKey: "animation") as! CAAnimationGroup)
+            try self.gradientLayer.addConcurrentAnimationsGroup(describedBy: [basicAnchorPointDescriptor, keyFramePositionDescriptor], forKey: "animation", duration: duration)
+            animations.append(self.gradientLayer.animation(forKey: "animation") as! CAAnimationGroup)
+            try self.replicatorLayer.addConcurrentAnimationsGroup(describedBy: [basicAnchorPointDescriptor, keyFramePositionDescriptor], forKey: "animation", duration: duration)
+            animations.append(self.replicatorLayer.animation(forKey: "animation") as! CAAnimationGroup)
+            try self.textLayer.addConcurrentAnimationsGroup(describedBy: [basicAnchorPointDescriptor, keyFramePositionDescriptor], forKey: "animation", duration: duration)
+            animations.append(self.textLayer.animation(forKey: "animation") as! CAAnimationGroup)
         } catch {
-            XCTFail("Animation groups should have been created")
+            XCTFail("Animation groups should have been created: " + error.localizedDescription)
         }
 
         animations.forEach {
@@ -292,22 +328,28 @@ class LayerAnimationAddingTests: XCTestCase {
 
         let groupDescriptor = Descriptor.Group.sequential(using: [basicAnchorPointDescriptor, keyFramePositionDescriptor])
 
-        var animations: [CAAnimationGroup] = []
+        var animations: [CAPropertyAnimation] = []
 
         do {
-            try animations.append(self.layer.addAnimationsGroup(describedBy: groupDescriptor))
-            try animations.append(self.shapeLayer.addAnimationsGroup(describedBy: groupDescriptor))
-            try animations.append(self.emitterLayer.addAnimationsGroup(describedBy: groupDescriptor))
-            try animations.append(self.gradientLayer.addAnimationsGroup(describedBy: groupDescriptor))
-            try animations.append(self.replicatorLayer.addAnimationsGroup(describedBy: groupDescriptor))
-            try animations.append(self.textLayer.addAnimationsGroup(describedBy: groupDescriptor))
+            try self.layer.addAnimationsGroup(describedBy: groupDescriptor, forKey: "animation")
+            animations.append(self.layer.animation(forKey: "animation") as! CAPropertyAnimation)
+            try self.shapeLayer.addAnimationsGroup(describedBy: groupDescriptor, forKey: "animation")
+            animations.append(self.shapeLayer.animation(forKey: "animation") as! CAPropertyAnimation)
+            try self.emitterLayer.addAnimationsGroup(describedBy: groupDescriptor, forKey: "animation")
+            animations.append(self.emitterLayer.animation(forKey: "animation") as! CAPropertyAnimation)
+            try self.gradientLayer.addAnimationsGroup(describedBy: groupDescriptor, forKey: "animation")
+            animations.append(self.gradientLayer.animation(forKey: "animation") as! CAPropertyAnimation)
+            try self.replicatorLayer.addAnimationsGroup(describedBy: groupDescriptor, forKey: "animation")
+            animations.append(self.replicatorLayer.animation(forKey: "animation") as! CAPropertyAnimation)
+            try self.textLayer.addAnimationsGroup(describedBy: groupDescriptor, forKey: "animation")
+            animations.append(self.textLayer.animation(forKey: "animation") as! CAPropertyAnimation)
         } catch {
-            XCTFail("Animation groups should have been created")
+            XCTFail("Animation sequences should have been created: " + error.localizedDescription)
         }
 
         animations.forEach {
-            XCTAssertEqual($0.duration, 6, "Should be equal for group \($0)")
-            XCTAssertEqual($0.animations?.count, 2, "Should be 2 animations in group \($0)")
+            XCTAssertEqual($0.duration, 2, "Should be equal for 1st animation \($0)")
+            XCTAssertEqual($0.keyPath, AnchorPoint.X.keyPath, "Should be equal for 1st animation \($0)")
         }
 
         // also test that we can't add group animations to layers without the animating properties
@@ -367,22 +409,28 @@ class LayerAnimationAddingTests: XCTestCase {
         let path = CGPath(ellipseIn: CGRect(x: 0, y: 0, width: 400, height: 250), transform: nil)
         let keyFramePositionDescriptor = SwiftyCoreAnimation.Descriptor.KeyFrame<SwiftyCoreAnimation.Position>.path(path, duration: 4)
 
-        var animations: [CAAnimationGroup] = []
+        var animations: [CAPropertyAnimation] = []
 
         do {
-            try animations.append(self.layer.addSequentialAnimationsGroup(describedBy: [basicAnchorPointDescriptor, keyFramePositionDescriptor]))
-            try animations.append(self.shapeLayer.addSequentialAnimationsGroup(describedBy: [basicAnchorPointDescriptor, keyFramePositionDescriptor]))
-            try animations.append(self.emitterLayer.addSequentialAnimationsGroup(describedBy: [basicAnchorPointDescriptor, keyFramePositionDescriptor]))
-            try animations.append(self.gradientLayer.addSequentialAnimationsGroup(describedBy: [basicAnchorPointDescriptor, keyFramePositionDescriptor]))
-            try animations.append(self.replicatorLayer.addSequentialAnimationsGroup(describedBy: [basicAnchorPointDescriptor, keyFramePositionDescriptor]))
-            try animations.append(self.textLayer.addSequentialAnimationsGroup(describedBy: [basicAnchorPointDescriptor, keyFramePositionDescriptor]))
+            try self.layer.addAnimationSequence(describedBy: [basicAnchorPointDescriptor, keyFramePositionDescriptor], forKey: "animation")
+            animations.append(self.layer.animation(forKey: "animation") as! CAPropertyAnimation)
+            try self.shapeLayer.addAnimationSequence(describedBy: [basicAnchorPointDescriptor, keyFramePositionDescriptor], forKey: "animation")
+            animations.append(self.shapeLayer.animation(forKey: "animation") as! CAPropertyAnimation)
+            try self.emitterLayer.addAnimationSequence(describedBy: [basicAnchorPointDescriptor, keyFramePositionDescriptor], forKey: "animation")
+            animations.append(self.emitterLayer.animation(forKey: "animation") as! CAPropertyAnimation)
+            try self.gradientLayer.addAnimationSequence(describedBy: [basicAnchorPointDescriptor, keyFramePositionDescriptor], forKey: "animation")
+            animations.append(self.gradientLayer.animation(forKey: "animation") as! CAPropertyAnimation)
+            try self.replicatorLayer.addAnimationSequence(describedBy: [basicAnchorPointDescriptor, keyFramePositionDescriptor], forKey: "animation")
+            animations.append(self.replicatorLayer.animation(forKey: "animation") as! CAPropertyAnimation)
+            try self.textLayer.addAnimationSequence(describedBy: [basicAnchorPointDescriptor, keyFramePositionDescriptor], forKey: "animation")
+            animations.append(self.textLayer.animation(forKey: "animation") as! CAPropertyAnimation)
         } catch {
-            XCTFail("Animation groups should have been created")
+            XCTFail("Animation sequences should have been created: " + error.localizedDescription)
         }
 
         animations.forEach {
-            XCTAssertEqual($0.duration, 6, "Should be equal for group \($0)")
-            XCTAssertEqual($0.animations?.count, 2, "Should be 2 animations in group \($0)")
+            XCTAssertEqual($0.duration, 2, "Should be equal for 1st animation \($0)")
+            XCTAssertEqual($0.keyPath, AnchorPoint.X.keyPath, "Should be equal for 1st animation \($0)")
         }
 
         // also test that we can't add group animations to layers without the animating properties
@@ -391,42 +439,42 @@ class LayerAnimationAddingTests: XCTestCase {
         let gradientColorsDescriptor = Descriptor.Basic<Colors>.from([.red, .green], to: [.blue, .yellow])
 
         do {
-            try self.layer.addSequentialAnimationsGroup(describedBy: [fillColorDescriptor, keyFramePositionDescriptor])
+            try self.layer.addAnimationSequence(describedBy: [fillColorDescriptor, keyFramePositionDescriptor])
             XCTFail("Shouldn't be able to add fillColor animation to CALayer")
         } catch {
             // success
         }
 
         do {
-            try self.shapeLayer.addSequentialAnimationsGroup(describedBy: [gradientColorsDescriptor, keyFramePositionDescriptor])
+            try self.shapeLayer.addAnimationSequence(describedBy: [gradientColorsDescriptor, keyFramePositionDescriptor])
             XCTFail("Shouldn't be able to add gradient colors animation to CAShapeLayer")
         } catch {
             // success
         }
 
         do {
-            try self.emitterLayer.addSequentialAnimationsGroup(describedBy: [fillColorDescriptor, keyFramePositionDescriptor])
+            try self.emitterLayer.addAnimationSequence(describedBy: [fillColorDescriptor, keyFramePositionDescriptor])
             XCTFail("Shouldn't be able to add fillColor animation to CAEmitterLayer")
         } catch {
             // success
         }
 
         do {
-            try self.gradientLayer.addSequentialAnimationsGroup(describedBy: [fillColorDescriptor, keyFramePositionDescriptor])
+            try self.gradientLayer.addAnimationSequence(describedBy: [fillColorDescriptor, keyFramePositionDescriptor])
             XCTFail("Shouldn't be able to add fillColor animation to CAGradientLayer")
         } catch {
             // success
         }
 
         do {
-            try self.replicatorLayer.addSequentialAnimationsGroup(describedBy: [fillColorDescriptor, keyFramePositionDescriptor])
+            try self.replicatorLayer.addAnimationSequence(describedBy: [fillColorDescriptor, keyFramePositionDescriptor])
             XCTFail("Shouldn't be able to add fillColor animation to CAReplicatorLayer")
         } catch {
             // success
         }
 
         do {
-            try self.textLayer.addSequentialAnimationsGroup(describedBy: [fillColorDescriptor, keyFramePositionDescriptor])
+            try self.textLayer.addAnimationSequence(describedBy: [fillColorDescriptor, keyFramePositionDescriptor])
             XCTFail("Shouldn't be able to add fillColor animation to CATextLayer")
         } catch {
             // success
