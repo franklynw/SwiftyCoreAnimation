@@ -39,19 +39,17 @@ public extension EmitterLayerAnimationAdding where Self: CAEmitterLayer {
     ///             these will be over-ridden by the values passed in here
     ///   - removeExistingAnimations: removes any existing layer animations if true
     ///   - animationFinished: invoked when the animation completes
-    /// - Returns: the CABasicAnimation object
-    @discardableResult
     public func addBasicAnimation<T: EmitterLayerProperty & Animatable>(describedBy animationDescriptor: Descriptor.Basic<T>,
                                                                         forKey key: String? = nil,
                                                                         applyingOtherProperties properties: [PropertiesApplicableToBasicAnimations] = [],
                                                                         removeExistingAnimations: Bool = false,
-                                                                        animationFinished: AnimationFinishedAction? = nil) -> CABasicAnimation {
+                                                                        animationFinished: AnimationFinishedAction? = nil) {
 
-        return self.addBasicAnimation(animationDescriptor,
-                                      forKey: key,
-                                      applyingProperties: properties,
-                                      removeExistingAnimations: removeExistingAnimations,
-                                      animationFinished: animationFinished)
+        self.addBasicAnimation(animationDescriptor,
+                               forKey: key,
+                               applyingProperties: properties,
+                               removeExistingAnimations: removeExistingAnimations,
+                               animationFinished: animationFinished)
     }
 
     /// Adds a CAKeyFrameAnimation to a CAEmitterLayer
@@ -63,19 +61,17 @@ public extension EmitterLayerAnimationAdding where Self: CAEmitterLayer {
     ///             these will be over-ridden by the values passed in here
     ///   - removeExistingAnimations: removes any existing layer animations if true
     ///   - animationFinished: invoked when the animation completes
-    /// - Returns: the CAKeyframeAnimation object
-    @discardableResult
     public func addKeyFrameAnimation<T: EmitterLayerProperty & Animatable>(describedBy animationDescriptor: Descriptor.KeyFrame<T>,
                                                                            forKey key: String? = nil,
                                                                            applyingOtherProperties properties: [PropertiesApplicableToKeyFrameAnimations] = [],
                                                                            removeExistingAnimations: Bool = false,
-                                                                           animationFinished: AnimationFinishedAction? = nil) -> CAKeyframeAnimation {
+                                                                           animationFinished: AnimationFinishedAction? = nil) {
 
-        return self.addKeyFrameAnimation(animationDescriptor,
-                                         forKey: key,
-                                         applyingProperties: properties,
-                                         removeExistingAnimations: removeExistingAnimations,
-                                         animationFinished: animationFinished)
+        self.addKeyFrameAnimation(animationDescriptor,
+                                  forKey: key,
+                                  applyingProperties: properties,
+                                  removeExistingAnimations: removeExistingAnimations,
+                                  animationFinished: animationFinished)
     }
 
     /// Adds a CASpringAnimation to a CAEmitterLayer
@@ -87,19 +83,17 @@ public extension EmitterLayerAnimationAdding where Self: CAEmitterLayer {
     ///             these will be over-ridden by the values passed in here
     ///   - removeExistingAnimations: removes any existing layer animations if true
     ///   - animationFinished: invoked when the animation completes
-    /// - Returns: the CASpringAnimation object
-    @discardableResult
     public func addSpringAnimation<T: EmitterLayerProperty & Animatable>(describedBy animationDescriptor: Descriptor.Spring<T>,
                                                                          forKey key: String? = nil,
                                                                          applyingOtherProperties properties: [PropertiesApplicableToSpringAnimations] = [],
                                                                          removeExistingAnimations: Bool = false,
-                                                                         animationFinished: AnimationFinishedAction? = nil) -> CASpringAnimation {
+                                                                         animationFinished: AnimationFinishedAction? = nil) {
         
-        return self.addSpringAnimation(animationDescriptor,
-                                       forKey: key,
-                                       applyingProperties: properties,
-                                       removeExistingAnimations: removeExistingAnimations,
-                                       animationFinished: animationFinished)
+        self.addSpringAnimation(animationDescriptor,
+                                forKey: key,
+                                applyingProperties: properties,
+                                removeExistingAnimations: removeExistingAnimations,
+                                animationFinished: animationFinished)
     }
 
     /// Adds an animation group to a CAEmitterLayer
@@ -113,13 +107,11 @@ public extension EmitterLayerAnimationAdding where Self: CAEmitterLayer {
     ///             these will be over-ridden by the values passed in here
     ///   - removeExistingAnimations: removes any existing layer animations if true
     ///   - animationFinished: invoked when the animation completes - any animationFinished actions on the individual descriptors will be ignored
-    /// - Returns: the CAAnimationGroup object
-    @discardableResult
     public func addAnimationsGroup(describedBy animationDescriptor: Descriptor.Group,
                                    forKey key: String? = nil,
                                    applyingOtherProperties properties: [PropertiesApplicableToAnimationGroups] = [],
                                    removeExistingAnimations: Bool = false,
-                                   animationFinished: AnimationFinishedAction? = nil) throws -> CAAnimationGroup {
+                                   animationFinished: AnimationFinishedAction? = nil) throws {
 
         try animationDescriptor.propertyTypes.forEach {
             guard $0 is LayerProperty.Type || $0 is EmitterLayerProperty.Type else {
@@ -127,11 +119,11 @@ public extension EmitterLayerAnimationAdding where Self: CAEmitterLayer {
             }
         }
 
-        return self.addAnimationsGroup(animationDescriptor,
-                                       forKey: key,
-                                       applyingProperties: properties,
-                                       removeExistingAnimations: removeExistingAnimations,
-                                       animationFinished: animationFinished)
+        self.addAnimationsGroup(animationDescriptor,
+                                forKey: key,
+                                applyingProperties: properties,
+                                removeExistingAnimations: removeExistingAnimations,
+                                animationFinished: animationFinished)
     }
 
     /// Adds an animation group to a CAEmitterLayer
@@ -142,18 +134,18 @@ public extension EmitterLayerAnimationAdding where Self: CAEmitterLayer {
     ///   - animationDescriptors: Animation descriptors for CAEmitterLayer animations
     ///   - key: key for the animation
     ///   - duration: the animation duration - if the descriptors specify a longer duration than this, the animation duration will be clipped, not scaled
+    ///             NB - if an animation sequence is added, it isn't clipped & will run its full sequence; this means that any animationFinished action
+    ///             could be invoked BEFORE the sequence is ended, as it runs when the group finishes
     ///   - properties: an array of Descriptor.Properties applicable to CAAnimationGroups; if the Descriptor already has animation properties,
     ///             these will be over-ridden by the values passed in here
     ///   - removeExistingAnimations: removes any existing layer animations if true
     ///   - animationFinished: invoked when the animation completes - any animationFinished actions on the individual descriptors will be ignored
-    /// - Returns: the CAAnimationGroup object
-    @discardableResult
     public func addConcurrentAnimationsGroup(describedBy animationDescriptors: [Descriptor.Root],
                                              forKey key: String? = nil,
-                                             duration: TimeInterval,
+                                             duration: TimeInterval? = nil,
                                              applyingOtherProperties properties: [PropertiesApplicableToAnimationGroups] = [],
                                              removeExistingAnimations: Bool = false,
-                                             animationFinished: AnimationFinishedAction? = nil) throws -> CAAnimationGroup {
+                                             animationFinished: AnimationFinishedAction? = nil) throws {
 
         try animationDescriptors.forEach {
             try $0.propertyTypes.forEach {
@@ -163,12 +155,12 @@ public extension EmitterLayerAnimationAdding where Self: CAEmitterLayer {
             }
         }
 
-        return self.addConcurrentAnimationsGroup(animationDescriptors,
-                                                 forKey: key,
-                                                 duration: duration,
-                                                 applyingProperties: properties,
-                                                 removeExistingAnimations: removeExistingAnimations,
-                                                 animationFinished: animationFinished)
+        self.addConcurrentAnimationsGroup(animationDescriptors,
+                                          forKey: key,
+                                          duration: duration,
+                                          applyingProperties: properties,
+                                          removeExistingAnimations: removeExistingAnimations,
+                                          animationFinished: animationFinished)
     }
 
     /// Adds an animation group to a CAEmitterLayer
@@ -183,13 +175,11 @@ public extension EmitterLayerAnimationAdding where Self: CAEmitterLayer {
     ///             these will be over-ridden by the values passed in here
     ///   - removeExistingAnimations: removes any existing layer animations if true
     ///   - animationFinished: invoked when the animation completes - any animationFinished actions on the individual descriptors will be ignored
-    /// - Returns: the CAAnimationGroup object
-    @discardableResult
-    public func addSequentialAnimations(describedBy animationDescriptors: [Descriptor.Root],
-                                        forKey key: String? = nil,
-                                        applyingOtherProperties properties: [PropertiesApplicableToAnimationGroups] = [],
-                                        removeExistingAnimations: Bool = false,
-                                        animationFinished: AnimationFinishedAction? = nil) throws -> CAAnimation? {
+    public func addAnimationSequence(describedBy animationDescriptors: [Descriptor.Root],
+                                     forKey key: String? = nil,
+                                     applyingOtherProperties properties: [PropertiesApplicableToAnimationGroups] = [],
+                                     removeExistingAnimations: Bool = false,
+                                     animationFinished: AnimationFinishedAction? = nil) throws {
 
         try animationDescriptors.forEach {
             try $0.propertyTypes.forEach {
@@ -199,10 +189,10 @@ public extension EmitterLayerAnimationAdding where Self: CAEmitterLayer {
             }
         }
 
-        return self.addSequentialAnimations(animationDescriptors,
-                                            forKey: key,
-                                            applyingProperties: properties,
-                                            removeExistingAnimations: removeExistingAnimations,
-                                            animationFinished: animationFinished)
+        self.addAnimationSequence(animationDescriptors,
+                                  forKey: key,
+                                  applyingProperties: properties,
+                                  removeExistingAnimations: removeExistingAnimations,
+                                  animationFinished: animationFinished)
     }
 }

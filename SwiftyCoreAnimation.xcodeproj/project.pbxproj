@@ -51,7 +51,10 @@
 		792A377E2232C6BA0024FC6E /* Wrapped.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792A377C2232C6BA0024FC6E /* Wrapped.swift */; };
 		792A37812232C6E70024FC6E /* AlignmentMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792A377F2232C6E70024FC6E /* AlignmentMode.swift */; };
 		792A37842232C7390024FC6E /* TruncationMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792A37822232C7390024FC6E /* TruncationMode.swift */; };
-		7943914C224240B5008346DD /* AnimationActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7943914B224240B5008346DD /* AnimationActions.swift */; };
+		794305542243C9DD00C9EDFC /* Descriptor.Wait.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794305532243C9DD00C9EDFC /* Descriptor.Wait.swift */; };
+		794305562244018E00C9EDFC /* ActionDescriptorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794305552244018E00C9EDFC /* ActionDescriptorTests.swift */; };
+		79430558224404B200C9EDFC /* WaitDescriptorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79430557224404B200C9EDFC /* WaitDescriptorTests.swift */; };
+		7943914C224240B5008346DD /* ActionLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7943914B224240B5008346DD /* ActionLayer.swift */; };
 		794391502242808D008346DD /* Descriptor.Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7943914F2242808D008346DD /* Descriptor.Action.swift */; };
 		796D7C51223823C8005A049B /* InstanceColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796D7C4F223823C8005A049B /* InstanceColor.swift */; };
 		796D7CAC223AAE5D005A049B /* Descriptor.Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796D7CAB223AAE5D005A049B /* Descriptor.Group.swift */; };
@@ -207,7 +210,10 @@
 		792A377C2232C6BA0024FC6E /* Wrapped.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wrapped.swift; sourceTree = "<group>"; };
 		792A377F2232C6E70024FC6E /* AlignmentMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlignmentMode.swift; sourceTree = "<group>"; };
 		792A37822232C7390024FC6E /* TruncationMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TruncationMode.swift; sourceTree = "<group>"; };
-		7943914B224240B5008346DD /* AnimationActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationActions.swift; sourceTree = "<group>"; };
+		794305532243C9DD00C9EDFC /* Descriptor.Wait.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Descriptor.Wait.swift; sourceTree = "<group>"; };
+		794305552244018E00C9EDFC /* ActionDescriptorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionDescriptorTests.swift; sourceTree = "<group>"; };
+		79430557224404B200C9EDFC /* WaitDescriptorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitDescriptorTests.swift; sourceTree = "<group>"; };
+		7943914B224240B5008346DD /* ActionLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionLayer.swift; sourceTree = "<group>"; };
 		7943914F2242808D008346DD /* Descriptor.Action.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Descriptor.Action.swift; sourceTree = "<group>"; };
 		796D7C4F223823C8005A049B /* InstanceColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstanceColor.swift; sourceTree = "<group>"; };
 		796D7CAB223AAE5D005A049B /* Descriptor.Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Descriptor.Group.swift; sourceTree = "<group>"; };
@@ -617,6 +623,7 @@
 				798A55F52227E3FC0086F0F9 /* Descriptor.Transition.swift */,
 				796D7CAB223AAE5D005A049B /* Descriptor.Group.swift */,
 				7943914F2242808D008346DD /* Descriptor.Action.swift */,
+				794305532243C9DD00C9EDFC /* Descriptor.Wait.swift */,
 			);
 			path = "Animation Descriptors";
 			sourceTree = "<group>";
@@ -632,7 +639,7 @@
 				7978C0C5221EA9A00019EE2C /* TextLayerAnimationAdding.swift */,
 				7978C0BB221DB90A0019EE2C /* CALayer+Extensions.swift */,
 				79C4C01F2223E3B900037B4B /* AnimationFinishedActions.swift */,
-				7943914B224240B5008346DD /* AnimationActions.swift */,
+				7943914B224240B5008346DD /* ActionLayer.swift */,
 			);
 			path = AnimationAdding;
 			sourceTree = "<group>";
@@ -656,6 +663,8 @@
 				79D4DE5D222ED71A005160A0 /* SpringDescriptorTests.swift */,
 				79D4DE5F222FB6CF005160A0 /* TransitionDescriptorTests.swift */,
 				790BF7D8223C05F40004E9D4 /* GroupDescriptorTests.swift */,
+				794305552244018E00C9EDFC /* ActionDescriptorTests.swift */,
+				79430557224404B200C9EDFC /* WaitDescriptorTests.swift */,
 				79D4DE61222FC50D005160A0 /* AnimationPropertiesTests.swift */,
 				79D4DE692231099E005160A0 /* LayerAnimationAddingTests.swift */,
 				79D4DE6B223126AF005160A0 /* AnimationFinishedActionsTests.swift */,
@@ -822,6 +831,7 @@
 				792A37842232C7390024FC6E /* TruncationMode.swift in Sources */,
 				7988B8C622205B170093DF65 /* String+Extensions.swift in Sources */,
 				792A37812232C6E70024FC6E /* AlignmentMode.swift in Sources */,
+				794305542243C9DD00C9EDFC /* Descriptor.Wait.swift in Sources */,
 				7988B88B22205ADD0093DF65 /* Descriptor.swift in Sources */,
 				7988B88C22205ADD0093DF65 /* LayerAnimationAdding.swift in Sources */,
 				7988B88D22205ADD0093DF65 /* ShapeLayerAnimationAdding.swift in Sources */,
@@ -917,7 +927,7 @@
 				7988B8B822205ADE0093DF65 /* StrokeEnd.swift in Sources */,
 				7988B8B922205ADE0093DF65 /* EmitterSize.swift in Sources */,
 				7988B8BA22205ADE0093DF65 /* Colors.swift in Sources */,
-				7943914C224240B5008346DD /* AnimationActions.swift in Sources */,
+				7943914C224240B5008346DD /* ActionLayer.swift in Sources */,
 				792A373D2232B3800024FC6E /* NeedsDisplayOnBoundsChange.swift in Sources */,
 				7988B8BB22205ADE0093DF65 /* Locations.swift in Sources */,
 				792A37552232B7B90024FC6E /* EmitterCells.swift in Sources */,
@@ -957,9 +967,11 @@
 				790BF7D9223C05F40004E9D4 /* GroupDescriptorTests.swift in Sources */,
 				79D4DE5E222ED71A005160A0 /* SpringDescriptorTests.swift in Sources */,
 				79D4DE6A2231099E005160A0 /* LayerAnimationAddingTests.swift in Sources */,
+				79430558224404B200C9EDFC /* WaitDescriptorTests.swift in Sources */,
 				79D4DE58222D853E005160A0 /* LayerPropertiesSettingAndGettingTests.swift in Sources */,
 				79C4C05C2225B2F300037B4B /* LayerPropertiesKeyPathsTests.swift in Sources */,
 				79D4DE6E223185D3005160A0 /* CATransactionTests.swift in Sources */,
+				794305562244018E00C9EDFC /* ActionDescriptorTests.swift in Sources */,
 				79D4DE5C222EC10C005160A0 /* KeyFrameDescriptorTests.swift in Sources */,
 				79D4DE6C223126AF005160A0 /* AnimationFinishedActionsTests.swift in Sources */,
 				7988B87E22205A6E0093DF65 /* BasicAnimationDescriptorTests.swift in Sources */,

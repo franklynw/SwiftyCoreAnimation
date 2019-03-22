@@ -34,7 +34,8 @@ class GroupDescriptorTests: XCTestCase {
 
         do {
 
-            let animation = try self.shapeLayer.addAnimationsGroup(describedBy: groupDescriptor)
+            try self.shapeLayer.addAnimationsGroup(describedBy: groupDescriptor, forKey: "animation")
+            let animation = self.shapeLayer.animation(forKey: "animation")!
 
             // the animation group's duration should override that of the individual group items
             XCTAssertEqual(duration, animation.duration, "Duration should be \(duration)")
@@ -71,10 +72,11 @@ class GroupDescriptorTests: XCTestCase {
 
         do {
 
-            let animation = try self.shapeLayer.addAnimationsGroup(describedBy: groupDescriptor)
+            try self.shapeLayer.addAnimationsGroup(describedBy: groupDescriptor, forKey: "animation")
+            let animation = self.shapeLayer.animation(forKey: "animation")!
 
-            // the animation group's duration should be the sum of the individual group items
-            XCTAssertEqual(duration1 + duration2, animation.duration, "Duration should be \(duration1 + duration2)")
+            // the animation sequence's duration should actually be the duration of the first item
+            XCTAssertEqual(duration1, animation.duration, "Duration should be \(duration1)")
 
         } catch {
             XCTFail("Descriptor should have successfully created animation")
