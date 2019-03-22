@@ -26,7 +26,8 @@ class TransitionDescriptorTests: XCTestCase {
         let start: CGFloat = 0
         let end: CGFloat = 1
         let transitionDescriptor = SwiftyCoreAnimation.Descriptor.Transition(type: .moveIn, subtype: .fromLeft, startProgress: start, endProgress: end, duration: 2)
-        let animation = self.layer.addTransition(describedBy: transitionDescriptor)
+        self.layer.addTransition(describedBy: transitionDescriptor)
+        let animation = self.layer.animation(forKey: "transition") as! CATransition
 
         XCTAssertEqual(animation.type, CATransitionType.moveIn, "Should be equal")
         XCTAssertEqual(animation.subtype, CATransitionSubtype.fromLeft, "Should be equal")

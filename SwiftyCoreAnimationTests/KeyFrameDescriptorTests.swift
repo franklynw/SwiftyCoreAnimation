@@ -25,7 +25,8 @@ class KeyFrameDescriptorTests: XCTestCase {
         let duration: TimeInterval = 2
         let path = CGPath(ellipseIn: CGRect(x: 0, y: 0, width: 400, height: 250), transform: nil)
         let keyFrameColorsDescriptor = SwiftyCoreAnimation.Descriptor.KeyFrame<SwiftyCoreAnimation.FillColor>.path(path, duration: duration)
-        let animation = self.layer.addKeyFrameAnimation(describedBy: keyFrameColorsDescriptor)
+        self.layer.addKeyFrameAnimation(describedBy: keyFrameColorsDescriptor, forKey: "animation")
+        let animation = self.layer.animation(forKey: "animation") as! CAKeyframeAnimation
 
         let pathValue: CGPath? = animation.path
         XCTAssertEqual(pathValue, path, "Should be equal")
@@ -41,7 +42,8 @@ class KeyFrameDescriptorTests: XCTestCase {
         let duration: TimeInterval = 2
         let values: [UIColor] = [.red, .green, .blue]
         let keyFrameColorsDescriptor = SwiftyCoreAnimation.Descriptor.KeyFrame<SwiftyCoreAnimation.FillColor>.values(values, duration: duration)
-        let animation = self.layer.addKeyFrameAnimation(describedBy: keyFrameColorsDescriptor)
+        self.layer.addKeyFrameAnimation(describedBy: keyFrameColorsDescriptor, forKey: "animation")
+        let animation = self.layer.animation(forKey: "animation") as! CAKeyframeAnimation
 
         let animationValues: [CGColor]? = animation.values as? [CGColor]
         let animationColorComponents: [[CGFloat]]? = animationValues?.compactMap { $0.components }

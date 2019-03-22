@@ -30,8 +30,6 @@ class AnimationFinishedActionsTests: XCTestCase {
         let expectation: XCTestExpectation = self.expectation(description: "Animation finished")
 
         self.layer.addBasicAnimation(describedBy: basicAnchorPointDescriptor) { _, _ in
-
-            XCTAssertTrue(true)
             expectation.fulfill()
         }
 
@@ -51,12 +49,10 @@ class AnimationFinishedActionsTests: XCTestCase {
         let animation = basicAnchorPointDescriptor.animation
 
         animation.addAnimationFinishedAction { _, _ in
-            XCTAssertTrue(true)
             expectation1.fulfill()
         }
 
         animation.addAnimationFinishedAction { _, _ in
-            XCTAssertTrue(true)
             expectation2.fulfill()
         }
 
@@ -84,7 +80,6 @@ class AnimationFinishedActionsTests: XCTestCase {
         }
 
         animation.addAnimationFinishedAction { _, _ in
-            XCTAssertTrue(true)
             expectation1.fulfill()
             expectation2.fulfill()
         }

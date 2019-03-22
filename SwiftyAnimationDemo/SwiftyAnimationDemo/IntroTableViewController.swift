@@ -17,7 +17,8 @@ class IntroTableViewController: UITableViewController {
     }
 
     private let demos: [Demo] = [
-        Demo(name: "Hello!", info: "Some fun animations using animation descriptors", segueName: "hello")
+        Demo(name: "Hello!", info: "Some fun animations using animation descriptors", segueName: "hello"),
+        Demo(name: "Action", info: "Adding an action to an animation", segueName: "action")
     ]
 
 
