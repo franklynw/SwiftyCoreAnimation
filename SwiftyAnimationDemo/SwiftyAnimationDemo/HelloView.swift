@@ -9,6 +9,9 @@
 import UIKit
 import SwiftyCoreAnimation
 
+/*
+ Demonstrates the use of Descriptors for the creation of animations
+*/
 
 class HelloView: UIView {
 

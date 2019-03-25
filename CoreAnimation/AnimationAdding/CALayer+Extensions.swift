@@ -218,7 +218,7 @@ extension CALayer {
         if let groupAnimationDescriptor = descriptor as? Descriptor.Group {
             if groupAnimationDescriptor.isConcurrent {
                 // if we're adding a group, use the addConcurrentAnimationsGroup function to do it
-                animation = self.concurrentAnimationsGroup([groupAnimationDescriptor],
+                animation = self.concurrentAnimationsGroup(groupAnimationDescriptor.descriptors,
                                                            forKey: key,
                                                            duration: groupAnimationDescriptor.duration,
                                                            applyingProperties: properties,
@@ -237,22 +237,22 @@ extension CALayer {
             animation = descriptor.animation
         }
 
-        guard let sequenceAnimation = animation else {
+        guard let nextAnimation = animation else {
             return nil
         }
 
-        CALayer.applyProperties(properties, to: sequenceAnimation)
+        CALayer.applyProperties(properties, to: nextAnimation)
 
-        sequenceAnimation.addAnimationFinishedAction { [weak self] _, _ in
+        nextAnimation.addAnimationFinishedAction { [weak self] _, _ in
             performActions()
             if self?.addAnimationSequence(descriptors, forKey: key, applyingProperties: properties, removeExistingAnimations: removeExistingAnimations, animationFinished: animationFinished) == nil {
-                animationFinished?(sequenceAnimation, true)
+                animationFinished?(nextAnimation, true)
             }
         }
 
-        self.add(sequenceAnimation, forKey: key)
+        self.add(nextAnimation, forKey: key)
 
-        return sequenceAnimation
+        return nextAnimation
     }
 
     private func concurrentAnimationsGroup(_ animationDescriptors: [Descriptor.Root],
