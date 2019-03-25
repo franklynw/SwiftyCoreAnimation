@@ -53,7 +53,7 @@ extension Descriptor.KeyFrame {
     /// Creates a Descriptor for a KeyFrame Animation
     ///
     /// - Parameters:
-    ///   - path: the animation's path
+    ///   - path: the animation's path (as CGPath)
     ///   - duration: the animation's duration
     ///   - otherAnimationProperties: animation properties which conform to PropertiesApplicableToKeyFrameAnimations
     ///   - delegate: the animation's delegate
@@ -65,6 +65,26 @@ extension Descriptor.KeyFrame {
 
         return self.init(values: nil,
                          path: path,
+                         duration: duration,
+                         animationProperties: otherAnimationProperties,
+                         delegate: delegate)
+    }
+
+    /// Creates a Descriptor for a KeyFrame Animation
+    ///
+    /// - Parameters:
+    ///   - path: the animation's path (as UIBezierPath)
+    ///   - duration: the animation's duration
+    ///   - otherAnimationProperties: animation properties which conform to PropertiesApplicableToKeyFrameAnimations
+    ///   - delegate: the animation's delegate
+    /// - Returns: a KeyFrame Descriptor object
+    public static func path(_ path: UIBezierPath,
+                            duration: TimeInterval? = nil,
+                            otherAnimationProperties: [PropertiesApplicableToKeyFrameAnimations] = [],
+                            delegate: CAAnimationDelegate? = nil) -> Self {
+
+        return self.init(values: nil,
+                         path: path.cgPath,
                          duration: duration,
                          animationProperties: otherAnimationProperties,
                          delegate: delegate)

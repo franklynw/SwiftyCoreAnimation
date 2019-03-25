@@ -59,10 +59,10 @@ class ActionView: UIView {
 
         let x = self.bounds.width / 2
         let y = self.bounds.height / 2
-        let width: CGFloat = 100
-        let height: CGFloat = 150
+        let width: CGFloat = 200
+        let height: CGFloat = 300
 
-        let ellipsePath = UIBezierPath(ovalIn: CGRect(x: x - width / 2, y: y - height / 2, width: width, height: height)).cgPath
+        let ellipsePath = UIBezierPath(ovalIn: CGRect(x: x - width / 2, y: y - height / 2, width: width, height: height))
         shapeLayer.set(Path(ellipsePath))
         shapeLayer.set(FillColor(.yellow))
         shapeLayer.set(StrokeColor(.green))
@@ -92,11 +92,11 @@ class ActionView: UIView {
         let setLineWidthActionDescriptor = Descriptor.Action {
             // set the layer's lineWidth property before we animate it
             print("Doing setLineWidthActionDescriptor")
-            shapeLayer.set(LineWidth(5))
+            shapeLayer.set(LineWidth(10))
         }
 
         // then animate the lineWidth
-        let lineWidthDescriptor = Descriptor.Basic<LineWidth>.from(0, to: 5, duration: 2, otherAnimationProperties: properties)
+        let lineWidthDescriptor = Descriptor.Basic<LineWidth>.from(1, to: 10, duration: 2, otherAnimationProperties: properties)
 
         // now set the fillColor property again before we animate it again
         let setFillColorActionDescriptor2 = Descriptor.Action {
@@ -128,9 +128,9 @@ class ActionView: UIView {
 
         // now we want to move & rotate at the same time, so make a concurrent group
         let keyFrameProperties: [Properties.KeyFrameAnimation] = [.calculationMode(.paced)]
-        var translate = CGAffineTransform(translationX: width / -2, y: 0)
-        let offsetEllipse = ellipsePath.copy(using: &translate)!
-        let moveDescriptor = Descriptor.KeyFrame<Position>.path(offsetEllipse, otherAnimationProperties: keyFrameProperties)
+        let translate = CGAffineTransform(translationX: width / -2, y: 0)
+        ellipsePath.apply(translate)
+        let moveDescriptor = Descriptor.KeyFrame<Position>.path(ellipsePath, otherAnimationProperties: keyFrameProperties)
         let rotateDescriptor = Descriptor.Basic<Transform.Rotation>.from(0, to: CGFloat.pi * 4)
 
         let groupDescriptor2 = Descriptor.Group.concurrent(using: [moveDescriptor, rotateDescriptor], duration: 3)

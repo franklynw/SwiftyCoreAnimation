@@ -94,6 +94,12 @@ extension UIImage: KeyValueDescribing {
     }
 }
 
+extension UIBezierPath: KeyValueDescribing {
+    public var keyValue: Any? {
+        return self.cgPath
+    }
+}
+
 extension CGImage: KeyValueDescribing {
     public var keyValue: Any? {
         return self
