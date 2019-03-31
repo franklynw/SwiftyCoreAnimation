@@ -72,6 +72,19 @@ extension Descriptor {
 
             super.init(duration: duration, animationProperties: animationProperties, propertyTypes: propertyTypes, delegate: delegate)
         }
+
+        public override var duration: TimeInterval? {
+            get {
+                if self.isConcurrent {
+                    return super.duration
+                } else {
+                    let duration = self.descriptors.reduce(into: TimeInterval(0)) {
+                        $0 += ($1.duration ?? 0.25)
+                    }
+                    return duration
+                }
+            }
+        }
     }
 }
 

@@ -9,7 +9,7 @@
 import UIKit
 
 
-public typealias AnimationFinishedAction = (CAAnimation, Bool) -> ()
+public typealias AnimationFinishedAction = (CAAnimation?, Bool) -> ()
 
 
 public extension CAAnimation {

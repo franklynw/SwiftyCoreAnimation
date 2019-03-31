@@ -134,6 +134,7 @@ public extension ShapeLayerAnimationAdding where Self: CAShapeLayer {
     ///   - animationDescriptors: Animation descriptors for CAShapeLayer animations
     ///   - key: key for the animation
     ///   - duration: the animation duration - if the descriptors specify a longer duration than this, the animation duration will be clipped, not scaled
+    ///             (if no duration is specified here, the default will be used, which would clip any longer animations from the descriptors)
     ///             NB - if an animation sequence is added, it isn't clipped & will run its full sequence; this means that any animationFinished action
     ///             could be invoked BEFORE the sequence is ended, as it runs when the group finishes
     ///   - properties: an array of Descriptor.Properties applicable to CAAnimationGroups; if the Descriptor already has animation properties,
@@ -155,9 +156,10 @@ public extension ShapeLayerAnimationAdding where Self: CAShapeLayer {
             }
         }
 
-        self.addConcurrentAnimationsGroup(animationDescriptors,
+        let concurrentAnimationsDescriptor = Descriptor.Group.concurrent(using: animationDescriptors, duration: duration, otherAnimationProperties: properties, delegate: nil)
+
+        self.addConcurrentAnimationsGroup(concurrentAnimationsDescriptor,
                                           forKey: key,
-                                          duration: duration,
                                           applyingProperties: properties,
                                           removeExistingAnimations: removeExistingAnimations,
                                           animationFinished: animationFinished)
