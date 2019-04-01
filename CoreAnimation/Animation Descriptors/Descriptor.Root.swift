@@ -14,7 +14,7 @@ extension Descriptor {
     public class Root {
 
         internal weak var animationDelegate: CAAnimationDelegate?
-        internal let duration: TimeInterval?
+        internal private(set) var duration: TimeInterval?
         internal let animationProperties: [AnimationPropertiesApplicable]
         internal let propertyTypes: [BaseLayerProperty.Type]
 

@@ -1220,9 +1220,9 @@ class LayerPropertiesSettingAndGettingTests: XCTestCase {
     // MARK: - CAShapeLayer properties
 
     func testPath() {
-        let path = Path(CGPath(rect: CGRect(x: 0, y: 0, width: 350, height: 280), transform: nil))
+        let path = Path.CGPath(CGPath(rect: CGRect(x: 0, y: 0, width: 350, height: 280), transform: nil))
         self.shapeLayer.set(path)
-        let result = self.shapeLayer.get(Path.self)
+        let result = self.shapeLayer.get(Path.CGPath.self)
 
         XCTAssertEqual(path.value, result, "Both should be equal")
 

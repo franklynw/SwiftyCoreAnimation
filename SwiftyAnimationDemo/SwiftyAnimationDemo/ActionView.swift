@@ -44,17 +44,46 @@ class ActionView: UIView {
 
         self.getGoing()
 
+        let tapGestureRecognizer: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(startAgain))
+        self.addGestureRecognizer(tapGestureRecognizer)
+
         return {}
     }()
+
+    private var allDone: Bool = false
 
 
     override func layoutSubviews() {
         super.layoutSubviews()
         self.setup() // now that our bounds is right
     }
+
+    deinit {
+        print("Deinit ActionView")
+    }
+
+    @objc
+    private func startAgain() {
+        guard self.allDone == true else { return }
+
+        self.allDone = false
+
+        let scaleDescriptor = Descriptor.Basic<Transform.Scale>.from(0, to: 1, duration: 0.5)
+
+        self.shapeLayer.set(Transform.Scale(1))
+
+        self.shapeLayer.addBasicAnimation(describedBy: scaleDescriptor, removeExistingAnimations: true) { [weak self] _, _ in
+            guard let self = self else { return }
+            Async.after(2, action: {
+                self.getGoing()
+            })
+        }
+    }
     
     private func getGoing() {
 
+        print("We're off!")
+        
         let shapeLayer: CAShapeLayer = self.shapeLayer
 
         let x = self.bounds.width / 2
@@ -133,11 +162,15 @@ class ActionView: UIView {
         let moveDescriptor = Descriptor.KeyFrame<Position>.path(ellipsePath, otherAnimationProperties: keyFrameProperties)
         let rotateDescriptor = Descriptor.Basic<Transform.Rotation>.from(0, to: CGFloat.pi * 4)
 
-        let groupDescriptor2 = Descriptor.Group.concurrent(using: [moveDescriptor, rotateDescriptor], duration: 3)
+        let groupDescriptor2 = Descriptor.Group.concurrent(using: [moveDescriptor, rotateDescriptor], duration: 2)
 
         // then put everything into a sequence
-        try? shapeLayer.addAnimationSequence(describedBy: [groupDescriptor, waitDescriptor, groupDescriptor2], animationFinished: { _, _ in
-            print("We're all done now")
+        try? shapeLayer.addAnimationSequence(describedBy: [groupDescriptor, waitDescriptor, groupDescriptor2], animationFinished: { [weak self] _, _ in
+            guard let self = self else { return }
+            print("Finished move & rotate")
+            Async.after(2, action: {
+                self.groupsOfGroups()
+            })
         })
 
 
@@ -149,6 +182,78 @@ class ActionView: UIView {
             try shapeLayer.addAnimationSequence(describedBy: [fillColorDescriptor, gradientColorsDescriptor])
         } catch {
             print("Not allowed! ", error.localizedDescription)
+        }
+    }
+
+    private func groupsOfGroups() {
+
+        let shapeLayer: CAShapeLayer = self.shapeLayer
+
+        guard let ellipsePath = shapeLayer.get(Path.self) else { return } // we can ask the shapeLayer for its path
+
+        let width: CGFloat = 200
+
+        let waitDescriptor = Descriptor.Wait(for: 1)
+        let actionDescriptor1 = Descriptor.Action {
+            print("Setting fillColor & strokeColor")
+            shapeLayer.set(FillColor(.blue))
+            shapeLayer.set(StrokeColor(.red))
+        }
+        let currentFillColor = shapeLayer.get(FillColor.self) ?? .clear
+        let fillColorDescriptor = Descriptor.Basic<FillColor>.from(currentFillColor, to: .blue)
+        let currentLineColor = shapeLayer.get(StrokeColor.self) ?? .clear
+        let strokeColorDescriptor = Descriptor.Basic<StrokeColor>.from(currentLineColor, to: .red)
+
+        let colorsGroupDescriptor = Descriptor.Group.concurrent(using: [fillColorDescriptor, strokeColorDescriptor], duration: 2)
+
+        let actionDescriptor2 = Descriptor.Action {
+            print("Setting lineWidth")
+            shapeLayer.set(LineWidth(40)) // in this case we're setting the layer's lineWidth property prior to animating it
+        }
+        let currentLineWidth = shapeLayer.get(LineWidth.self) ?? 0
+        let lineWidthDescriptor = Descriptor.Basic<LineWidth>.from(currentLineWidth, to: 40, duration: 2)
+
+        // create the first 'sequence' descriptor using the above descriptors
+        let sequenceDescriptor = Descriptor.Group.sequential(using: [waitDescriptor, actionDescriptor1, colorsGroupDescriptor, waitDescriptor, actionDescriptor2, lineWidthDescriptor])
+
+        let keyFrameProperties: [Properties.KeyFrameAnimation] = [.calculationMode(.paced)]
+        let translate = CGAffineTransform(translationX: width / -2, y: 0)
+        ellipsePath.apply(translate)
+        let moveDescriptor = Descriptor.KeyFrame<Position>.path(ellipsePath, otherAnimationProperties: keyFrameProperties)
+        let rotateDescriptor = Descriptor.Basic<Transform.Rotation>.from(0, to: CGFloat.pi * 4)
+
+        let sequenceDuration = sequenceDescriptor.duration
+
+        // create a 'concurrent' descriptor to move & rotate
+        let concurrentDescriptor = Descriptor.Group.concurrent(using: [moveDescriptor, rotateDescriptor], duration: sequenceDuration)
+
+        // put the two group animations together in another concurrent group (to run them at the same time)
+        let groupDescriptor = Descriptor.Group.concurrent(using: [sequenceDescriptor, concurrentDescriptor], duration: sequenceDuration)
+
+        let waitDescriptor2 = Descriptor.Wait(for: 0.5)
+
+        try? shapeLayer.addAnimationSequence(describedBy: [groupDescriptor, waitDescriptor2], animationFinished: { [weak self] _, _ in
+            guard let self = self else { return }
+            print("Done moving & rotating, & changing lineWidth, fillColor & strokeColor")
+            self.shrink()
+        })
+    }
+
+    private func shrink() {
+
+        let currentScale = self.shapeLayer.get(Transform.Scale.self) ?? 1
+        let scaleDescriptor = Descriptor.Basic<Transform.Scale>.from(currentScale, to: 0, duration: 0.5)
+
+        let properties: [PropertiesApplicableToBasicAnimations] = []//[Properties.MediaTiming.fillMode(.forwards), Properties.isRemovedOnCompletion(false)]
+
+        self.shapeLayer.set(Transform.Scale(0))
+        self.shapeLayer.addBasicAnimation(describedBy: scaleDescriptor, applyingOtherProperties: properties, removeExistingAnimations: true) { [weak self] _, _ in
+            guard let self = self else { return }
+            self.shapeLayer.set(FillColor(.yellow))
+            self.shapeLayer.set(StrokeColor(.green))
+            self.shapeLayer.set(LineWidth(1))
+            self.allDone = true
+            print("Shrunk!")
         }
     }
 }

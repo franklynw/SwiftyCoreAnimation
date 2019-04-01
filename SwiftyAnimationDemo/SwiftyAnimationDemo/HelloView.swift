@@ -159,6 +159,10 @@ class HelloView: UIView {
         self.setup() // now that our bounds is right
     }
 
+    deinit {
+        print("Deinit HelloView")
+    }
+
     @objc
     private func hello(_ startTime: TimeInterval = 0) {
         guard self.isInProgress == false else { return }
