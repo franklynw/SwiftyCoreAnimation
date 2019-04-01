@@ -138,9 +138,8 @@ extension CALayer {
                             animationFinished: AnimationFinishedAction?) {
 
         if animationDescriptor.isConcurrent {
-            self.addConcurrentAnimationsGroup([animationDescriptor],
+            self.addConcurrentAnimationsGroup(animationDescriptor,
                                               forKey: key,
-                                              duration: animationDescriptor.duration,
                                               applyingProperties: properties,
                                               removeExistingAnimations: removeExistingAnimations,
                                               animationFinished: animationFinished)
@@ -153,131 +152,73 @@ extension CALayer {
         }
     }
 
-    func addConcurrentAnimationsGroup(_ animationDescriptors: [Descriptor.Root],
-                                      forKey key: String?,
-                                      duration: TimeInterval?,
-                                      applyingProperties properties: [AnimationPropertiesApplicable],
-                                      removeExistingAnimations: Bool,
-                                      animationFinished: AnimationFinishedAction?) {
-
-        if let animationGroup = self.concurrentAnimationsGroup(animationDescriptors,
-                                                               forKey: key,
-                                                               duration: duration,
-                                                               applyingProperties: properties,
-                                                               removeExistingAnimations: removeExistingAnimations,
-                                                               animationFinished: animationFinished) {
-
-            if let animationFinished = animationFinished,
-                animationDescriptors.isEmpty == false,
-                (animationGroup.animations == nil || animationGroup.animations?.isEmpty == true) {
-
-                // the descriptors must have all been group or action descriptors, so they've been handled separately, & not part of this group
-                // create a dummy animation with an animationFinished closure
-                let animation = self.addAction(duration: duration, action: nil)
-                animation.addAnimationFinishedAction(animationFinished)
-
-            } else {
-                self.add(animationGroup, forKey: key ?? self.defaultKey)
-            }
-        }
-    }
-
-    @discardableResult
     func addAnimationSequence(_ animationDescriptors: [Descriptor.Root],
                               forKey key: String?,
                               applyingProperties properties: [AnimationPropertiesApplicable],
                               removeExistingAnimations: Bool,
-                              animationFinished: AnimationFinishedAction?) -> CAAnimation? {
+                              animationFinished: AnimationFinishedAction?) {
 
         self.removeExistingAnimationsIfNecessary(removeExistingAnimations)
 
         var descriptors = animationDescriptors
 
-        func performActions() {
+        // if any of the descriptors are for actions, we want to carry them out straight away,
+        // in the animationFinished closure of the previous animation in the sequence;
+        // we'd also remove their descriptors when we do this so they're not repeated
 
-            var actions: [() -> ()] = []
-            repeat {
-                if let nextActionDescriptor = descriptors.first as? Descriptor.Action {
-                    actions.append(nextActionDescriptor.action)
-                    descriptors.removeFirst()
-                }
-            } while descriptors.first is Descriptor.Action
-
-            actions.forEach { $0() }
+        while let nextActionDescriptor = descriptors.first as? Descriptor.Action {
+            nextActionDescriptor.action()
+            descriptors.removeFirst()
         }
 
-        // just in case the consumer has put actions at the start of the array, we need to execute them immediately
-        performActions()
+        // the first descriptor for an actual animation (or group)
+        guard let descriptor = descriptors.first else {
+            // we've run out of items on the group
+            animationFinished?(nil, true)
+            return
+        }
 
-        guard var descriptor = descriptors.first else { return nil }
-
-        descriptors.removeFirst()
-
-        let animation: CAAnimation?
+        descriptors.removeFirst() // we don't want it in the list any more
 
         if let groupAnimationDescriptor = descriptor as? Descriptor.Group {
             if groupAnimationDescriptor.isConcurrent {
-                // if we're adding a group, use the addConcurrentAnimationsGroup function to do it
-                animation = self.concurrentAnimationsGroup([groupAnimationDescriptor],
-                                                           forKey: key,
-                                                           duration: groupAnimationDescriptor.duration,
-                                                           applyingProperties: properties,
-                                                           removeExistingAnimations: removeExistingAnimations,
-                                                           animationFinished: nil)
+                self.addConcurrentAnimationsGroup(groupAnimationDescriptor, forKey: key, applyingProperties: properties, removeExistingAnimations: removeExistingAnimations, animationFinished: { [weak self] _, _ in
+                    guard let self = self else { return }
+                    self.addAnimationSequence(descriptors, forKey: key, applyingProperties: properties, removeExistingAnimations: removeExistingAnimations, animationFinished: animationFinished)
+                })
             } else {
-                // if we're adding another sedquential animation, build it up from its descriptors
-                descriptors = groupAnimationDescriptor.descriptors + descriptors
-                performActions() // again, check that the start of the sequence isn't an action(s)
-                guard let firstDescriptor = descriptors.first else { return nil }
-                descriptor = firstDescriptor
-                descriptors.removeFirst()
-                animation = descriptor.animation
+                // adding another sequence
+                let allDescriptors = groupAnimationDescriptor.descriptors + descriptors
+                self.addAnimationSequence(allDescriptors, forKey: key, applyingProperties: properties, removeExistingAnimations: removeExistingAnimations, animationFinished: animationFinished)
             }
         } else {
-            animation = descriptor.animation
-        }
+            // in this case it's a normal animation
 
-        guard let sequenceAnimation = animation else {
-            return nil
-        }
+            let animation = descriptor.animation
 
-        CALayer.applyProperties(properties, to: sequenceAnimation)
-
-        sequenceAnimation.addAnimationFinishedAction { [weak self] _, _ in
-            performActions()
-            if self?.addAnimationSequence(descriptors, forKey: key, applyingProperties: properties, removeExistingAnimations: removeExistingAnimations, animationFinished: animationFinished) == nil {
-                animationFinished?(sequenceAnimation, true)
+            animation.addAnimationFinishedAction { [weak self] _, _ in
+                guard let self = self else { return }
+                self.addAnimationSequence(descriptors, forKey: key, applyingProperties: properties, removeExistingAnimations: removeExistingAnimations, animationFinished: animationFinished)
             }
+
+            self.add(animation, forKey: key)
         }
-
-        self.add(sequenceAnimation, forKey: key)
-
-        return sequenceAnimation
     }
 
-    private func concurrentAnimationsGroup(_ animationDescriptors: [Descriptor.Root],
-                                           forKey key: String?,
-                                           duration: TimeInterval?,
-                                           applyingProperties properties: [AnimationPropertiesApplicable],
-                                           removeExistingAnimations: Bool,
-                                           animationFinished: AnimationFinishedAction?) -> CAAnimationGroup? {
+    func addConcurrentAnimationsGroup(_ animationDescriptor: Descriptor.Group,
+                                      forKey key: String?,
+                                      applyingProperties properties: [AnimationPropertiesApplicable],
+                                      removeExistingAnimations: Bool,
+                                      animationFinished: AnimationFinishedAction?) {
 
         self.removeExistingAnimationsIfNecessary(removeExistingAnimations)
 
-        var descriptors = animationDescriptors
+        var descriptors = animationDescriptor.descriptors
         var descriptorsToRemove: [Int] = []
 
         descriptors.enumerated().forEach { pair in
-            let descriptor = pair.element
-            if let actionDescriptor = descriptor as? Descriptor.Action {
-                actionDescriptor.action()
-                descriptorsToRemove.append(pair.offset)
-            } else if let groupDescriptor = descriptor as? Descriptor.Group {
-                if groupDescriptor.isConcurrent {
-                    self.addConcurrentAnimationsGroup(groupDescriptor.descriptors, forKey: key, duration: duration, applyingProperties: properties, removeExistingAnimations: removeExistingAnimations, animationFinished: nil)
-                } else {
-                    _ = self.addAnimationSequence([groupDescriptor], forKey: key, applyingProperties: properties, removeExistingAnimations: removeExistingAnimations, animationFinished: nil)
-                }
+            if let descriptor = pair.element as? Descriptor.Action {
+                descriptor.action()
                 descriptorsToRemove.append(pair.offset)
             }
         }
@@ -286,33 +227,64 @@ extension CALayer {
             descriptors.remove(at: $0)
         }
 
-        let groupAnimations: [CAAnimation]
+        guard descriptors.isEmpty == false else {
+            // we've run out of items on the group
+            animationFinished?(nil, true)
+            return
+        }
 
-        // if we've used up the descriptors because they were all actions & group descriptors, we'll need to add a dummy animation for the animationFinished action
-        if descriptors.isEmpty {
-            if animationFinished != nil {
-                let animation: CABasicAnimation = CABasicAnimation(keyPath: "dummy")
-                animation.fromValue = 0
-                animation.toValue = 1
-                groupAnimations = [animation]
-            } else {
-                return nil
+        let groupDescriptors: [Descriptor.Group] = descriptors.compactMap { $0 as? Descriptor.Group }
+
+        // if we have only group descriptors, we just add the groups - they're not actual 'animations',
+        // but animations with completion closures which begin the next animation
+        // this doesn't play well with CAAnimationGroups, which are actually collections of CAAnimations,
+        // which have a duration of their own. In the case of having only sequences, the groups 'duration' property
+        // is meaningless. If we have a combination of sequences & other animations, the duration is used,
+        // (& any animationFinished action) but this can end up being before or after the end of any sequence
+        // We also have the problem of what to do with the 'animationFinished' if we have only sequences -
+        // currently the logic is to trigger it after the first sequence (maybe better after shortest? longest?)
+        let isOnlyGroups = groupDescriptors.count == descriptors.count
+
+        if isOnlyGroups {
+
+            var animationFinishedAction: AnimationFinishedAction? = animationFinished
+            groupDescriptors.forEach { descriptor in
+                if descriptor.isConcurrent {
+                    self.addConcurrentAnimationsGroup(descriptor, forKey: key, applyingProperties: properties, removeExistingAnimations: removeExistingAnimations, animationFinished: animationFinishedAction)
+                } else {
+                    self.addAnimationSequence(descriptor.descriptors, forKey: key, applyingProperties: properties, removeExistingAnimations: removeExistingAnimations, animationFinished: animationFinishedAction)
+                }
+                animationFinishedAction = nil
             }
+
         } else {
-            groupAnimations = descriptors.compactMap { $0.animation }
+
+            var animations: [CAAnimation] = []
+            descriptors.forEach { descriptor in
+                if let groupAnimationDescriptor = descriptor as? Descriptor.Group {
+                    if groupAnimationDescriptor.isConcurrent {
+                        self.addConcurrentAnimationsGroup(groupAnimationDescriptor, forKey: key, applyingProperties: properties, removeExistingAnimations: removeExistingAnimations, animationFinished: nil)
+                    } else {
+                        self.addAnimationSequence(groupAnimationDescriptor.descriptors, forKey: key, applyingProperties: properties, removeExistingAnimations: removeExistingAnimations, animationFinished: nil)
+                    }
+                } else {
+                    animations.append(descriptor.animation)
+                }
+            }
+            let animationGroup: CAAnimationGroup = CAAnimationGroup()
+            animationGroup.animations = animations
+
+            if let duration = animationDescriptor.duration {
+                animationGroup.duration = duration
+            }
+
+            if let animationFinished = animationFinished {
+                animationGroup.addAnimationFinishedAction(animationFinished)
+            }
+
+            self.add(animationGroup, forKey: key)
         }
 
-        let animationGroup: CAAnimationGroup = CAAnimationGroup()
-        animationGroup.animations = groupAnimations
-
-        if let duration = duration {
-            animationGroup.duration = duration
-        }
-
-        CALayer.applyProperties(properties, to: animationGroup)
-        CALayer.addAnimationFinishedAction(animationFinished, to: animationGroup)
-
-        return animationGroup
     }
 
     private func removeExistingAnimationsIfNecessary(_ removeExistingAnimations: Bool) {

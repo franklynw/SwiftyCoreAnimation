@@ -20,7 +20,7 @@ extension Descriptor {
 
         public init(action: @escaping () -> ()) {
             self.action = action
-            super.init(duration: nil, animationProperties: [], propertyTypes: [], delegate: nil)
+            super.init(duration: 0, animationProperties: [], propertyTypes: [], delegate: nil)
         }
     }
 }

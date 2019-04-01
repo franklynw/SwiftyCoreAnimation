@@ -9,6 +9,9 @@
 import UIKit
 import SwiftyCoreAnimation
 
+/*
+ Demonstrates the use of Descriptors for the creation of animations
+*/
 
 class HelloView: UIView {
 
@@ -156,6 +159,10 @@ class HelloView: UIView {
         self.setup() // now that our bounds is right
     }
 
+    deinit {
+        print("Deinit HelloView")
+    }
+
     @objc
     private func hello(_ startTime: TimeInterval = 0) {
         guard self.isInProgress == false else { return }
@@ -172,9 +179,9 @@ class HelloView: UIView {
         self.containerLayer.set(Transform.Scale(1))
         self.containerLayer.set(Opacity(1))
         self.gradientLayer.set(Opacity(0))
-        self.maskLayer.set(Path(textPath))
+        self.maskLayer.set(Path.CGPath(textPath))
         self.textLayer.set(Opacity(0))
-        self.textLayer.set(Path(textPath))
+        self.textLayer.set(Path.CGPath(textPath))
         self.emitterLayer.set(Opacity(0))
 
         Async.after(startTime) {
@@ -221,16 +228,16 @@ class HelloView: UIView {
 
     private func goodBye() {
 
-        guard let currentPath: CGPath = self.textLayer.get(Path.self) else { return }
+        guard let currentPath: CGPath = self.textLayer.get(Path.CGPath.self) else { return }
 
         self.attributedText = HelloView.goodbyeText
 
         guard let textPath: CGPath = self.textPath else { return }
 
-        self.textLayer.set(Path(textPath))
-        self.maskLayer.set(Path(textPath))
+        self.textLayer.set(Path.CGPath(textPath))
+        self.maskLayer.set(Path.CGPath(textPath))
 
-        let pathChangeDescriptor = Descriptor.Basic<Path>.from(currentPath, to: textPath, duration: 0.5)
+        let pathChangeDescriptor = Descriptor.Basic<Path.CGPath>.from(currentPath, to: textPath, duration: 0.5)
 
         self.textLayer.addBasicAnimation(describedBy: pathChangeDescriptor)
         self.maskLayer.addBasicAnimation(describedBy: pathChangeDescriptor, animationFinished: { [weak self] _, _ in

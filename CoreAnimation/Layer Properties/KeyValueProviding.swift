@@ -20,7 +20,6 @@ extension KeyValueProviding {
     // String
     // CALayer
     // CATransform3D
-    // CGPath
     // CAGradientLayerType
     // CALayerContentsGravity
     // CAShapeLayerFillRule
@@ -140,6 +139,14 @@ extension KeyValueProviding where KeyValueType == CGImage {
         guard let from = from else { return nil }
         guard let images: [CGImage] = [from] as? [CGImage] else { return nil }
         return images.first
+    }
+}
+
+extension KeyValueProviding where KeyValueType == UIBezierPath {
+    public static func toKeyValueType(_ from: Any?) -> KeyValueType? {
+        guard let from = from else { return nil }
+        let cgPath = from as! CGPath // we can always guarantee that it will be a CGPath here
+        return UIBezierPath(cgPath: cgPath)
     }
 }
 
