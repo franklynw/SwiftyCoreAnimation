@@ -156,7 +156,7 @@ public extension GradientLayerAnimationAdding where Self: CAGradientLayer {
             }
         }
 
-        let concurrentAnimationsDescriptor = Descriptor.Group.concurrent(using: animationDescriptors, duration: duration, otherAnimationProperties: properties, delegate: nil)
+        let concurrentAnimationsDescriptor = Descriptor.Group.concurrent(using: animationDescriptors, duration: duration, otherAnimationProperties: properties)
 
         self.addConcurrentAnimationsGroup(concurrentAnimationsDescriptor,
                                           forKey: key,

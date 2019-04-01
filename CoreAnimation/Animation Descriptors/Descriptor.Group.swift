@@ -63,14 +63,13 @@ extension Descriptor {
         fileprivate init(_ descriptors: [Descriptor.Root],
                          duration: TimeInterval?,
                          animationProperties: [PropertiesApplicableToAnimationGroups],
-                         isConcurrent: Bool,
-                         delegate: CAAnimationDelegate?) {
+                         isConcurrent: Bool) {
 
             self.descriptors = descriptors
             self.isConcurrent = isConcurrent
             let propertyTypes: [BaseLayerProperty.Type] = self.descriptors.flatMap { $0.propertyTypes }
 
-            super.init(duration: duration, animationProperties: animationProperties, propertyTypes: propertyTypes, delegate: delegate)
+            super.init(duration: duration, animationProperties: animationProperties, propertyTypes: propertyTypes)
         }
 
         public override var duration: TimeInterval? {
@@ -98,18 +97,15 @@ extension Descriptor.Group {
     ///   - descriptors: Animation descriptors for CAShapeLayer animations
     ///   - duration: the animation duration - if the descriptors specify a longer duration than this, the animation duration will be clipped, not scaled
     ///   - otherAnimationProperties: animation properties which conform to PropertiesApplicableToAnimationGroups
-    ///   - delegate: the animation's delegate
     /// - Returns: a Group Descriptor object
     public static func concurrent(using descriptors: [Descriptor.Root],
                                   duration: TimeInterval? = nil,
-                                  otherAnimationProperties: [PropertiesApplicableToAnimationGroups] = [],
-                                  delegate: CAAnimationDelegate? = nil) -> Self {
+                                  otherAnimationProperties: [PropertiesApplicableToAnimationGroups] = []) -> Self {
 
         return self.init(descriptors,
                          duration: duration,
                          animationProperties: otherAnimationProperties,
-                         isConcurrent: true,
-                         delegate: delegate)
+                         isConcurrent: true)
     }
 
     /// Creates a descriptor for an Animation Group
@@ -119,16 +115,13 @@ extension Descriptor.Group {
     /// - Parameters:
     ///   - descriptors: Animation descriptors for CAShapeLayer animations; these should have durations, which are used for timing the sequence
     ///   - otherAnimationProperties: animation properties which conform to PropertiesApplicableToAnimationGroups
-    ///   - delegate: the animation's delegate
     /// - Returns: a Group Descriptor object
     public static func sequential(using descriptors: [Descriptor.Root],
-                                  otherAnimationProperties: [PropertiesApplicableToAnimationGroups] = [],
-                                  delegate: CAAnimationDelegate? = nil) -> Self {
+                                  otherAnimationProperties: [PropertiesApplicableToAnimationGroups] = []) -> Self {
 
         return self.init(descriptors,
                          duration: nil,
                          animationProperties: otherAnimationProperties,
-                         isConcurrent: false,
-                         delegate: delegate)
+                         isConcurrent: false)
     }
 }

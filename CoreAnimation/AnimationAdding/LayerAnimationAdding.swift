@@ -178,7 +178,7 @@ public extension LayerAnimationAdding where Self: CALayer {
             }
         }
 
-        let concurrentAnimationsDescriptor = Descriptor.Group.concurrent(using: animationDescriptors, duration: duration, otherAnimationProperties: properties, delegate: nil)
+        let concurrentAnimationsDescriptor = Descriptor.Group.concurrent(using: animationDescriptors, duration: duration, otherAnimationProperties: properties)
 
         self.addConcurrentAnimationsGroup(concurrentAnimationsDescriptor,
                                           forKey: key,

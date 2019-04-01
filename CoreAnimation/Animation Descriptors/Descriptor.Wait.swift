@@ -20,7 +20,7 @@ extension Descriptor {
 
 
         public init(for duration: TimeInterval) {
-            super.init(duration: duration, animationProperties: [], propertyTypes: [], delegate: nil)
+            super.init(duration: duration, animationProperties: [], propertyTypes: [])
         }
 
         override internal var animation: AnimationType {
