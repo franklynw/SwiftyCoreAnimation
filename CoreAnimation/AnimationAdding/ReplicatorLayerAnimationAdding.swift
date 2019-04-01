@@ -103,13 +103,10 @@ public extension ReplicatorLayerAnimationAdding where Self: CAReplicatorLayer {
     /// - Parameters:
     ///   - animationDescriptor: a Group Animation descriptor - whether it is concurrent or sequential is determined by the descriptor
     ///   - key: key for the animation
-    ///   - properties: an array of Descriptor.Properties applicable to CAAnimationGroups; if the Descriptor already has animation properties,
-    ///             these will be over-ridden by the values passed in here
     ///   - removeExistingAnimations: removes any existing layer animations if true
     ///   - animationFinished: invoked when the animation completes - any animationFinished actions on the individual descriptors will be ignored
     public func addAnimationsGroup(describedBy animationDescriptor: Descriptor.Group,
                                    forKey key: String? = nil,
-                                   applyingOtherProperties properties: [PropertiesApplicableToAnimationGroups] = [],
                                    removeExistingAnimations: Bool = false,
                                    animationFinished: AnimationFinishedAction? = nil) throws {
 
@@ -121,7 +118,6 @@ public extension ReplicatorLayerAnimationAdding where Self: CAReplicatorLayer {
 
         self.addAnimationsGroup(animationDescriptor,
                                 forKey: key,
-                                applyingProperties: properties,
                                 removeExistingAnimations: removeExistingAnimations,
                                 animationFinished: animationFinished)
     }
@@ -137,8 +133,7 @@ public extension ReplicatorLayerAnimationAdding where Self: CAReplicatorLayer {
     ///             (if no duration is specified here, the default will be used, which would clip any longer animations from the descriptors)
     ///             NB - if an animation sequence is added, it isn't clipped & will run its full sequence; this means that any animationFinished action
     ///             could be invoked BEFORE the sequence is ended, as it runs when the group finishes
-    ///   - properties: an array of Descriptor.Properties applicable to CAAnimationGroups; if the Descriptor already has animation properties,
-    ///             these will be over-ridden by the values passed in here
+    ///   - properties: an array of Descriptor.Properties applicable to CAAnimationGroups
     ///   - removeExistingAnimations: removes any existing layer animations if true
     ///   - animationFinished: invoked when the animation completes - any animationFinished actions on the individual descriptors will be ignored
     public func addConcurrentAnimationsGroup(describedBy animationDescriptors: [Descriptor.Root],
@@ -156,11 +151,10 @@ public extension ReplicatorLayerAnimationAdding where Self: CAReplicatorLayer {
             }
         }
 
-        let concurrentAnimationsDescriptor = Descriptor.Group.concurrent(using: animationDescriptors, duration: duration, otherAnimationProperties: properties)
+        let concurrentAnimationsDescriptor = Descriptor.Group.Concurrent(using: animationDescriptors, duration: duration, otherAnimationProperties: properties)
 
         self.addConcurrentAnimationsGroup(concurrentAnimationsDescriptor,
                                           forKey: key,
-                                          applyingProperties: properties,
                                           removeExistingAnimations: removeExistingAnimations,
                                           animationFinished: animationFinished)
     }
@@ -173,13 +167,10 @@ public extension ReplicatorLayerAnimationAdding where Self: CAReplicatorLayer {
     /// - Parameters:
     ///   - animationDescriptors: Animation descriptors for CAReplicatorLayer animations; these should have durations, which are used for timing the sequence
     ///   - key: key for the animation
-    ///   - properties: an array of Descriptor.Properties applicable to CAAnimationGroups; if the Descriptor already has animation properties,
-    ///             these will be over-ridden by the values passed in here
-    ///   - removeExistingAnimations: removes any existing layer animations if true
+    ///   - removeExistingAnimations: removes any existing layer animations if true (continues down the sequence - each animation will remove other existing animations)
     ///   - animationFinished: invoked when the animation completes - any animationFinished actions on the individual descriptors will be ignored
     public func addAnimationSequence(describedBy animationDescriptors: [Descriptor.Root],
                                      forKey key: String? = nil,
-                                     applyingOtherProperties properties: [PropertiesApplicableToAnimationGroups] = [],
                                      removeExistingAnimations: Bool = false,
                                      animationFinished: AnimationFinishedAction? = nil) throws {
 
@@ -193,7 +184,6 @@ public extension ReplicatorLayerAnimationAdding where Self: CAReplicatorLayer {
         
         self.addAnimationSequence(animationDescriptors,
                                   forKey: key,
-                                  applyingProperties: properties,
                                   removeExistingAnimations: removeExistingAnimations,
                                   animationFinished: animationFinished)
     }

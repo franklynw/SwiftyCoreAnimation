@@ -13,10 +13,12 @@ import SwiftyCoreAnimation
  Demonstrates the use of Descriptors for the creation of animations
 */
 
-class HelloView: UIView {
+class HelloView: UIView, AnimationsView {
 
     private static let helloText: NSAttributedString = NSAttributedString(string: "Hello!", attributes: [.font: UIFont.boldSystemFont(ofSize: 100)])
     private static let goodbyeText: NSAttributedString = NSAttributedString(string: "Bye!", attributes: [.font: UIFont.boldSystemFont(ofSize: 100)])
+
+    weak var animationsViewDelegate: AnimationsViewDelegate?
 
     private var attributedText: NSAttributedString = HelloView.helloText
 

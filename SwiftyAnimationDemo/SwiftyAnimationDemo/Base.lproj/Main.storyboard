@@ -78,7 +78,7 @@
         <!--Groups & Actions-->
         <scene sceneID="yAT-XG-1RT">
             <objects>
-                <viewController id="dT6-PA-o8u" sceneMemberID="viewController">
+                <viewController id="dT6-PA-o8u" customClass="ViewController" customModule="SwiftyAnimationDemo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="snZ-5p-8s9">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -87,17 +87,30 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sRF-2C-lPx">
+                                <rect key="frame" x="16" y="647" width="343" height="0.0"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="kVu-ZR-vUh" firstAttribute="trailing" secondItem="KqG-IA-UIf" secondAttribute="trailing" id="5ZQ-hF-bO0"/>
                             <constraint firstItem="kVu-ZR-vUh" firstAttribute="top" secondItem="snZ-5p-8s9" secondAttribute="top" id="6Kr-lc-gsO"/>
+                            <constraint firstItem="KqG-IA-UIf" firstAttribute="bottom" secondItem="sRF-2C-lPx" secondAttribute="bottom" constant="20" id="VUL-1q-1dS"/>
+                            <constraint firstItem="sRF-2C-lPx" firstAttribute="leading" secondItem="KqG-IA-UIf" secondAttribute="leading" constant="16" id="asB-6Q-Sws"/>
                             <constraint firstItem="kVu-ZR-vUh" firstAttribute="bottom" secondItem="KqG-IA-UIf" secondAttribute="bottom" id="asQ-fO-EEq"/>
                             <constraint firstItem="kVu-ZR-vUh" firstAttribute="leading" secondItem="KqG-IA-UIf" secondAttribute="leading" id="eiu-Do-tOb"/>
+                            <constraint firstItem="KqG-IA-UIf" firstAttribute="trailing" secondItem="sRF-2C-lPx" secondAttribute="trailing" constant="16" id="oTX-FC-55e"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="KqG-IA-UIf"/>
                     </view>
                     <navigationItem key="navigationItem" title="Groups &amp; Actions" id="EZJ-nE-flV"/>
+                    <connections>
+                        <outlet property="animationsView" destination="kVu-ZR-vUh" id="crK-Zh-XDc"/>
+                        <outlet property="messageLabel" destination="sRF-2C-lPx" id="HGc-it-WtW"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ewR-eA-HG2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -115,10 +128,19 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qFz-0X-MYs">
+                                <rect key="frame" x="16" y="647" width="343" height="0.0"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="pbp-d1-LqB" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="Pzq-ew-36p"/>
+                            <constraint firstItem="qFz-0X-MYs" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="TgT-L6-Jzt"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="qFz-0X-MYs" secondAttribute="bottom" constant="20" id="Vqd-CZ-O0k"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="qFz-0X-MYs" secondAttribute="trailing" constant="16" id="fvV-qn-H7G"/>
                             <constraint firstItem="pbp-d1-LqB" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="kha-di-klt"/>
                             <constraint firstItem="pbp-d1-LqB" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="o3X-Ig-WkL"/>
                             <constraint firstItem="pbp-d1-LqB" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="xer-8G-xUN"/>
@@ -126,6 +148,10 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" title="Hello!" id="5tm-o3-JJ7"/>
+                    <connections>
+                        <outlet property="animationsView" destination="pbp-d1-LqB" id="1cS-QI-U9B"/>
+                        <outlet property="messageLabel" destination="qFz-0X-MYs" id="qE9-Qk-WT6"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
