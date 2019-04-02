@@ -25,7 +25,7 @@ class AnimationFinishedActionsTests: XCTestCase {
         let properties: [Properties] = [
             Properties.isRemovedOnCompletion(true)
         ]
-        let basicAnchorPointDescriptor = SwiftyCoreAnimation.Descriptor.Basic<SwiftyCoreAnimation.AnchorPoint.X>(duration: duration, otherAnimationProperties: properties)
+        let basicAnchorPointDescriptor = Descriptor.Basic<SwiftyCoreAnimation.AnchorPoint.X>(duration: duration, otherAnimationProperties: properties)
 
         let expectation: XCTestExpectation = self.expectation(description: "Animation finished")
 
@@ -41,7 +41,7 @@ class AnimationFinishedActionsTests: XCTestCase {
     func testAnimationFinishedMultipleActions() {
 
         let duration: TimeInterval = 4
-        let basicAnchorPointDescriptor = SwiftyCoreAnimation.Descriptor.Basic<SwiftyCoreAnimation.AnchorPoint.X>(duration: duration)
+        let basicAnchorPointDescriptor = Descriptor.Basic<SwiftyCoreAnimation.AnchorPoint.X>(duration: duration)
 
         let expectation1: XCTestExpectation = self.expectation(description: "Animation finished 1")
         let expectation2: XCTestExpectation = self.expectation(description: "Animation finished 2")
@@ -66,7 +66,7 @@ class AnimationFinishedActionsTests: XCTestCase {
     func testRemoveAnimationFinishedMultipleActions() {
 
         let duration: TimeInterval = 4
-        let basicAnchorPointDescriptor = SwiftyCoreAnimation.Descriptor.Basic<SwiftyCoreAnimation.AnchorPoint.X>(duration: duration)
+        let basicAnchorPointDescriptor = Descriptor.Basic<SwiftyCoreAnimation.AnchorPoint.X>(duration: duration)
 
         let expectation1: XCTestExpectation = self.expectation(description: "Animation finished 1")
         let expectation2: XCTestExpectation = self.expectation(description: "Animation finished 2")
@@ -96,7 +96,7 @@ class AnimationFinishedActionsTests: XCTestCase {
     func testRemoveAllAnimationFinishedActions() {
 
         let duration: TimeInterval = 0.5
-        let basicAnchorPointDescriptor = SwiftyCoreAnimation.Descriptor.Basic<SwiftyCoreAnimation.AnchorPoint.X>(duration: duration)
+        let basicAnchorPointDescriptor = Descriptor.Basic<SwiftyCoreAnimation.AnchorPoint.X>(duration: duration)
 
         let expectation1: XCTestExpectation = self.expectation(description: "Animation finished 1")
         let expectation2: XCTestExpectation = self.expectation(description: "Animation finished 2")

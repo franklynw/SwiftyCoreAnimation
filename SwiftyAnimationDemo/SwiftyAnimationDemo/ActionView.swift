@@ -150,14 +150,14 @@ class ActionView: UIView, AnimationsView {
 
 
         // however, we want to include it as part of another animation, so it's easier to make a separate sequence descriptor
-        let groupDescriptor = Descriptor.Group.Sequence(using: [waitDescriptor, setFillColorActionDescriptor, fillColorDescriptor, waitDescriptor, setLineWidthActionDescriptor, lineWidthDescriptor, setFillColorActionDescriptor2, fillColorDescriptor2])
+        let groupDescriptor = Descriptor.Group.Sequential(using: [waitDescriptor, setFillColorActionDescriptor, fillColorDescriptor, waitDescriptor, setLineWidthActionDescriptor, lineWidthDescriptor, setFillColorActionDescriptor2, fillColorDescriptor2])
 
         // if we want to run the sequence concurrently with another animation, we can put it into a concurrent animation group
         // the main thing to note here is that the animationFinished action will be invoked after the group's duration, not the sequence's duration
         // so if the action is required after all the animations finish, either set the duration of the group so it matches the sequences,
         // or add it as an actionDescriptor at the end of the animation sequence
 //        let rotateDescriptor = Descriptor.Basic<Transform.Rotation.Z>.from(0, to: CGFloat.pi * 2)
-//        try? shapeLayer.addConcurrentAnimationsGroup(describedBy: [groupDescriptor, rotateDescriptor], duration: 9, animationFinished: { _, _ in
+//        try? shapeLayer.addConcurrentAnimations(describedBy: [groupDescriptor, rotateDescriptor], duration: 9, animationFinished: { _, _ in
 //            self.animationsViewDelegate?.showMessage("All done!") // will be executed after setFillColorActionDescriptor & setLineWidthActionDescriptor, but before setFillColorActionDescriptor2
 //        })
 
@@ -222,7 +222,7 @@ class ActionView: UIView, AnimationsView {
         let lineWidthDescriptor = Descriptor.Basic<LineWidth>.from(currentLineWidth, to: 40, duration: 2)
 
         // create the first 'sequence' descriptor using the above descriptors
-        let sequenceDescriptor = Descriptor.Group.Sequence(using: [waitDescriptor, actionDescriptor1, colorsGroupDescriptor, waitDescriptor, actionDescriptor2, lineWidthDescriptor])
+        let sequenceDescriptor = Descriptor.Group.Sequential(using: [waitDescriptor, actionDescriptor1, colorsGroupDescriptor, waitDescriptor, actionDescriptor2, lineWidthDescriptor])
 
         let keyFrameProperties: [Properties.KeyFrameAnimation] = [.calculationMode(.paced)]
         let translate = CGAffineTransform(translationX: width / -2, y: 0)

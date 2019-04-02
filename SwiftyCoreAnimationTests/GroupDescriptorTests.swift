@@ -26,11 +26,11 @@ class GroupDescriptorTests: XCTestCase {
     func testConcurrentAnimationGroup() {
 
         let duration: TimeInterval = 2
-        let basicAnchorPointDescriptor = SwiftyCoreAnimation.Descriptor.Basic<SwiftyCoreAnimation.AnchorPoint.X>()
+        let basicAnchorPointDescriptor = Descriptor.Basic<SwiftyCoreAnimation.AnchorPoint.X>()
         let path = CGPath(ellipseIn: CGRect(x: 0, y: 0, width: 400, height: 250), transform: nil)
         let keyFrameColorsDescriptor = SwiftyCoreAnimation.Descriptor.KeyFrame<SwiftyCoreAnimation.FillColor>.path(path, duration: 4)
 
-        let groupDescriptor = Descriptor.Group.concurrent(using: [basicAnchorPointDescriptor, keyFrameColorsDescriptor], duration: duration)
+        let groupDescriptor = Descriptor.Group.Concurrent(using: [basicAnchorPointDescriptor, keyFrameColorsDescriptor], duration: duration)
 
         do {
 
@@ -62,13 +62,13 @@ class GroupDescriptorTests: XCTestCase {
     func testSequentialAnimationGroup() {
 
         let duration1: TimeInterval = 2
-        let basicAnchorPointDescriptor = SwiftyCoreAnimation.Descriptor.Basic<SwiftyCoreAnimation.AnchorPoint.X>(duration: duration1)
+        let basicAnchorPointDescriptor = Descriptor.Basic<SwiftyCoreAnimation.AnchorPoint.X>(duration: duration1)
 
         let duration2: TimeInterval = 4
         let path = CGPath(ellipseIn: CGRect(x: 0, y: 0, width: 400, height: 250), transform: nil)
         let keyFrameColorsDescriptor = SwiftyCoreAnimation.Descriptor.KeyFrame<SwiftyCoreAnimation.FillColor>.path(path, duration: duration2)
 
-        let groupDescriptor = Descriptor.Group.sequential(using: [basicAnchorPointDescriptor, keyFrameColorsDescriptor])
+        let groupDescriptor = Descriptor.Group.Sequential(using: [basicAnchorPointDescriptor, keyFrameColorsDescriptor])
 
         do {
 

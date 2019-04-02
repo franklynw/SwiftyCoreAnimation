@@ -137,12 +137,12 @@ public extension ShapeLayerAnimationAdding where Self: CAShapeLayer {
     ///   - properties: an array of Descriptor.Properties applicable to CAAnimationGroups
     ///   - removeExistingAnimations: removes any existing layer animations if true
     ///   - animationFinished: invoked when the animation completes - any animationFinished actions on the individual descriptors will be ignored
-    public func addConcurrentAnimationsGroup(describedBy animationDescriptors: [Descriptor.Root],
-                                             forKey key: String? = nil,
-                                             duration: TimeInterval? = nil,
-                                             applyingOtherProperties properties: [PropertiesApplicableToAnimationGroups] = [],
-                                             removeExistingAnimations: Bool = false,
-                                             animationFinished: AnimationFinishedAction? = nil) throws {
+    public func addConcurrentAnimations(describedBy animationDescriptors: [Descriptor.Root],
+                                        forKey key: String? = nil,
+                                        duration: TimeInterval? = nil,
+                                        applyingOtherProperties properties: [PropertiesApplicableToAnimationGroups] = [],
+                                        removeExistingAnimations: Bool = false,
+                                        animationFinished: AnimationFinishedAction? = nil) throws {
 
         try animationDescriptors.forEach {
             try $0.propertyTypes.forEach {
@@ -154,10 +154,10 @@ public extension ShapeLayerAnimationAdding where Self: CAShapeLayer {
 
         let concurrentAnimationsDescriptor = Descriptor.Group.Concurrent(using: animationDescriptors, duration: duration, otherAnimationProperties: properties)
 
-        self.addConcurrentAnimationsGroup(concurrentAnimationsDescriptor,
-                                          forKey: key,
-                                          removeExistingAnimations: removeExistingAnimations,
-                                          animationFinished: animationFinished)
+        self.addConcurrentAnimations(concurrentAnimationsDescriptor,
+                                     forKey: key,
+                                     removeExistingAnimations: removeExistingAnimations,
+                                     animationFinished: animationFinished)
     }
 
     /// Adds an animation group to a CAShapeLayer

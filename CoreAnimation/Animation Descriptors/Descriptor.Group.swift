@@ -57,6 +57,14 @@ extension Descriptor {
         // The Concurrent & Sequence classes are embedded in the Group class so we can have a sort of name-spacing,
         // ie, Descriptor.Group.Concurrent or Descriptor.Group.Sequence
 
+        /*
+         The Group classes don't implement AnimationDescribing as they don't produce CAAnimationGroups (or any animation) directly
+         Instead, the descriptor is used to add a group or sequence of other descriptors, including Action & Wait descriptors.
+         Because of the way CAAnimationGroup works (any animation in the group can't have a CAAnimationDelegate), the structure is
+         completely independent of CAAnimationGroup for sequences, and because the concurrent groups can have other groups inside them,
+         it means we can't just return a CAAnimationGroup animation.
+        */
+
         // MARK: - Describes a Concurrent Animations Group
         public final class Concurrent: Group {
 
@@ -81,7 +89,7 @@ extension Descriptor {
         }
 
         // MARK: - Describes a Sequence Animation Group
-        public final class Sequence: Group {
+        public final class Sequential: Group {
 
             internal let descriptors: [Descriptor.Root]
 

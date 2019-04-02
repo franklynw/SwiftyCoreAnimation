@@ -22,14 +22,6 @@ class IntroTableViewController: UITableViewController {
     ]
 
 
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-
-        guard let viewController = segue.destination as? AnimationsViewDelegate else { return }
-
-        
-    }
-
-
     // MARK: - Table view data source
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

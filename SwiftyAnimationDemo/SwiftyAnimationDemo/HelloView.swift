@@ -198,9 +198,9 @@ class HelloView: UIView, AnimationsView {
             let scaleDescriptor = Descriptor.Basic<Transform.Scale>.from(5, to: 1)
 
             do {
-                try self.emitterLayer.addConcurrentAnimationsGroup(describedBy: [emitterFollowingDescriptor, rotationDescriptor, scaleDescriptor], duration: duration)
+                try self.emitterLayer.addConcurrentAnimations(describedBy: [emitterFollowingDescriptor, rotationDescriptor, scaleDescriptor], duration: duration)
 
-                try self.textLayer.addConcurrentAnimationsGroup(describedBy: [strokeDescriptor, rotationDescriptor, scaleDescriptor], duration: duration, animationFinished: { [weak self] _, _ in
+                try self.textLayer.addConcurrentAnimations(describedBy: [strokeDescriptor, rotationDescriptor, scaleDescriptor], duration: duration, animationFinished: { [weak self] _, _ in
                     guard let self = self else { return }
 
                     self.gradientLayer.set(Opacity(1))
@@ -257,7 +257,7 @@ class HelloView: UIView, AnimationsView {
                 let opacityDescriptor = Descriptor.Basic<Opacity>.from(1, to: 0)
 
                 do {
-                    try self.containerLayer.addConcurrentAnimationsGroup(describedBy: [rotationDescriptor, scaleXDescriptor, scaleYDescriptor, opacityDescriptor], duration: 1, animationFinished: { [weak self] _, _ in
+                    try self.containerLayer.addConcurrentAnimations(describedBy: [rotationDescriptor, scaleXDescriptor, scaleYDescriptor, opacityDescriptor], duration: 1, animationFinished: { [weak self] _, _ in
                         guard let self = self else { return }
 
                         self.textLayer.set(Opacity(0))

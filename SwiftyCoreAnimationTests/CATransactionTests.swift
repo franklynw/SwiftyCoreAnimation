@@ -36,9 +36,9 @@ class CATransactionTests: XCTestCase {
 
     func testCreateCATransaction() {
 
-        let basicAnchorPointDescriptor = SwiftyCoreAnimation.Descriptor.Basic<SwiftyCoreAnimation.AnchorPoint.X>(duration: 2)
+        let basicAnchorPointDescriptor = Descriptor.Basic<SwiftyCoreAnimation.AnchorPoint.X>(duration: 2)
         let path = CGPath(ellipseIn: CGRect(x: 0, y: 0, width: 400, height: 250), transform: nil)
-        let keyFrameColorsDescriptor = SwiftyCoreAnimation.Descriptor.KeyFrame<SwiftyCoreAnimation.FillColor>.path(path, duration: 2)
+        let keyFrameColorsDescriptor = Descriptor.KeyFrame<SwiftyCoreAnimation.FillColor>.path(path, duration: 2)
 
         let properties: [LayerProperty.Type] = [AnchorPoint.self, BorderWidth.self]
         let disabledAnimations = self.layer.disabledImplicitAnimations(for: properties)
@@ -88,9 +88,9 @@ class CATransactionTests: XCTestCase {
 
     func testPerformCATransaction() {
 
-        let basicAnchorPointDescriptor = SwiftyCoreAnimation.Descriptor.Basic<SwiftyCoreAnimation.AnchorPoint.X>(duration: 2)
+        let basicAnchorPointDescriptor = Descriptor.Basic<SwiftyCoreAnimation.AnchorPoint.X>(duration: 2)
         let path = CGPath(ellipseIn: CGRect(x: 0, y: 0, width: 400, height: 250), transform: nil)
-        let keyFrameColorsDescriptor = SwiftyCoreAnimation.Descriptor.KeyFrame<SwiftyCoreAnimation.FillColor>.path(path, duration: 2)
+        let keyFrameColorsDescriptor = Descriptor.KeyFrame<SwiftyCoreAnimation.FillColor>.path(path, duration: 2)
 
         let properties: [LayerProperty.Type] = [AnchorPoint.self, BorderWidth.self]
         let disabledAnimations = self.layer.disabledImplicitAnimations(for: properties)
