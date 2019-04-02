@@ -26,31 +26,27 @@ extension Descriptor {
         /// - Parameters:
         ///   - duration: the animation's duration
         ///   - otherAnimationProperties: animation properties which conform to PropertiesApplicableToBasicAnimations
-        ///   - delegate: the animation's delegate
         public convenience init(duration: TimeInterval? = nil,
-                                otherAnimationProperties: [PropertiesApplicableToBasicAnimations] = [],
-                                delegate: CAAnimationDelegate? = nil) {
+                                otherAnimationProperties: [PropertiesApplicableToBasicAnimations] = []) {
 
             self.init(from: nil,
                       by: nil,
                       to: nil,
                       duration: duration,
-                      animationProperties: otherAnimationProperties,
-                      delegate: delegate)
+                      animationProperties: otherAnimationProperties)
         }
 
         fileprivate init(from: Any?,
                          by: Any?,
                          to: Any?,
                          duration: TimeInterval?,
-                         animationProperties: [PropertiesApplicableToBasicAnimations],
-                         delegate: CAAnimationDelegate?) {
+                         animationProperties: [PropertiesApplicableToBasicAnimations]) {
 
             self.from = from
             self.by = by
             self.to = to
 
-            super.init(duration: duration, animationProperties: animationProperties, propertyTypes: [T.self], delegate: delegate)
+            super.init(duration: duration, animationProperties: animationProperties, propertyTypes: [T.self])
         }
 
         /// Creates & returns an instance of the animation described by the class instance
@@ -78,19 +74,16 @@ extension Descriptor.Basic {
     ///   - from: used for the fromValue of the animation
     ///   - duration: the animation's duration
     ///   - otherAnimationProperties: animation properties which conform to PropertiesApplicableToBasicAnimations
-    ///   - delegate: the animation's delegate
     /// - Returns: a Basic Descriptor object
     public static func from(_ from: T.KeyValueType?,
                             duration: TimeInterval? = nil,
-                            otherAnimationProperties: [PropertiesApplicableToBasicAnimations] = [],
-                            delegate: CAAnimationDelegate? = nil) -> Self {
+                            otherAnimationProperties: [PropertiesApplicableToBasicAnimations] = []) -> Self {
 
         return self.init(from: from?.keyValue,
                          by: nil,
                          to: nil,
                          duration: duration,
-                         animationProperties: otherAnimationProperties,
-                         delegate: delegate)
+                         animationProperties: otherAnimationProperties)
     }
 
     /// Creates a Descriptor for a Basic Animation
@@ -99,19 +92,16 @@ extension Descriptor.Basic {
     ///   - by: used for the byValue of the animation
     ///   - duration: the animation's duration
     ///   - otherAnimationProperties: animation properties which conform to PropertiesApplicableToBasicAnimations
-    ///   - delegate: the animation's delegate
     /// - Returns: a Basic Descriptor object
     public static func by(_ by: T.KeyValueType?,
                           duration: TimeInterval? = nil,
-                          otherAnimationProperties: [PropertiesApplicableToBasicAnimations] = [],
-                          delegate: CAAnimationDelegate? = nil) -> Self {
+                          otherAnimationProperties: [PropertiesApplicableToBasicAnimations] = []) -> Self {
 
         return self.init(from: nil,
                          by: by?.keyValue,
                          to: nil,
                          duration: duration,
-                         animationProperties: otherAnimationProperties,
-                         delegate: delegate)
+                         animationProperties: otherAnimationProperties)
     }
 
     /// Creates a Descriptor for a Basic Animation
@@ -120,19 +110,16 @@ extension Descriptor.Basic {
     ///   - to: used for the toValue of the animation
     ///   - duration: the animation's duration
     ///   - otherAnimationProperties: animation properties which conform to PropertiesApplicableToBasicAnimations
-    ///   - delegate: the animation's delegate
     /// - Returns: a Basic Descriptor object
     public static func to(_ to: T.KeyValueType?,
                           duration: TimeInterval? = nil,
-                          otherAnimationProperties: [PropertiesApplicableToBasicAnimations] = [],
-                          delegate: CAAnimationDelegate? = nil) -> Self {
+                          otherAnimationProperties: [PropertiesApplicableToBasicAnimations] = []) -> Self {
 
         return self.init(from: nil,
                          by: nil,
                          to: to?.keyValue,
                          duration: duration,
-                         animationProperties: otherAnimationProperties,
-                         delegate: delegate)
+                         animationProperties: otherAnimationProperties)
     }
 
     /// Creates a Descriptor for a Basic Animation
@@ -142,20 +129,17 @@ extension Descriptor.Basic {
     ///   - by: used for the byValue of the animation
     ///   - duration: the animation's duration
     ///   - otherAnimationProperties: animation properties which conform to PropertiesApplicableToBasicAnimations
-    ///   - delegate: the animation's delegate
     /// - Returns: a Basic Descriptor object
     public static func from(_ from: T.KeyValueType?,
                             by: T.KeyValueType?,
                             duration: TimeInterval? = nil,
-                            otherAnimationProperties: [PropertiesApplicableToBasicAnimations] = [],
-                            delegate: CAAnimationDelegate? = nil) -> Self {
+                            otherAnimationProperties: [PropertiesApplicableToBasicAnimations] = []) -> Self {
 
         return self.init(from: from?.keyValue,
                          by: by?.keyValue,
                          to: nil,
                          duration: duration,
-                         animationProperties: otherAnimationProperties,
-                         delegate: delegate)
+                         animationProperties: otherAnimationProperties)
     }
 
     /// Creates a Descriptor for a Basic Animation
@@ -165,20 +149,17 @@ extension Descriptor.Basic {
     ///   - to: used for the toValue of the animation
     ///   - duration: the animation's duration
     ///   - otherAnimationProperties: animation properties which conform to PropertiesApplicableToBasicAnimations
-    ///   - delegate: the animation's delegate
     /// - Returns: a Basic Descriptor object
     public static func from(_ from: T.KeyValueType?,
                             to: T.KeyValueType?,
                             duration: TimeInterval? = nil,
-                            otherAnimationProperties: [PropertiesApplicableToBasicAnimations] = [],
-                            delegate: CAAnimationDelegate? = nil) -> Self {
+                            otherAnimationProperties: [PropertiesApplicableToBasicAnimations] = []) -> Self {
 
         return self.init(from: from?.keyValue,
                          by: nil,
                          to: to?.keyValue,
                          duration: duration,
-                         animationProperties: otherAnimationProperties,
-                         delegate: delegate)
+                         animationProperties: otherAnimationProperties)
     }
 
     /// Creates a Descriptor for a Basic Animation
@@ -188,19 +169,16 @@ extension Descriptor.Basic {
     ///   - to: used for the toValue of the animation
     ///   - duration: the animation's duration
     ///   - otherAnimationProperties: animation properties which conform to PropertiesApplicableToBasicAnimations
-    ///   - delegate: the animation's delegate
     /// - Returns: a Basic Descriptor object
     public static func by(_ by: T.KeyValueType?,
                           to: T.KeyValueType?,
                           duration: TimeInterval? = nil,
-                          otherAnimationProperties: [PropertiesApplicableToBasicAnimations] = [],
-                          delegate: CAAnimationDelegate? = nil) -> Self {
+                          otherAnimationProperties: [PropertiesApplicableToBasicAnimations] = []) -> Self {
 
         return self.init(from: nil,
                          by: by?.keyValue,
                          to: to?.keyValue,
                          duration: duration,
-                         animationProperties: otherAnimationProperties,
-                         delegate: delegate)
+                         animationProperties: otherAnimationProperties)
     }
 }

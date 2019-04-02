@@ -125,13 +125,10 @@ public extension LayerAnimationAdding where Self: CALayer {
     /// - Parameters:
     ///   - animationDescriptor: a Group Animation descriptor - whether it is concurrent or sequential is determined by the descriptor
     ///   - key: key for the animation
-    ///   - properties: an array of Descriptor.Properties applicable to CAAnimationGroups; if the Descriptor already has animation properties,
-    ///             these will be over-ridden by the values passed in here
     ///   - removeExistingAnimations: removes any existing layer animations if true
     ///   - animationFinished: invoked when the animation completes - any animationFinished actions on the individual descriptors will be ignored
     public func addAnimationsGroup(describedBy animationDescriptor: Descriptor.Group,
                                    forKey key: String? = nil,
-                                   applyingOtherProperties properties: [PropertiesApplicableToAnimationGroups] = [],
                                    removeExistingAnimations: Bool = false,
                                    animationFinished: AnimationFinishedAction? = nil) throws {
 
@@ -143,7 +140,6 @@ public extension LayerAnimationAdding where Self: CALayer {
 
         self.addAnimationsGroup(animationDescriptor,
                                 forKey: key,
-                                applyingProperties: properties,
                                 removeExistingAnimations: removeExistingAnimations,
                                 animationFinished: animationFinished)
     }
@@ -159,16 +155,15 @@ public extension LayerAnimationAdding where Self: CALayer {
     ///             (if no duration is specified here, the default will be used, which would clip any longer animations from the descriptors)
     ///             NB - if an animation sequence is added, it isn't clipped & will run its full sequence; this means that any animationFinished action
     ///             could be invoked BEFORE the sequence is ended, as it runs when the group finishes
-    ///   - properties: an array of Descriptor.Properties applicable to CAAnimationGroups; if the Descriptor already has animation properties,
-    ///             these will be over-ridden by the values passed in here
+    ///   - properties: an array of Descriptor.Properties applicable to CAAnimationGroups
     ///   - removeExistingAnimations: removes any existing layer animations if true
     ///   - animationFinished: invoked when the animation completes - any animationFinished actions on the individual descriptors will be ignored
-    public func addConcurrentAnimationsGroup(describedBy animationDescriptors: [Descriptor.Root],
-                                             forKey key: String? = nil,
-                                             duration: TimeInterval? = nil,
-                                             applyingOtherProperties properties: [PropertiesApplicableToAnimationGroups] = [],
-                                             removeExistingAnimations: Bool = false,
-                                             animationFinished: AnimationFinishedAction? = nil) throws {
+    public func addConcurrentAnimations(describedBy animationDescriptors: [Descriptor.Root],
+                                        forKey key: String? = nil,
+                                        duration: TimeInterval? = nil,
+                                        applyingOtherProperties properties: [PropertiesApplicableToAnimationGroups] = [],
+                                        removeExistingAnimations: Bool = false,
+                                        animationFinished: AnimationFinishedAction? = nil) throws {
 
         try animationDescriptors.forEach {
             try $0.propertyTypes.forEach {
@@ -178,13 +173,12 @@ public extension LayerAnimationAdding where Self: CALayer {
             }
         }
 
-        let concurrentAnimationsDescriptor = Descriptor.Group.concurrent(using: animationDescriptors, duration: duration, otherAnimationProperties: properties, delegate: nil)
+        let concurrentAnimationsDescriptor = Descriptor.Group.Concurrent(using: animationDescriptors, duration: duration, otherAnimationProperties: properties)
 
-        self.addConcurrentAnimationsGroup(concurrentAnimationsDescriptor,
-                                          forKey: key,
-                                          applyingProperties: properties,
-                                          removeExistingAnimations: removeExistingAnimations,
-                                          animationFinished: animationFinished)
+        self.addConcurrentAnimations(concurrentAnimationsDescriptor,
+                                     forKey: key,
+                                     removeExistingAnimations: removeExistingAnimations,
+                                     animationFinished: animationFinished)
     }
 
     /// Adds an animation group to a CALayer
@@ -195,13 +189,10 @@ public extension LayerAnimationAdding where Self: CALayer {
     /// - Parameters:
     ///   - animationDescriptors: Animation descriptors for CALayer animations; these should have durations, which are used for timing the sequence
     ///   - key: key for the animation
-    ///   - properties: an array of Descriptor.Properties applicable to CAAnimationGroups; if the Descriptor already has animation properties,
-    ///             these will be over-ridden by the values passed in here
-    ///   - removeExistingAnimations: removes any existing layer animations if true
+    ///   - removeExistingAnimations: removes any existing layer animations if true (continues down the sequence - each animation will remove other existing animations)
     ///   - animationFinished: invoked when the animation completes - any animationFinished actions on the individual descriptors will be ignored
     public func addAnimationSequence(describedBy animationDescriptors: [Descriptor.Root],
                                      forKey key: String? = nil,
-                                     applyingOtherProperties properties: [PropertiesApplicableToAnimationGroups] = [],
                                      removeExistingAnimations: Bool = false,
                                      animationFinished: AnimationFinishedAction? = nil) throws {
 
@@ -212,10 +203,9 @@ public extension LayerAnimationAdding where Self: CALayer {
                 }
             }
         }
-        
+
         self.addAnimationSequence(animationDescriptors,
                                   forKey: key,
-                                  applyingProperties: properties,
                                   removeExistingAnimations: removeExistingAnimations,
                                   animationFinished: animationFinished)
     }

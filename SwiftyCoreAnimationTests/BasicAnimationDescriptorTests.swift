@@ -23,7 +23,7 @@ class BasicAnimationDescriptorTests: XCTestCase {
     func testBasicAnimation() {
 
         let duration: TimeInterval = 2
-        let basicAnchorPointDescriptor = SwiftyCoreAnimation.Descriptor.Basic<SwiftyCoreAnimation.AnchorPoint.X>(duration: duration)
+        let basicAnchorPointDescriptor = Descriptor.Basic<SwiftyCoreAnimation.AnchorPoint.X>(duration: duration)
         self.layer.addBasicAnimation(describedBy: basicAnchorPointDescriptor, forKey: "animation")
         let animation = self.layer.animation(forKey: "animation") as! CABasicAnimation
 
@@ -41,7 +41,7 @@ class BasicAnimationDescriptorTests: XCTestCase {
 
         let start: CGFloat = 0
         let duration: TimeInterval = 2
-        let basicAnchorPointFromDescriptor = SwiftyCoreAnimation.Descriptor.Basic<SwiftyCoreAnimation.AnchorPoint.Z>.from(start, duration: duration)
+        let basicAnchorPointFromDescriptor = Descriptor.Basic<SwiftyCoreAnimation.AnchorPoint.Z>.from(start, duration: duration)
         self.layer.addBasicAnimation(describedBy: basicAnchorPointFromDescriptor, forKey: "animation")
         let animation = self.layer.animation(forKey: "animation") as! CABasicAnimation
 
@@ -61,7 +61,7 @@ class BasicAnimationDescriptorTests: XCTestCase {
 
         let by: CGFloat = 0
         let duration: TimeInterval = 2
-        let basicAnchorPointByDescriptor = SwiftyCoreAnimation.Descriptor.Basic<SwiftyCoreAnimation.AnchorPoint.Z>.by(by, duration: duration)
+        let basicAnchorPointByDescriptor = Descriptor.Basic<SwiftyCoreAnimation.AnchorPoint.Z>.by(by, duration: duration)
         self.layer.addBasicAnimation(describedBy: basicAnchorPointByDescriptor, forKey: "animation")
         let animation = self.layer.animation(forKey: "animation") as! CABasicAnimation
 
@@ -73,7 +73,7 @@ class BasicAnimationDescriptorTests: XCTestCase {
         XCTAssertNil(animation.toValue, "To value should be nil")
 
         let keyPath = animation.keyPath
-        XCTAssertEqual(keyPath, SwiftyCoreAnimation.AnchorPoint.Z.keyPath, "KeyPath should be \(SwiftyCoreAnimation.AnchorPoint.Z.keyPath)")
+        XCTAssertEqual(keyPath, AnchorPoint.Z.keyPath, "KeyPath should be \(AnchorPoint.Z.keyPath)")
 
         XCTAssertEqual(duration, animation.duration, "Duration should be \(duration)")
     }
@@ -82,7 +82,7 @@ class BasicAnimationDescriptorTests: XCTestCase {
 
         let finish: CGFloat = 0.4
         let duration: TimeInterval = 2
-        let basicAnchorPointToDescriptor = SwiftyCoreAnimation.Descriptor.Basic<SwiftyCoreAnimation.AnchorPoint.Y>.to(finish, duration: duration)
+        let basicAnchorPointToDescriptor = Descriptor.Basic<SwiftyCoreAnimation.AnchorPoint.Y>.to(finish, duration: duration)
         self.layer.addBasicAnimation(describedBy: basicAnchorPointToDescriptor, forKey: "animation")
         let animation = self.layer.animation(forKey: "animation") as! CABasicAnimation
 
@@ -93,7 +93,7 @@ class BasicAnimationDescriptorTests: XCTestCase {
         XCTAssertEqual(toValue, finish, "To value should be \(finish)")
 
         let keyPath = animation.keyPath
-        XCTAssertEqual(keyPath, SwiftyCoreAnimation.AnchorPoint.Y.keyPath, "KeyPath should be \(SwiftyCoreAnimation.AnchorPoint.Y.keyPath)")
+        XCTAssertEqual(keyPath, AnchorPoint.Y.keyPath, "KeyPath should be \(AnchorPoint.Y.keyPath)")
 
         XCTAssertEqual(duration, animation.duration, "Duration should be \(duration)")
     }
@@ -103,7 +103,7 @@ class BasicAnimationDescriptorTests: XCTestCase {
         let startPoint: CGPoint = .zero
         let finishPoint: CGPoint = CGPoint(x: 0.5, y: 0.4)
         let duration: TimeInterval = 2
-        let basicAnchorPointFromToDescriptor = SwiftyCoreAnimation.Descriptor.Basic<SwiftyCoreAnimation.AnchorPoint>.from(startPoint, to: finishPoint, duration: duration)
+        let basicAnchorPointFromToDescriptor = Descriptor.Basic<SwiftyCoreAnimation.AnchorPoint>.from(startPoint, to: finishPoint, duration: duration)
 
         self.layer.addBasicAnimation(describedBy: basicAnchorPointFromToDescriptor, forKey: "animation1")
         let animation1 = self.layer.animation(forKey: "animation1") as! CABasicAnimation
@@ -117,14 +117,14 @@ class BasicAnimationDescriptorTests: XCTestCase {
         XCTAssertEqual(toValue1, finishPoint, "To value should be \(finishPoint)")
 
         let keyPath1 = animation1.keyPath
-        XCTAssertEqual(keyPath1, SwiftyCoreAnimation.AnchorPoint.keyPath, "KeyPath should be \(SwiftyCoreAnimation.AnchorPoint.keyPath)")
+        XCTAssertEqual(keyPath1, AnchorPoint.keyPath, "KeyPath should be \(AnchorPoint.keyPath)")
 
         XCTAssertEqual(duration, animation1.duration, "Duration should be \(duration)")
 
 
         let start: CGFloat = 0
         let finish: CGFloat = 0.5
-        let basicAnchorPointXFromToDescriptor = SwiftyCoreAnimation.Descriptor.Basic<SwiftyCoreAnimation.AnchorPoint.X>.from(start, to: finish, duration: duration)
+        let basicAnchorPointXFromToDescriptor = Descriptor.Basic<SwiftyCoreAnimation.AnchorPoint.X>.from(start, to: finish, duration: duration)
         self.layer.addBasicAnimation(describedBy: basicAnchorPointXFromToDescriptor, forKey: "animation2")
         let animation2 = self.layer.animation(forKey: "animation2") as! CABasicAnimation
 
@@ -137,7 +137,7 @@ class BasicAnimationDescriptorTests: XCTestCase {
         XCTAssertEqual(toValue2, finish, "To value should be \(finish)")
 
         let keyPath2 = animation2.keyPath
-        XCTAssertEqual(keyPath2, SwiftyCoreAnimation.AnchorPoint.X.keyPath, "KeyPath should be \(SwiftyCoreAnimation.AnchorPoint.X.keyPath)")
+        XCTAssertEqual(keyPath2, AnchorPoint.X.keyPath, "KeyPath should be \(AnchorPoint.X.keyPath)")
         XCTAssertEqual(duration, animation2.duration, "Duration should be \(duration)")
         XCTAssertEqual(CAMediaTimingFillMode.removed, animation2.fillMode, "FillMode should be .removed")
         XCTAssertTrue(animation2.isRemovedOnCompletion, "isRemovedOnCompletion should be true")
@@ -150,8 +150,8 @@ class BasicAnimationDescriptorTests: XCTestCase {
         let by: CGFloat = 0.5
         let duration: TimeInterval = 2
 
-        let timingProperties: [SwiftyCoreAnimation.PropertiesApplicableToBasicAnimations] = [SwiftyCoreAnimation.Properties.MediaTiming.fillMode(.backwards), SwiftyCoreAnimation.Properties.isRemovedOnCompletion(false)]
-        let basicAnchorPointFromByDescriptor = SwiftyCoreAnimation.Descriptor.Basic<SwiftyCoreAnimation.AnchorPoint.X>.from(start, by: by, duration: duration, otherAnimationProperties: timingProperties)
+        let timingProperties: [SwiftyCoreAnimation.PropertiesApplicableToBasicAnimations] = [SwiftyCoreAnimation.Properties.MediaTiming.fillMode(.backwards), Properties.isRemovedOnCompletion(false)]
+        let basicAnchorPointFromByDescriptor = Descriptor.Basic<SwiftyCoreAnimation.AnchorPoint.X>.from(start, by: by, duration: duration, otherAnimationProperties: timingProperties)
         self.layer.addBasicAnimation(describedBy: basicAnchorPointFromByDescriptor, forKey: "animation")
         let animation = self.layer.animation(forKey: "animation") as! CABasicAnimation
 
@@ -164,7 +164,7 @@ class BasicAnimationDescriptorTests: XCTestCase {
         XCTAssertNil(animation.toValue, "To value should be nil")
 
         let keyPath = animation.keyPath
-        XCTAssertEqual(keyPath, SwiftyCoreAnimation.AnchorPoint.X.keyPath, "KeyPath should be \(SwiftyCoreAnimation.AnchorPoint.X.keyPath)")
+        XCTAssertEqual(keyPath, AnchorPoint.X.keyPath, "KeyPath should be \(AnchorPoint.X.keyPath)")
         XCTAssertEqual(duration, animation.duration, "Duration should be \(duration)")
         XCTAssertEqual(CAMediaTimingFillMode.backwards, animation.fillMode, "FillMode should be .backwards")
         XCTAssertFalse(animation.isRemovedOnCompletion, "isRemovedOnCompletion should be false")
@@ -175,7 +175,7 @@ class BasicAnimationDescriptorTests: XCTestCase {
         let start: CGFloat = 0
         let finish: CGFloat = 0.5
         let duration: TimeInterval = 2
-        let basicAnchorPointByToDescriptor = SwiftyCoreAnimation.Descriptor.Basic<SwiftyCoreAnimation.AnchorPoint.X>.by(start, to: finish, duration: duration)
+        let basicAnchorPointByToDescriptor = Descriptor.Basic<SwiftyCoreAnimation.AnchorPoint.X>.by(start, to: finish, duration: duration)
         self.layer.addBasicAnimation(describedBy: basicAnchorPointByToDescriptor, forKey: "animation")
         let animation = self.layer.animation(forKey: "animation") as! CABasicAnimation
 
@@ -188,7 +188,7 @@ class BasicAnimationDescriptorTests: XCTestCase {
         XCTAssertEqual(toValue, finish, "To value should be \(finish)")
 
         let keyPath = animation.keyPath
-        XCTAssertEqual(keyPath, SwiftyCoreAnimation.AnchorPoint.X.keyPath, "KeyPath should be \(SwiftyCoreAnimation.AnchorPoint.X.keyPath)")
+        XCTAssertEqual(keyPath, AnchorPoint.X.keyPath, "KeyPath should be \(AnchorPoint.X.keyPath)")
         XCTAssertEqual(duration, animation.duration, "Duration should be \(duration)")
     }
 }

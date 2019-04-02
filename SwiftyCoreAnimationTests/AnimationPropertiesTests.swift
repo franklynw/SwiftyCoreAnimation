@@ -31,7 +31,7 @@ class AnimationPropertiesTests: XCTestCase {
 
         // first of all, test that the descriptor correctly applies the properties to the animation it creates
 
-        let animationDescriptor: SwiftyCoreAnimation.Descriptor.Basic<SwiftyCoreAnimation.AnchorPoint> = .from(.zero, to: CGPoint(x: 0.4, y: 0.6), duration: 2, otherAnimationProperties: properties)
+        let animationDescriptor: Descriptor.Basic<SwiftyCoreAnimation.AnchorPoint> = .from(.zero, to: CGPoint(x: 0.4, y: 0.6), duration: 2, otherAnimationProperties: properties)
         self.layer.addBasicAnimation(describedBy: animationDescriptor)
 
         let animation = animationDescriptor.animation
@@ -82,7 +82,7 @@ class AnimationPropertiesTests: XCTestCase {
 
         // first of all, test that the descriptor correctly applies the properties to the animation it creates
 
-        let animationDescriptor: SwiftyCoreAnimation.Descriptor.Basic<SwiftyCoreAnimation.AnchorPoint> = .from(.zero, to: CGPoint(x: 0.4, y: 0.6), duration: 2, otherAnimationProperties: timingProperties)
+        let animationDescriptor: Descriptor.Basic<SwiftyCoreAnimation.AnchorPoint> = .from(.zero, to: CGPoint(x: 0.4, y: 0.6), duration: 2, otherAnimationProperties: timingProperties)
         self.layer.addBasicAnimation(describedBy: animationDescriptor)
 
         let animation = animationDescriptor.animation
@@ -135,7 +135,7 @@ class AnimationPropertiesTests: XCTestCase {
 
         // first of all, test that the descriptor correctly applies the properties to the animation it creates
 
-        let animationDescriptor: SwiftyCoreAnimation.Descriptor.Basic<SwiftyCoreAnimation.AnchorPoint> = .from(.zero, to: CGPoint(x: 0.4, y: 0.6), duration: 2, otherAnimationProperties: propertyProperties)
+        let animationDescriptor: Descriptor.Basic<SwiftyCoreAnimation.AnchorPoint> = .from(.zero, to: CGPoint(x: 0.4, y: 0.6), duration: 2, otherAnimationProperties: propertyProperties)
         self.layer.addBasicAnimation(describedBy: animationDescriptor)
 
         let animation = animationDescriptor.animation
@@ -189,7 +189,7 @@ class AnimationPropertiesTests: XCTestCase {
         // first of all, test that the descriptor correctly applies the properties to the animation it creates
 
         let values: [CGPoint] = [CGPoint.zero, CGPoint(x: 0.2, y: 0.4)]
-        let animationDescriptor: SwiftyCoreAnimation.Descriptor.KeyFrame<SwiftyCoreAnimation.AnchorPoint> = .values(values, duration: 2, otherAnimationProperties: keyFrameProperties)
+        let animationDescriptor: Descriptor.KeyFrame<SwiftyCoreAnimation.AnchorPoint> = .values(values, duration: 2, otherAnimationProperties: keyFrameProperties)
         self.layer.addKeyFrameAnimation(describedBy: animationDescriptor)
 
         let animation = animationDescriptor.animation
@@ -244,7 +244,7 @@ class AnimationPropertiesTests: XCTestCase {
 
         // first of all, test that the descriptor correctly applies the properties to the animation it creates
 
-        let animationDescriptor: SwiftyCoreAnimation.Descriptor.Spring<SwiftyCoreAnimation.AnchorPoint> = .from(.zero, to: CGPoint(x: 0.4, y: 0.6), duration: 2, otherAnimationProperties: springProperties)
+        let animationDescriptor: Descriptor.Spring<SwiftyCoreAnimation.AnchorPoint> = .from(.zero, to: CGPoint(x: 0.4, y: 0.6), duration: 2, otherAnimationProperties: springProperties)
         self.layer.addSpringAnimation(describedBy: animationDescriptor)
 
         let animation = animationDescriptor.animation
@@ -294,7 +294,7 @@ class AnimationPropertiesTests: XCTestCase {
 
         // first of all, test that the descriptor correctly applies the properties to the animation it creates
 
-        let animationDescriptor: SwiftyCoreAnimation.Descriptor.Basic<SwiftyCoreAnimation.AnchorPoint> = .from(.zero, to: CGPoint(x: 0.4, y: 0.6), duration: 2, otherAnimationProperties: sceneKitProperties)
+        let animationDescriptor: Descriptor.Basic<SwiftyCoreAnimation.AnchorPoint> = .from(.zero, to: CGPoint(x: 0.4, y: 0.6), duration: 2, otherAnimationProperties: sceneKitProperties)
         self.layer.addBasicAnimation(describedBy: animationDescriptor)
 
         let animation = animationDescriptor.animation

@@ -13,14 +13,12 @@ extension Descriptor {
 
     public class Root {
 
-        internal weak var animationDelegate: CAAnimationDelegate?
         internal private(set) var duration: TimeInterval?
         internal let animationProperties: [AnimationPropertiesApplicable]
         internal let propertyTypes: [BaseLayerProperty.Type]
 
 
-        internal init(duration: TimeInterval?, animationProperties: [AnimationPropertiesApplicable], propertyTypes: [BaseLayerProperty.Type], delegate: CAAnimationDelegate?) {
-            self.animationDelegate = delegate
+        internal init(duration: TimeInterval?, animationProperties: [AnimationPropertiesApplicable], propertyTypes: [BaseLayerProperty.Type]) {
             self.duration = duration
             self.animationProperties = animationProperties
             self.propertyTypes = propertyTypes
@@ -31,8 +29,6 @@ extension Descriptor {
             if let duration = self.duration {
                 animation.duration = duration
             }
-
-            animation.delegate = self.animationDelegate
 
             self.animationProperties.forEach {
                 ($0 as? InternalAnimationPropertiesApplying)?.applyProperty(to: animation)

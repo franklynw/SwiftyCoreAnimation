@@ -24,7 +24,7 @@ class KeyFrameDescriptorTests: XCTestCase {
 
         let duration: TimeInterval = 2
         let path = CGPath(ellipseIn: CGRect(x: 0, y: 0, width: 400, height: 250), transform: nil)
-        let keyFrameColorsDescriptor = SwiftyCoreAnimation.Descriptor.KeyFrame<SwiftyCoreAnimation.FillColor>.path(path, duration: duration)
+        let keyFrameColorsDescriptor = Descriptor.KeyFrame<SwiftyCoreAnimation.FillColor>.path(path, duration: duration)
         self.layer.addKeyFrameAnimation(describedBy: keyFrameColorsDescriptor, forKey: "animation")
         let animation = self.layer.animation(forKey: "animation") as! CAKeyframeAnimation
 
@@ -32,7 +32,7 @@ class KeyFrameDescriptorTests: XCTestCase {
         XCTAssertEqual(pathValue, path, "Should be equal")
 
         let keyPath = animation.keyPath
-        XCTAssertEqual(keyPath, SwiftyCoreAnimation.FillColor.keyPath, "KeyPath should be \(SwiftyCoreAnimation.FillColor.keyPath)")
+        XCTAssertEqual(keyPath, FillColor.keyPath, "KeyPath should be \(FillColor.keyPath)")
 
         XCTAssertEqual(duration, animation.duration, "Duration should be \(duration)")
     }
@@ -41,7 +41,7 @@ class KeyFrameDescriptorTests: XCTestCase {
 
         let duration: TimeInterval = 2
         let values: [UIColor] = [.red, .green, .blue]
-        let keyFrameColorsDescriptor = SwiftyCoreAnimation.Descriptor.KeyFrame<SwiftyCoreAnimation.FillColor>.values(values, duration: duration)
+        let keyFrameColorsDescriptor = Descriptor.KeyFrame<SwiftyCoreAnimation.FillColor>.values(values, duration: duration)
         self.layer.addKeyFrameAnimation(describedBy: keyFrameColorsDescriptor, forKey: "animation")
         let animation = self.layer.animation(forKey: "animation") as! CAKeyframeAnimation
 
@@ -52,7 +52,7 @@ class KeyFrameDescriptorTests: XCTestCase {
         XCTAssertEqual(animationColorComponents, valuesColorComponents, "Should be equal")
 
         let keyPath = animation.keyPath
-        XCTAssertEqual(keyPath, SwiftyCoreAnimation.FillColor.keyPath, "KeyPath should be \(SwiftyCoreAnimation.FillColor.keyPath)")
+        XCTAssertEqual(keyPath, FillColor.keyPath, "KeyPath should be \(FillColor.keyPath)")
 
         XCTAssertEqual(duration, animation.duration, "Duration should be \(duration)")
     }

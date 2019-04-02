@@ -23,7 +23,7 @@ class SpringDescriptorTests: XCTestCase {
     func testSpringAnimation() {
 
         let duration: TimeInterval = 2
-        let springSublayersDescriptor = SwiftyCoreAnimation.Descriptor.Spring<SwiftyCoreAnimation.Sublayers>(duration: duration)
+        let springSublayersDescriptor = Descriptor.Spring<SwiftyCoreAnimation.Sublayers>(duration: duration)
         self.layer.addSpringAnimation(describedBy: springSublayersDescriptor, forKey: "animation")
         let animation = self.layer.animation(forKey: "animation") as! CASpringAnimation
 
@@ -32,7 +32,7 @@ class SpringDescriptorTests: XCTestCase {
         XCTAssertNil(animation.toValue, "To value should be nil")
 
         let keyPath = animation.keyPath
-        XCTAssertEqual(keyPath, SwiftyCoreAnimation.Sublayers.keyPath, "KeyPath should be \(SwiftyCoreAnimation.Sublayers.keyPath)")
+        XCTAssertEqual(keyPath, Sublayers.keyPath, "KeyPath should be \(Sublayers.keyPath)")
 
         XCTAssertEqual(duration, animation.duration, "Duration should be \(duration)")
     }
@@ -41,7 +41,7 @@ class SpringDescriptorTests: XCTestCase {
 
         let start: [CALayer] = [CALayer(), CAShapeLayer()]
         let duration: TimeInterval = 2
-        let springSublayersFromDescriptor = SwiftyCoreAnimation.Descriptor.Spring<SwiftyCoreAnimation.Sublayers>.from(start, duration: duration)
+        let springSublayersFromDescriptor = Descriptor.Spring<SwiftyCoreAnimation.Sublayers>.from(start, duration: duration)
         self.layer.addSpringAnimation(describedBy: springSublayersFromDescriptor, forKey: "animation")
         let animation = self.layer.animation(forKey: "animation") as! CASpringAnimation
 
@@ -52,7 +52,7 @@ class SpringDescriptorTests: XCTestCase {
         XCTAssertNil(animation.toValue, "To value should be nil")
 
         let keyPath = animation.keyPath
-        XCTAssertEqual(keyPath, SwiftyCoreAnimation.Sublayers.keyPath, "KeyPath should be \(SwiftyCoreAnimation.Sublayers.keyPath)")
+        XCTAssertEqual(keyPath, Sublayers.keyPath, "KeyPath should be \(Sublayers.keyPath)")
 
         XCTAssertEqual(duration, animation.duration, "Duration should be \(duration)")
     }
@@ -61,7 +61,7 @@ class SpringDescriptorTests: XCTestCase {
 
         let by: [CALayer] = [CALayer(), CAShapeLayer()]
         let duration: TimeInterval = 2
-        let springSublayersByDescriptor = SwiftyCoreAnimation.Descriptor.Spring<SwiftyCoreAnimation.Sublayers>.by(by, duration: duration)
+        let springSublayersByDescriptor = Descriptor.Spring<SwiftyCoreAnimation.Sublayers>.by(by, duration: duration)
         self.layer.addSpringAnimation(describedBy: springSublayersByDescriptor, forKey: "animation")
         let animation = self.layer.animation(forKey: "animation") as! CASpringAnimation
 
@@ -73,7 +73,7 @@ class SpringDescriptorTests: XCTestCase {
         XCTAssertNil(animation.toValue, "To value should be nil")
 
         let keyPath = animation.keyPath
-        XCTAssertEqual(keyPath, SwiftyCoreAnimation.Sublayers.keyPath, "KeyPath should be \(SwiftyCoreAnimation.Sublayers.keyPath)")
+        XCTAssertEqual(keyPath, Sublayers.keyPath, "KeyPath should be \(Sublayers.keyPath)")
 
         XCTAssertEqual(duration, animation.duration, "Duration should be \(duration)")
     }
@@ -82,7 +82,7 @@ class SpringDescriptorTests: XCTestCase {
 
         let finish: [CALayer] = [CALayer(), CAShapeLayer()]
         let duration: TimeInterval = 2
-        let springSublayersToDescriptor = SwiftyCoreAnimation.Descriptor.Spring<SwiftyCoreAnimation.Sublayers>.to(finish, duration: duration)
+        let springSublayersToDescriptor = Descriptor.Spring<SwiftyCoreAnimation.Sublayers>.to(finish, duration: duration)
         self.layer.addSpringAnimation(describedBy: springSublayersToDescriptor, forKey: "animation")
         let animation = self.layer.animation(forKey: "animation") as! CASpringAnimation
 
@@ -93,7 +93,7 @@ class SpringDescriptorTests: XCTestCase {
         XCTAssertEqual(toValue, finish, "To value should be \(finish)")
 
         let keyPath = animation.keyPath
-        XCTAssertEqual(keyPath, SwiftyCoreAnimation.Sublayers.keyPath, "KeyPath should be \(SwiftyCoreAnimation.Sublayers.keyPath)")
+        XCTAssertEqual(keyPath, Sublayers.keyPath, "KeyPath should be \(Sublayers.keyPath)")
 
         XCTAssertEqual(duration, animation.duration, "Duration should be \(duration)")
     }
@@ -103,7 +103,7 @@ class SpringDescriptorTests: XCTestCase {
         let start: [CALayer] = [CALayer(), CAShapeLayer()]
         let finish: [CALayer] = [CALayer(), CAShapeLayer(), CAGradientLayer()]
         let duration: TimeInterval = 2
-        let springSublayersFromToDescriptor = SwiftyCoreAnimation.Descriptor.Spring<SwiftyCoreAnimation.Sublayers>.from(start, to: finish, duration: duration)
+        let springSublayersFromToDescriptor = Descriptor.Spring<SwiftyCoreAnimation.Sublayers>.from(start, to: finish, duration: duration)
 
         self.layer.addSpringAnimation(describedBy: springSublayersFromToDescriptor, forKey: "animation")
         let animation = self.layer.animation(forKey: "animation") as! CASpringAnimation
@@ -117,7 +117,7 @@ class SpringDescriptorTests: XCTestCase {
         XCTAssertEqual(toValue, finish, "To value should be \(finish)")
 
         let keyPath = animation.keyPath
-        XCTAssertEqual(keyPath, SwiftyCoreAnimation.Sublayers.keyPath, "KeyPath should be \(SwiftyCoreAnimation.Sublayers.keyPath)")
+        XCTAssertEqual(keyPath, Sublayers.keyPath, "KeyPath should be \(Sublayers.keyPath)")
 
         XCTAssertEqual(duration, animation.duration, "Duration should be \(duration)")
     }
@@ -128,8 +128,8 @@ class SpringDescriptorTests: XCTestCase {
         let by: [CALayer] = [CALayer(), CAShapeLayer(), CAGradientLayer()]
         let duration: TimeInterval = 2
 
-        let timingProperties: [SwiftyCoreAnimation.PropertiesApplicableToSpringAnimations] = [SwiftyCoreAnimation.Properties.MediaTiming.fillMode(.backwards), SwiftyCoreAnimation.Properties.isRemovedOnCompletion(false)]
-        let springSublayersFromByDescriptor = SwiftyCoreAnimation.Descriptor.Spring<SwiftyCoreAnimation.Sublayers>.from(start, by: by, duration: duration, otherAnimationProperties: timingProperties)
+        let timingProperties: [SwiftyCoreAnimation.PropertiesApplicableToSpringAnimations] = [SwiftyCoreAnimation.Properties.MediaTiming.fillMode(.backwards), Properties.isRemovedOnCompletion(false)]
+        let springSublayersFromByDescriptor = Descriptor.Spring<SwiftyCoreAnimation.Sublayers>.from(start, by: by, duration: duration, otherAnimationProperties: timingProperties)
         self.layer.addSpringAnimation(describedBy: springSublayersFromByDescriptor, forKey: "animation")
         let animation = self.layer.animation(forKey: "animation") as! CASpringAnimation
 
@@ -142,7 +142,7 @@ class SpringDescriptorTests: XCTestCase {
         XCTAssertNil(animation.toValue, "To value should be nil")
 
         let keyPath = animation.keyPath
-        XCTAssertEqual(keyPath, SwiftyCoreAnimation.Sublayers.keyPath, "KeyPath should be \(SwiftyCoreAnimation.Sublayers.keyPath)")
+        XCTAssertEqual(keyPath, Sublayers.keyPath, "KeyPath should be \(Sublayers.keyPath)")
         XCTAssertEqual(duration, animation.duration, "Duration should be \(duration)")
         XCTAssertEqual(CAMediaTimingFillMode.backwards, animation.fillMode, "FillMode should be .backwards")
         XCTAssertFalse(animation.isRemovedOnCompletion, "isRemovedOnCompletion should be false")
@@ -153,7 +153,7 @@ class SpringDescriptorTests: XCTestCase {
         let start: [CALayer] = [CALayer(), CAShapeLayer()]
         let finish: [CALayer] = [CALayer(), CAShapeLayer(), CAGradientLayer()]
         let duration: TimeInterval = 2
-        let springSublayersByToDescriptor = SwiftyCoreAnimation.Descriptor.Spring<SwiftyCoreAnimation.Sublayers>.by(start, to: finish, duration: duration)
+        let springSublayersByToDescriptor = Descriptor.Spring<SwiftyCoreAnimation.Sublayers>.by(start, to: finish, duration: duration)
         self.layer.addSpringAnimation(describedBy: springSublayersByToDescriptor, forKey: "animation")
         let animation = self.layer.animation(forKey: "animation") as! CASpringAnimation
 
@@ -166,7 +166,7 @@ class SpringDescriptorTests: XCTestCase {
         XCTAssertEqual(toValue, finish, "To value should be \(finish)")
 
         let keyPath = animation.keyPath
-        XCTAssertEqual(keyPath, SwiftyCoreAnimation.Sublayers.keyPath, "KeyPath should be \(SwiftyCoreAnimation.Sublayers.keyPath)")
+        XCTAssertEqual(keyPath, Sublayers.keyPath, "KeyPath should be \(Sublayers.keyPath)")
         XCTAssertEqual(duration, animation.duration, "Duration should be \(duration)")
     }
 }
