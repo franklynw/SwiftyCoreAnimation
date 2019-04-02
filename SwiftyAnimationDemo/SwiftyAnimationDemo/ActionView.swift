@@ -200,9 +200,6 @@ class ActionView: UIView, AnimationsView {
         let width: CGFloat = 200
 
         let waitDescriptor = Descriptor.Wait(for: 1)
-//        waitDescriptor.animationDidFinish = { _, _ in
-//            print("Finished waiting")
-//        }
         let actionDescriptor1 = Descriptor.Action { [weak self] in
             guard let self = self else { return }
             self.animationsViewDelegate?.showMessage("Setting fillColor to blue & strokeColor to red")
@@ -216,16 +213,19 @@ class ActionView: UIView, AnimationsView {
 
         let colorsGroupDescriptor = Descriptor.Group.Concurrent(using: [fillColorDescriptor, strokeColorDescriptor], duration: 2)
 
-        let actionDescriptor2 = Descriptor.Action { [weak self] in
+        let currentLineWidth = shapeLayer.get(LineWidth.self) ?? 0
+        let lineWidthDescriptor = Descriptor.Basic<LineWidth>.from(currentLineWidth, to: 40, duration: 2)
+
+        // we're using an animationWillBegin closure on the lineWidth descriptor to set properties prior to the animation (instead of an Action Descriptor)
+        // this is probably better than having a dedicated Action descriptor
+        lineWidthDescriptor.animationWillBegin = { [weak self] in
             guard let self = self else { return }
             self.animationsViewDelegate?.showMessage("Setting lineWidth to 40")
             shapeLayer.set(LineWidth(40)) // in this case we're setting the layer's lineWidth property prior to animating it
         }
-        let currentLineWidth = shapeLayer.get(LineWidth.self) ?? 0
-        let lineWidthDescriptor = Descriptor.Basic<LineWidth>.from(currentLineWidth, to: 40, duration: 2)
 
         // create the first 'sequence' descriptor using the above descriptors
-        let sequenceDescriptor = Descriptor.Group.Sequential(using: [waitDescriptor, actionDescriptor1, colorsGroupDescriptor, waitDescriptor, actionDescriptor2, lineWidthDescriptor])
+        let sequenceDescriptor = Descriptor.Group.Sequential(using: [waitDescriptor, actionDescriptor1, colorsGroupDescriptor, waitDescriptor, lineWidthDescriptor])
 
         let keyFrameProperties: [Properties.KeyFrameAnimation] = [.calculationMode(.paced)]
         let translate = CGAffineTransform(translationX: width / -2, y: 0)

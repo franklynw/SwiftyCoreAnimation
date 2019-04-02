@@ -204,9 +204,17 @@ extension CALayer {
 
         if let concurrentAnimationsDescriptor = descriptor as? Descriptor.Group.Concurrent {
 
-            self.addConcurrentAnimations(concurrentAnimationsDescriptor, forKey: key, removeExistingAnimations: removeExistingAnimations, animationFinished: { [weak self] _, _ in
+            self.addConcurrentAnimations(concurrentAnimationsDescriptor,
+                                         forKey: key,
+                                         removeExistingAnimations: removeExistingAnimations,
+                                         animationFinished: { [weak self] _, _ in
+
                 guard let self = self else { return }
-                self.addAnimationSequence(descriptors, forKey: key, removeExistingAnimations: removeExistingAnimations, animationFinished: { animation, finished in
+                self.addAnimationSequence(descriptors,
+                                          forKey: key,
+                                          removeExistingAnimations: removeExistingAnimations,
+                                          animationFinished: { animation, finished in
+
                     animationFinished?(animation, finished)
                     descriptor.animationDidFinish?(animation, finished)
                 })
@@ -215,7 +223,11 @@ extension CALayer {
         } else if let sequentialAnimationsDescriptor = descriptor as? Descriptor.Group.Sequential {
 
             let allDescriptors = sequentialAnimationsDescriptor.descriptors + descriptors
-            self.addAnimationSequence(allDescriptors, forKey: key, removeExistingAnimations: removeExistingAnimations, animationFinished: { animation, finished in
+            self.addAnimationSequence(allDescriptors,
+                                      forKey: key,
+                                      removeExistingAnimations: removeExistingAnimations,
+                                      animationFinished: { animation, finished in
+
                 animationFinished?(animation, finished)
                 descriptor.animationDidFinish?(animation, finished)
             })
@@ -227,7 +239,11 @@ extension CALayer {
 
             animation.addAnimationFinishedAction { [weak self] animation, finished in
                 guard let self = self else { return }
-                self.addAnimationSequence(descriptors, forKey: key, removeExistingAnimations: removeExistingAnimations, animationFinished: animationFinished)
+                self.addAnimationSequence(descriptors,
+                                          forKey: key,
+                                          removeExistingAnimations: removeExistingAnimations,
+                                          animationFinished: animationFinished)
+
                 descriptor.animationDidFinish?(animation, finished)
             }
 
@@ -281,12 +297,20 @@ extension CALayer {
 
             groupDescriptors.forEach { descriptor in
                 if let descriptor = descriptor as? Descriptor.Group.Concurrent {
-                    self.addConcurrentAnimations(descriptor, forKey: key, removeExistingAnimations: removeExistingAnimations, animationFinished: { animation, finished in
+                    self.addConcurrentAnimations(descriptor,
+                                                 forKey: key,
+                                                 removeExistingAnimations: removeExistingAnimations,
+                                                 animationFinished: { [animationFinishedAction, animationDescriptorFinishedAction] animation, finished in
+
                         animationDescriptorFinishedAction?(animation, finished)
                         animationFinishedAction?(animation, finished)
                     })
                 } else if let descriptor = descriptor as? Descriptor.Group.Sequential {
-                    self.addAnimationSequence(descriptor.descriptors, forKey: key, removeExistingAnimations: removeExistingAnimations, animationFinished: { animation, finished in
+                    self.addAnimationSequence(descriptor.descriptors,
+                                              forKey: key,
+                                              removeExistingAnimations: removeExistingAnimations,
+                                              animationFinished: { [animationFinishedAction, animationDescriptorFinishedAction] animation, finished in
+
                         animationDescriptorFinishedAction?(animation, finished)
                         animationFinishedAction?(animation, finished)
                     })
@@ -299,13 +323,21 @@ extension CALayer {
 
             let animations: [CAAnimation] = descriptors.compactMap { descriptor -> CAAnimation? in
                 if let concurrentAnimationsDescriptor = descriptor as? Descriptor.Group.Concurrent {
-                    self.addConcurrentAnimations(concurrentAnimationsDescriptor, forKey: key, removeExistingAnimations: removeExistingAnimations, animationFinished: { animation, finished in
-                        descriptor.animationDidFinish?(animation, finished)
+                    self.addConcurrentAnimations(concurrentAnimationsDescriptor,
+                                                 forKey: key,
+                                                 removeExistingAnimations: removeExistingAnimations,
+                                                 animationFinished: { [animationFinishedAction = descriptor.animationDidFinish] animation, finished in
+
+                        animationFinishedAction?(animation, finished)
                     })
                     return nil
                 } else if let sequentialAnimationsDescriptor = descriptor as? Descriptor.Group.Sequential {
-                    self.addAnimationSequence(sequentialAnimationsDescriptor.descriptors, forKey: key, removeExistingAnimations: removeExistingAnimations, animationFinished: { animation, finished in
-                        descriptor.animationDidFinish?(animation, finished)
+                    self.addAnimationSequence(sequentialAnimationsDescriptor.descriptors,
+                                              forKey: key,
+                                              removeExistingAnimations: removeExistingAnimations,
+                                              animationFinished: { [animationFinishedAction = descriptor.animationDidFinish] animation, finished in
+
+                        animationFinishedAction?(animation, finished)
                     })
                     return nil
                 } else {
@@ -330,6 +362,8 @@ extension CALayer {
             descriptors.forEach {
                 CALayer.addAnimationFinishedAction($0.animationDidFinish, to: animationGroup)
             }
+
+            animationDescriptor.animationWillBegin?()
 
             self.add(animationGroup, forKey: key)
         }
