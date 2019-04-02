@@ -200,6 +200,9 @@ class ActionView: UIView, AnimationsView {
         let width: CGFloat = 200
 
         let waitDescriptor = Descriptor.Wait(for: 1)
+//        waitDescriptor.animationDidFinish = { _, _ in
+//            print("Finished waiting")
+//        }
         let actionDescriptor1 = Descriptor.Action { [weak self] in
             guard let self = self else { return }
             self.animationsViewDelegate?.showMessage("Setting fillColor to blue & strokeColor to red")

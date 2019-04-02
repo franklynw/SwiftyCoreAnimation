@@ -17,6 +17,9 @@ extension Descriptor {
         internal let animationProperties: [AnimationPropertiesApplicable]
         internal let propertyTypes: [BaseLayerProperty.Type]
 
+        public var animationWillBegin: (() -> ())?
+        public var animationDidFinish: AnimationFinishedAction?
+
 
         internal init(duration: TimeInterval?, animationProperties: [AnimationPropertiesApplicable], propertyTypes: [BaseLayerProperty.Type]) {
             self.duration = duration
