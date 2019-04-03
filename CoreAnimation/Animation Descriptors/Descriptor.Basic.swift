@@ -50,7 +50,7 @@ extension Descriptor {
         }
 
         /// Creates & returns an instance of the animation described by the class instance
-        override internal var animation: AnimationType {
+        internal var animation: AnimationType {
 
             let animation: CABasicAnimation = CABasicAnimation(keyPath: T.keyPath)
 

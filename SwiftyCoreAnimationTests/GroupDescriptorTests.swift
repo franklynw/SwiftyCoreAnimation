@@ -15,6 +15,9 @@ class GroupDescriptorTests: XCTestCase {
     // Test all the group animation descriptor constructors
     // Probably a fair assumption that if we can construct the descriptors for one property, it'll be ok for all of them
 
+    // Unfortunately, there's a fair chunk of the Group Descriptor code which is pretty much untestable here,
+    // we'd have to write UI tests - mark that as a TODO...
+
     private lazy var layer: CALayer = {
         return CALayer()
     }()
@@ -75,8 +78,12 @@ class GroupDescriptorTests: XCTestCase {
             try self.shapeLayer.addAnimationsGroup(describedBy: groupDescriptor, forKey: "animation")
             let animation = self.shapeLayer.animation(forKey: "animation")!
 
-            // the animation sequence's duration should actually be the duration of the first item
+            // the animation's duration should actually be the duration of the first item
+            // (the way the sequences are created, only the first animation is returned)
             XCTAssertEqual(duration1, animation.duration, "Duration should be \(duration1)")
+
+            // on the other hand, the duration of the descriptor should be the total
+            XCTAssertEqual(duration1 + duration2, groupDescriptor.duration, "Duration should be \(duration1 + duration2)")
 
         } catch {
             XCTFail("Descriptor should have successfully created animation")

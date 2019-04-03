@@ -23,7 +23,7 @@ extension Descriptor {
             super.init(duration: duration, animationProperties: [], propertyTypes: [])
         }
 
-        override internal var animation: AnimationType {
+        internal var animation: AnimationType {
 
             let animation: CABasicAnimation = CABasicAnimation(keyPath: Wait.animationKey)
             animation.fromValue = 0

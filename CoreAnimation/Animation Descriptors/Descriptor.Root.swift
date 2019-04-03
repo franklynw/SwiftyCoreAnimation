@@ -37,9 +37,5 @@ extension Descriptor {
                 ($0 as? InternalAnimationPropertiesApplying)?.applyProperty(to: animation)
             }
         }
-
-        internal var animation: CAAnimation {
-            fatalError("Must override")
-        }
     }
 }

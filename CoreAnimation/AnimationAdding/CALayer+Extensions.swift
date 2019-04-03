@@ -87,7 +87,7 @@ extension CALayer {
 
         self.removeExistingAnimationsIfNecessary(removeExistingAnimations)
 
-        let animation = animationDescriptor.animation
+        let animation: CABasicAnimation = animationDescriptor.animation
 
         CALayer.applyProperties(properties, to: animation)
         CALayer.addAnimationFinishedAction(animationFinished, to: animation)
@@ -173,6 +173,10 @@ extension CALayer {
         }
     }
 
+    /*
+     A large part of this function isn't testable by the unit tests, as it has UI dependencies
+     TODO: - write UI tests for Animation Sequence groups
+    */
     func addAnimationSequence(_ animationDescriptors: [Descriptor.Root],
                               forKey key: String?,
                               removeExistingAnimations: Bool,
@@ -232,10 +236,10 @@ extension CALayer {
                 descriptor.animationDidFinish?(animation, finished)
             })
 
-        } else {
+        } else if let typeErasedDescriptor = descriptor as? TypeErasedAnimationDescribing {
             // in this case it's a normal animation
 
-            let animation = descriptor.animation
+            let animation = typeErasedDescriptor.typeErasedAnimation
 
             animation.addAnimationFinishedAction { [weak self] animation, finished in
                 guard let self = self else { return }
@@ -251,6 +255,10 @@ extension CALayer {
         }
     }
 
+    /*
+     A large part of this function isn't testable by the unit tests, as it has UI dependencies
+     TODO: - write UI tests for Concurrent Animation groups
+     */
     func addConcurrentAnimations(_ animationDescriptor: Descriptor.Group.Concurrent,
                                  forKey key: String?,
                                  removeExistingAnimations: Bool,
@@ -340,8 +348,10 @@ extension CALayer {
                         animationFinishedAction?(animation, finished)
                     })
                     return nil
+                } else if let typeErasedDescriptor = descriptor as? TypeErasedAnimationDescribing {
+                    return typeErasedDescriptor.typeErasedAnimation
                 } else {
-                    return descriptor.animation
+                    return nil
                 }
             }
 
