@@ -17,8 +17,8 @@ public extension ShapeLayerAnimationAdding where Self: CAShapeLayer {
     /// Set the layer's property using the 'nice' type
     ///
     /// - Parameter property: object conforming to ShapeLayerProperty & KeyValueProviding & KeyPathProviding & Settable
-    public func set<T: ShapeLayerProperty & KeyValueProviding & KeyPathProviding & Settable>(_ property: T) {
-        self.setValue(property.value?.keyValue, forKeyPath: T.keyPath)
+    public func set<T: ShapeLayerProperty & KeyValueProviding & KeyPathProviding & Settable>(_ property: T?) {
+        self.setValue(property?.value?.keyValue, forKeyPath: T.keyPath)
     }
 
     /// Get the layer's value for the specified property

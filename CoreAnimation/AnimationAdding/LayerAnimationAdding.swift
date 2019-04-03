@@ -17,8 +17,8 @@ public extension LayerAnimationAdding where Self: CALayer {
     /// Set the layer's property using the 'nice' KeyValueType type
     ///
     /// - Parameter property: object conforming to LayerProperty & KeyValueProviding & KeyPathProviding & Settable
-    public func set<T: LayerProperty & KeyValueProviding & KeyPathProviding & Settable>(_ property: T) {
-        self.setValue(property.value?.keyValue, forKeyPath: T.keyPath)
+    public func set<T: LayerProperty & KeyValueProviding & KeyPathProviding & Settable>(_ property: T?) {
+        self.setValue(property?.value?.keyValue, forKeyPath: T.keyPath)
     }
 
     /// Get the layer's value for the specified property

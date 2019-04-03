@@ -17,8 +17,8 @@ public extension GradientLayerAnimationAdding where Self: CAGradientLayer {
     /// Set the layer's property using the 'nice' type
     ///
     /// - Parameter property: object conforming to GradientLayerProperty & KeyValueProviding & KeyPathProviding & Settable
-    public func set<T: GradientLayerProperty & KeyValueProviding & KeyPathProviding & Settable>(_ property: T) {
-        self.setValue(property.value?.keyValue, forKeyPath: T.keyPath)
+    public func set<T: GradientLayerProperty & KeyValueProviding & KeyPathProviding & Settable>(_ property: T?) {
+        self.setValue(property?.value?.keyValue, forKeyPath: T.keyPath)
     }
 
     /// Get the layer's value for the specified property
