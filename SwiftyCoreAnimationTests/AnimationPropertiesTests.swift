@@ -138,7 +138,7 @@ class AnimationPropertiesTests: XCTestCase {
         let animationDescriptor: Descriptor.Basic<SwiftyCoreAnimation.AnchorPoint> = .from(.zero, to: CGPoint(x: 0.4, y: 0.6), duration: 2, otherAnimationProperties: propertyProperties)
         self.layer.addBasicAnimation(describedBy: animationDescriptor)
 
-        let animation = animationDescriptor.animation
+        let animation = animationDescriptor.animation as! CABasicAnimation
 
         XCTAssertEqual(animation.isCumulative, isCumulative, "Should be equal")
         XCTAssertEqual(animation.isAdditive, isAdditive, "Should be equal")
@@ -192,7 +192,7 @@ class AnimationPropertiesTests: XCTestCase {
         let animationDescriptor: Descriptor.KeyFrame<SwiftyCoreAnimation.AnchorPoint> = .values(values, duration: 2, otherAnimationProperties: keyFrameProperties)
         self.layer.addKeyFrameAnimation(describedBy: animationDescriptor)
 
-        let animation = animationDescriptor.animation
+        let animation = animationDescriptor.animation as! CAKeyframeAnimation
 
         XCTAssertEqual(animation.keyTimes?.compactMap { CGFloat($0.doubleValue) }, keyTimes, "Should be equal")
         XCTAssertEqual(animation.timingFunctions, timingFunctions, "Should be equal")
@@ -247,7 +247,7 @@ class AnimationPropertiesTests: XCTestCase {
         let animationDescriptor: Descriptor.Spring<SwiftyCoreAnimation.AnchorPoint> = .from(.zero, to: CGPoint(x: 0.4, y: 0.6), duration: 2, otherAnimationProperties: springProperties)
         self.layer.addSpringAnimation(describedBy: animationDescriptor)
 
-        let animation = animationDescriptor.animation
+        let animation = animationDescriptor.animation as! CASpringAnimation
 
         XCTAssertEqual(animation.damping, damping, "Should be equal")
         XCTAssertEqual(animation.initialVelocity, initialVelocity, "Should be equal")

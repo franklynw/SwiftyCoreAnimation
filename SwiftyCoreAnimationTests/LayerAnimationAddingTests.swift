@@ -487,7 +487,7 @@ class LayerAnimationAddingTests: XCTestCase {
         let by: UIColor = .green
         let duration: TimeInterval = 2
         let basicAnimationDescriptor = Descriptor.Basic<BorderColor>.from(from, by: by, duration: duration)
-        let basicAnimation = basicAnimationDescriptor.animation
+        let basicAnimation = basicAnimationDescriptor.animation as! CABasicAnimation
 
         let layers: [CALayer] = [self.layer, self.shapeLayer, self.emitterLayer, self.gradientLayer, self.replicatorLayer, self.textLayer]
 
@@ -508,7 +508,7 @@ class LayerAnimationAddingTests: XCTestCase {
 
         let values: [UIColor] = [.red, .green, .purple]
         let keyFrameAnimationDescriptor = Descriptor.KeyFrame<BorderColor>.values(values, duration: duration)
-        let keyFrameAnimation = keyFrameAnimationDescriptor.animation
+        let keyFrameAnimation = keyFrameAnimationDescriptor.animation as! CAKeyframeAnimation
 
         layers.forEach {
             $0.addKeyFrameAnimation(keyFrameAnimation, forKey: "keyFrameAnimation")
@@ -526,7 +526,7 @@ class LayerAnimationAddingTests: XCTestCase {
 
 
         let springAnimationDescriptor = Descriptor.Spring<BorderColor>.from(from, by: by, duration: duration)
-        let springAnimation = springAnimationDescriptor.animation
+        let springAnimation = springAnimationDescriptor.animation as! CASpringAnimation
 
         layers.forEach {
             $0.addSpringAnimation(springAnimation, forKey: "springAnimation")

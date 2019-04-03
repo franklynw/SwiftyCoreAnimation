@@ -46,7 +46,7 @@ class AnimationFinishedActionsTests: XCTestCase {
         let expectation1: XCTestExpectation = self.expectation(description: "Animation finished 1")
         let expectation2: XCTestExpectation = self.expectation(description: "Animation finished 2")
 
-        let animation = basicAnchorPointDescriptor.animation
+        let animation = basicAnchorPointDescriptor.animation as! CABasicAnimation
 
         animation.addAnimationFinishedAction { _, _ in
             expectation1.fulfill()
@@ -71,7 +71,7 @@ class AnimationFinishedActionsTests: XCTestCase {
         let expectation1: XCTestExpectation = self.expectation(description: "Animation finished 1")
         let expectation2: XCTestExpectation = self.expectation(description: "Animation finished 2")
 
-        let animation = basicAnchorPointDescriptor.animation
+        let animation = basicAnchorPointDescriptor.animation as! CABasicAnimation
 
         let id1 = animation.addAnimationFinishedAction { _, _ in
             XCTFail("Shouldn't be called")
@@ -101,7 +101,7 @@ class AnimationFinishedActionsTests: XCTestCase {
         let expectation1: XCTestExpectation = self.expectation(description: "Animation finished 1")
         let expectation2: XCTestExpectation = self.expectation(description: "Animation finished 2")
 
-        let animation = basicAnchorPointDescriptor.animation
+        let animation = basicAnchorPointDescriptor.animation as! CABasicAnimation
 
         animation.addAnimationFinishedAction { _, _ in
             XCTFail("Shouldn't be called")
