@@ -9,7 +9,30 @@
 import Foundation
 
 
-/// Wrapper for the layer's masksToBounds property
+/**
+ Wrapper for the CALayer's masksToBounds property
+
+ Use with Descriptors or SwiftyCoreAnimation's set/get functions
+ - KeyValueType: Bool
+
+ ## Usage Examples ##
+ ````
+ myLayer.set(MasksToBounds(false))
+ let isHidden = myLayer.get(MasksToBounds.self)
+ let isHiddenDescriptor = Descriptor.Basic<MasksToBounds>.from(true, to: false, duration: 1)
+ ````
+
+ Conforms to -
+ - Settable
+ - Animatable
+ - KeyValueProviding
+ - LayerProperty
+ - ShapeLayerProperty
+ - EmitterLayerProperty
+ - GradientLayerProperty
+ - ReplicatorLayerProperty
+ - TextLayerProperty
+*/
 public struct MasksToBounds: AnimatableLayerPropertyConformance {
     public typealias KeyValueType = Bool
 

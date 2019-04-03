@@ -65,7 +65,25 @@ extension Descriptor {
          it means we can't just return a CAAnimationGroup animation.
         */
 
-        // MARK: - Describes a Concurrent Animations Group
+        /**
+         A Descriptor for creating a group of concurrent animations
+
+         ## Usage Example ##
+         Create a Descriptor for a group of concurrent animations, & add it to a layer:
+         ````
+         let keyFrameProperties: [Properties.KeyFrameAnimation] = [.calculationMode(.paced)]
+         let moveDescriptor = Descriptor.KeyFrame<Position>.path(ellipsePath, otherAnimationProperties: keyFrameProperties)
+         let rotateDescriptor = Descriptor.Basic<Transform.Rotation>.from(0, to: CGFloat.pi * 4)
+
+         let groupDescriptor = Descriptor.Group.Concurrent(using: [moveDescriptor, rotateDescriptor], duration: 2)
+
+         do {
+            try myLayer.addAnimationsGroup(describedBy: groupDescriptor)
+         } catch {
+            // handle the error thrown if any of the animatable properties are not appropriate for the layer type (eg, fillColor on CAGradientLayer)
+         }
+         ````
+        */
         public final class Concurrent: Group {
 
             internal let descriptors: [Descriptor.Root]
@@ -88,7 +106,25 @@ extension Descriptor {
             }
         }
 
-        // MARK: - Describes a Sequence Animation Group
+        /**
+         A Descriptor for creating a sequence of animations
+
+         ## Usage Example ##
+         Create a Descriptor for a sequential group of animations, & add it to a layer:
+         ````
+         let fillColorDescriptor = Descriptor.Basic<FillColor>.from(.red, to: .blue)
+         let waitDescriptor = Descriptor.Wait(for: 2)
+         let lineWidthDescriptor = Descriptor.Basic<LineWidth>.from(currentLineWidth, to: 10, duration: 1)
+
+         let groupDescriptor = Descriptor.Group.Sequential(using: [fillColorDescriptor, waitDescriptor, lineWidthDescriptor])
+
+         do {
+            try myShapeLayer.addAnimationsGroup(describedBy: groupDescriptor)
+         } catch {
+            // handle the error thrown if any of the animatable properties are not appropriate for the layer type (eg, fillColor on CAGradientLayer)
+         }
+         ````
+        */
         public final class Sequential: Group {
 
             internal let descriptors: [Descriptor.Root]

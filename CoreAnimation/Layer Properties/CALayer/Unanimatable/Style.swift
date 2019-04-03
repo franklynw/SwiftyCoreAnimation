@@ -9,7 +9,28 @@
 import Foundation
 
 
-/// Wrapper for the layer's style property
+/**
+ Wrapper for the CALayer's style property
+
+ Use with Descriptors or SwiftyCoreAnimation's set/get functions
+ - KeyValueType: [AnyHashable: Any]
+
+ ## Usage Examples ##
+ ````
+ myLayer.set(Style(styleDict))
+ let style = myLayer.get(Style.self)
+ ````
+
+ Conforms to -
+ - Settable
+ - KeyValueProviding
+ - LayerProperty
+ - ShapeLayerProperty
+ - EmitterLayerProperty
+ - GradientLayerProperty
+ - ReplicatorLayerProperty
+ - TextLayerProperty
+*/
 public struct Style: LayerPropertyConformance {
     public typealias KeyValueType = [AnyHashable: Any]
 

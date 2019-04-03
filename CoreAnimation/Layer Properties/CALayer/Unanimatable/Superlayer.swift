@@ -9,7 +9,27 @@
 import UIKit
 
 
-/// Wrapper for the layer's superlayer property
+/**
+ Wrapper for the CALayer's superlayer property
+
+ Use with Descriptors or SwiftyCoreAnimation's set/get functions
+ - KeyValueType: CALayer
+
+ ## Usage Examples ##
+ ````
+ let superlayer = myLayer.get(Superlayer.self)
+ ````
+
+ Conforms to -
+ - Settable
+ - KeyValueProviding
+ - LayerProperty
+ - ShapeLayerProperty
+ - EmitterLayerProperty
+ - GradientLayerProperty
+ - ReplicatorLayerProperty
+ - TextLayerProperty
+*/
 public struct Superlayer: UnsettableLayerPropertyConformance {
     public typealias KeyValueType = CALayer
 

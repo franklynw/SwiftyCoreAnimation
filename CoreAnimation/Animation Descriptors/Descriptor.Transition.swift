@@ -11,7 +11,16 @@ import UIKit
 
 extension Descriptor {
 
-    // MARK: - Describes a Transition Animation
+    /**
+     A Descriptor for creating a CATransition
+
+     ## Usage Example ##
+     Create a Descriptor for a transition, & add it to a layer:
+     ````
+     let transitionDescriptor = Descriptor.Transition(type: .push, subtype: .fromBottom, duration: 1.5)
+     myLayer.addTransition(describedBy: transitionDescriptor)
+     ````
+    */
     public final class Transition: Root, AnimationDescribing {
         
         private let type: CATransitionType

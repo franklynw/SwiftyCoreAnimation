@@ -9,7 +9,28 @@
 import Foundation
 
 
-/// Wrapper for the layer's allowsGroupOpacity property
+/**
+ Wrapper for the CALayer's allowsGroupOpacity property
+
+ Use with Descriptors or SwiftyCoreAnimation's set/get functions
+ - KeyValueType: Bool
+
+ ## Usage Examples ##
+ ````
+ myLayer.set(AllowsGroupOpacity(true))
+ let allowsGroupOpacity = myLayer.get(AllowsGroupOpacity.self)
+ ````
+
+ Conforms to -
+ - Settable
+ - KeyValueProviding
+ - LayerProperty
+ - ShapeLayerProperty
+ - EmitterLayerProperty
+ - GradientLayerProperty
+ - ReplicatorLayerProperty
+ - TextLayerProperty
+*/
 public struct AllowsGroupOpacity: LayerPropertyConformance {
     public typealias KeyValueType = Bool
 

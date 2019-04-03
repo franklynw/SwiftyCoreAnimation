@@ -9,7 +9,30 @@
 import Foundation
 
 
-/// Wrapper for the layer's isHidden property
+/**
+ Wrapper for the CALayer's isHidden property
+
+ Use with Descriptors or SwiftyCoreAnimation's set/get functions
+ - KeyValueType: Bool
+
+ ## Usage Examples ##
+ ````
+ myLayer.set(Hidden(false))
+ let isHidden = myLayer.get(Hidden.self)
+ let isHiddenDescriptor = Descriptor.Basic<Hidden>.from(true, to: false, duration: 1)
+ ````
+
+ Conforms to -
+ - Settable
+ - Animatable
+ - KeyValueProviding
+ - LayerProperty
+ - ShapeLayerProperty
+ - EmitterLayerProperty
+ - GradientLayerProperty
+ - ReplicatorLayerProperty
+ - TextLayerProperty
+*/
 public struct Hidden: AnimatableLayerPropertyConformance {
     public typealias KeyValueType = Bool
 

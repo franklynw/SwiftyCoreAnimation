@@ -9,6 +9,7 @@
 import Foundation
 
 
+/// Used by SwiftyCoreAnimation's layer property wrappers to return their keyPaths
 public protocol KeyPathProviding {
     static var keyPath: String { get }
 }

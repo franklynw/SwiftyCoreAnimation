@@ -11,7 +11,18 @@ import UIKit
 
 extension Descriptor {
 
-    // MARK: - Describes a Spring Animation on the specified property T
+    /**
+     A Descriptor for creating a CASpringAnimation
+
+     Animate property 'T' - conforming to BaseLayerProperty, KeyValueProviding & Animatable
+
+     ## Usage Example ##
+     Create a Descriptor for a Transform.Scale spring animation, & add it to a layer:
+     ````
+     let stretchDescriptor = Descriptor.Spring<Transform.Scale>.from(1, to: 2, duration: 0.5)
+     myLayer.addSpringAnimation(describedBy: stretchDescriptor)
+     ````
+    */
     public final class Spring<T: BaseLayerProperty & KeyValueProviding & Animatable>: Root, AnimationDescribing {
 
         private let from: Any?

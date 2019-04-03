@@ -8,7 +8,7 @@
 
 import UIKit
 
-
+/// The counterpart to KeyValueDescribing, allows us to retrieve the value from a CALayer as the 'nice' type
 public protocol KeyValueProviding {
     associatedtype KeyValueType: KeyValueDescribing
     var value: KeyValueType? { get }

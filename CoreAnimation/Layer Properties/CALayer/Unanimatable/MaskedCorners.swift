@@ -9,7 +9,28 @@
 import UIKit
 
 
-/// Wrapper for the layer's maskedCorners property
+/**
+ Wrapper for the CALayer's maskedCorners property
+
+ Use with Descriptors or SwiftyCoreAnimation's set/get functions
+ - KeyValueType: CACornerMask
+
+ ## Usage Examples ##
+ ````
+ myLayer.set(MaskedCorners(cornerMask))
+ let maskedCorners = myLayer.get(MaskedCorners.self)
+ ````
+
+ Conforms to -
+ - Settable
+ - KeyValueProviding
+ - LayerProperty
+ - ShapeLayerProperty
+ - EmitterLayerProperty
+ - GradientLayerProperty
+ - ReplicatorLayerProperty
+ - TextLayerProperty
+*/
 @available(iOS 11.0, *)
 public struct MaskedCorners: LayerPropertyConformance {
     public typealias KeyValueType = CACornerMask

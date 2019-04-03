@@ -9,7 +9,28 @@
 import Foundation
 
 
-/// Wrapper for the layer's allowsEdgeAntialiasing property
+/**
+ Wrapper for the CALayer's allowsEdgeAntialiasing property
+
+ Use with Descriptors or SwiftyCoreAnimation's set/get functions
+ - KeyValueType: Bool
+
+ ## Usage Examples ##
+ ````
+ myLayer.set(AllowsEdgeAntialiasing(true))
+ let allowsEdgeAntialiasing = myLayer.get(AllowsEdgeAntialiasing.self)
+ ````
+
+ Conforms to -
+ - Settable
+ - KeyValueProviding
+ - LayerProperty
+ - ShapeLayerProperty
+ - EmitterLayerProperty
+ - GradientLayerProperty
+ - ReplicatorLayerProperty
+ - TextLayerProperty
+*/
 public struct AllowsEdgeAntialiasing: LayerPropertyConformance {
     public typealias KeyValueType = Bool
 

@@ -9,7 +9,30 @@
 import UIKit
 
 
-/// Wrapper for the layer's contents property
+/**
+ Wrapper for the CALayer's contents property, as UIImage
+
+ Use with Descriptors or SwiftyCoreAnimation's set/get functions
+ - KeyValueType: CGRect
+
+ ## Usage Examples ##
+ ````
+ myLayer.set(Contents(UIImage(named: "myImage")))
+ let image = myLayer.get(Contents.self)
+ let imageDescriptor = Descriptor.Basic<Contents>.from(UIImage(named: "myImage1"), to: UIImage(named: "myImage2"), duration: 1)
+ ````
+
+ Conforms to -
+ - Settable
+ - Animatable
+ - KeyValueProviding
+ - LayerProperty
+ - ShapeLayerProperty
+ - EmitterLayerProperty
+ - GradientLayerProperty
+ - ReplicatorLayerProperty
+ - TextLayerProperty
+*/
 public struct Contents: AnimatableLayerPropertyConformance {
     public typealias KeyValueType = UIImage
 

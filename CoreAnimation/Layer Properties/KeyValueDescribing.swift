@@ -10,7 +10,7 @@ import UIKit
 
 
 /// Allows animations to be created using Swift types which implement the protocol, rather than Any?
-/// This means that we use values appropriate for the animated property, such as CGFloat for the strokeEnd, etc.
+/// This means that we can use 'nice' value types to set the animated property, such as CGFloat for the strokeEnd, etc.
 public protocol KeyValueDescribing {
     var keyValue: Any? { get }
 }

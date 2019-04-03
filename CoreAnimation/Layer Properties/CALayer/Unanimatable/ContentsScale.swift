@@ -9,7 +9,28 @@
 import UIKit
 
 
-/// Wrapper for the layer's contentsScale property
+/**
+ Wrapper for the CALayer's contentsScale property, as CGFloat
+
+ Use with Descriptors or SwiftyCoreAnimation's set/get functions
+ - KeyValueType: CGFloat
+
+ ## Usage Examples ##
+ ````
+ myLayer.set(ContentsScale(0.7))
+ let contentsScale = myLayer.get(ContentsScale.self)
+ ````
+
+ Conforms to -
+ - Settable
+ - KeyValueProviding
+ - LayerProperty
+ - ShapeLayerProperty
+ - EmitterLayerProperty
+ - GradientLayerProperty
+ - ReplicatorLayerProperty
+ - TextLayerProperty
+*/
 public struct ContentsScale: LayerPropertyConformance {
     public typealias KeyValueType = CGFloat
 

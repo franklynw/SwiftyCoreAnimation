@@ -9,7 +9,28 @@
 import UIKit
 
 
-/// Wrapper for the layer's edgeAntialiasingMask property
+/**
+ Wrapper for the CALayer's edgeAntialiasingMask property
+
+ Use with Descriptors or SwiftyCoreAnimation's set/get functions
+ - KeyValueType: CAEdgeAntialiasingMask
+
+ ## Usage Examples ##
+ ````
+ myLayer.set(EdgeAntialiasingMask(mask))
+ let edgeAntialiasingMask = myLayer.get(EdgeAntialiasingMask.self)
+ ````
+
+ Conforms to -
+ - Settable
+ - KeyValueProviding
+ - LayerProperty
+ - ShapeLayerProperty
+ - EmitterLayerProperty
+ - GradientLayerProperty
+ - ReplicatorLayerProperty
+ - TextLayerProperty
+*/
 public struct EdgeAntialiasingMask: LayerPropertyConformance {
     public typealias KeyValueType = CAEdgeAntialiasingMask
 

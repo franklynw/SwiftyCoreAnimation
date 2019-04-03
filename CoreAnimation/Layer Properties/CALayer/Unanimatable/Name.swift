@@ -9,7 +9,28 @@
 import Foundation
 
 
-/// Wrapper for the layer's name property
+/**
+ Wrapper for the CALayer's name property
+
+ Use with Descriptors or SwiftyCoreAnimation's set/get functions
+ - KeyValueType: String
+
+ ## Usage Examples ##
+ ````
+ myLayer.set(Name("Fred"))
+ let name = myLayer.get(Name.self)
+ ````
+
+ Conforms to -
+ - Settable
+ - KeyValueProviding
+ - LayerProperty
+ - ShapeLayerProperty
+ - EmitterLayerProperty
+ - GradientLayerProperty
+ - ReplicatorLayerProperty
+ - TextLayerProperty
+*/
 public struct Name: LayerPropertyConformance {
     public typealias KeyValueType = String
 

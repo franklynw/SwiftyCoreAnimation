@@ -9,7 +9,26 @@
 import UIKit
 
 
-/// Wrapper for the layer's contentsFormat property
+/**
+ Wrapper for the CALayer's contentsFormat property
+
+ Use with Descriptors or SwiftyCoreAnimation's set/get functions
+ - KeyValueType: Bool
+
+ ## Usage Examples ##
+ ````
+ let contentsFormat = myLayer.get(ContentsFormat.self)
+ ````
+
+ Conforms to -
+ - KeyValueProviding
+ - LayerProperty
+ - ShapeLayerProperty
+ - EmitterLayerProperty
+ - GradientLayerProperty
+ - ReplicatorLayerProperty
+ - TextLayerProperty
+*/
 public struct ContentsFormat: UnsettableLayerPropertyConformance {
     // contentsFormat is documented as { get set } but setting appears to have no affect, so it's implemented here as read-only
 
