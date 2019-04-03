@@ -54,7 +54,6 @@
 		794305542243C9DD00C9EDFC /* Descriptor.Wait.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794305532243C9DD00C9EDFC /* Descriptor.Wait.swift */; };
 		794305562244018E00C9EDFC /* ActionDescriptorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794305552244018E00C9EDFC /* ActionDescriptorTests.swift */; };
 		79430558224404B200C9EDFC /* WaitDescriptorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79430557224404B200C9EDFC /* WaitDescriptorTests.swift */; };
-		7943914C224240B5008346DD /* ActionLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7943914B224240B5008346DD /* ActionLayer.swift */; };
 		794391502242808D008346DD /* Descriptor.Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7943914F2242808D008346DD /* Descriptor.Action.swift */; };
 		796D7C51223823C8005A049B /* InstanceColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796D7C4F223823C8005A049B /* InstanceColor.swift */; };
 		796D7CAC223AAE5D005A049B /* Descriptor.Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796D7CAB223AAE5D005A049B /* Descriptor.Group.swift */; };
@@ -919,7 +918,6 @@
 				7988B8B822205ADE0093DF65 /* StrokeEnd.swift in Sources */,
 				7988B8B922205ADE0093DF65 /* EmitterSize.swift in Sources */,
 				7988B8BA22205ADE0093DF65 /* Colors.swift in Sources */,
-				7943914C224240B5008346DD /* ActionLayer.swift in Sources */,
 				792A373D2232B3800024FC6E /* NeedsDisplayOnBoundsChange.swift in Sources */,
 				7988B8BB22205ADE0093DF65 /* Locations.swift in Sources */,
 				792A37552232B7B90024FC6E /* EmitterCells.swift in Sources */,

@@ -14,8 +14,6 @@ extension Descriptor {
     // MARK: - Describes a Basic Animation on the specified property T
     public final class Basic<T: BaseLayerProperty & KeyValueProviding & Animatable>: Root, AnimationDescribing {
 
-        public typealias AnimationType = CABasicAnimation
-
         private let from: Any?
         private let by: Any?
         private let to: Any?
@@ -50,7 +48,7 @@ extension Descriptor {
         }
 
         /// Creates & returns an instance of the animation described by the class instance
-        override internal var animation: AnimationType {
+        internal var animation: CAAnimation {
 
             let animation: CABasicAnimation = CABasicAnimation(keyPath: T.keyPath)
 

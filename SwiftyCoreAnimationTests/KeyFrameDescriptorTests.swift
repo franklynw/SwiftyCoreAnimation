@@ -20,7 +20,24 @@ class KeyFrameDescriptorTests: XCTestCase {
     }()
 
 
-    func testKeyFramePathAnimation() {
+    func testKeyFrameUIBezierPathAnimation() {
+
+        let duration: TimeInterval = 2
+        let path = UIBezierPath(ovalIn: CGRect(x: 0, y: 0, width: 400, height: 250))
+        let keyFrameColorsDescriptor = Descriptor.KeyFrame<SwiftyCoreAnimation.FillColor>.path(path, duration: duration)
+        self.layer.addKeyFrameAnimation(describedBy: keyFrameColorsDescriptor, forKey: "animation")
+        let animation = self.layer.animation(forKey: "animation") as! CAKeyframeAnimation
+
+        let pathValue: UIBezierPath? = UIBezierPath(cgPath: animation.path!)
+        XCTAssertEqual(pathValue, path, "Should be equal")
+
+        let keyPath = animation.keyPath
+        XCTAssertEqual(keyPath, FillColor.keyPath, "KeyPath should be \(FillColor.keyPath)")
+
+        XCTAssertEqual(duration, animation.duration, "Duration should be \(duration)")
+    }
+
+    func testKeyFrameCGPathAnimation() {
 
         let duration: TimeInterval = 2
         let path = CGPath(ellipseIn: CGRect(x: 0, y: 0, width: 400, height: 250), transform: nil)

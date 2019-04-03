@@ -10,6 +10,5 @@ import UIKit
 
 
 protocol AnimationDescribing {
-    associatedtype AnimationType: CAAnimation
-    var animation: AnimationType { get }
+    var animation: CAAnimation { get }
 }

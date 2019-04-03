@@ -9,6 +9,10 @@
 import UIKit
 
 
+/*
+ Currently, this is excluded from any target as it's sort of experimental, & definitely not for testing
+*/
+
 extension CALayer {
 
     @discardableResult

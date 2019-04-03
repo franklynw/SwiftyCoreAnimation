@@ -14,8 +14,6 @@ extension Descriptor {
     // MARK: - Describes a KeyFrame Animation on the specified property T
     public final class KeyFrame<T: BaseLayerProperty & KeyValueProviding & Animatable>: Root, AnimationDescribing {
 
-        public typealias AnimationType = CAKeyframeAnimation
-
         private let values: [Any]?
         private let path: CGPath?
 
@@ -32,7 +30,7 @@ extension Descriptor {
         }
 
         /// Creates & returns an instance of the animation described by the class instance
-        override internal var animation: AnimationType {
+        internal var animation: CAAnimation {
 
             let animation: CAKeyframeAnimation = CAKeyframeAnimation(keyPath: T.keyPath)
 

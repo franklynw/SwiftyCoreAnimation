@@ -9,8 +9,8 @@
 import XCTest
 @testable import SwiftyCoreAnimation
 
-/*
-// Can't get this test to work, as the animation won't actually animate when the view is not real
+
+
 class WaitDescriptorTests: XCTestCase {
 
     // tests the Animation Wait Descriptor
@@ -19,8 +19,9 @@ class WaitDescriptorTests: XCTestCase {
         return CALayer()
     }()
 
+/*
     func testWait() {
-
+        // Can't get this test to work, as the animation won't actually animate when the view is not real
         let expectation: XCTestExpectation = self.expectation(description: "Waiting")
 
         let waitDescriptor = Descriptor.Wait(for: 3)
@@ -40,5 +41,14 @@ class WaitDescriptorTests: XCTestCase {
             XCTAssertTrue(timeElapsed < 3.1, "Wait was too long (\(timeElapsed))")
         })
     }
+ */
+
+    func testWaitAnimation() {
+
+        let waitDescriptor = Descriptor.Wait(for: 3)
+        let animation = waitDescriptor.animation
+
+        XCTAssertEqual(3, animation.duration, "Should be equal")
+    }
 }
-*/
+
