@@ -14,8 +14,6 @@ extension Descriptor {
     // MARK: - Describes a Spring Animation on the specified property T
     public final class Spring<T: BaseLayerProperty & KeyValueProviding & Animatable>: Root, AnimationDescribing {
 
-        public typealias AnimationType = CASpringAnimation
-
         private let from: Any?
         private let by: Any?
         private let to: Any?
@@ -26,35 +24,31 @@ extension Descriptor {
         /// - Parameters:
         ///   - duration: the animation's duration
         ///   - otherAnimationProperties: animation properties which conform to PropertiesApplicableToSpringAnimations
-        ///   - delegate: the animation's delegate
         public convenience init(duration: TimeInterval? = nil,
-                                otherAnimationProperties: [PropertiesApplicableToSpringAnimations] = [],
-                                delegate: CAAnimationDelegate? = nil) {
+                                otherAnimationProperties: [PropertiesApplicableToSpringAnimations] = []) {
 
             self.init(from: nil,
                       by: nil,
                       to: nil,
                       duration: duration,
-                      animationProperties: otherAnimationProperties,
-                      delegate: delegate)
+                      animationProperties: otherAnimationProperties)
         }
 
         fileprivate init(from: Any?,
                          by: Any?,
                          to: Any?,
                          duration: TimeInterval?,
-                         animationProperties: [PropertiesApplicableToSpringAnimations],
-                         delegate: CAAnimationDelegate?) {
+                         animationProperties: [PropertiesApplicableToSpringAnimations]) {
 
             self.from = from
             self.by = by
             self.to = to
 
-            super.init(duration: duration, animationProperties: animationProperties, propertyTypes: [T.self], delegate: delegate)
+            super.init(duration: duration, animationProperties: animationProperties, propertyTypes: [T.self])
         }
 
         /// Creates & returns an instance of the animation described by the class instance
-        override internal var animation: AnimationType {
+        internal var animation: CAAnimation {
 
             let animation: CASpringAnimation = CASpringAnimation(keyPath: T.keyPath)
 
@@ -78,19 +72,16 @@ extension Descriptor.Spring {
     ///   - from: used for the fromValue of the animation
     ///   - duration: the animation's duration
     ///   - otherAnimationProperties: animation properties which conform to PropertiesApplicableToSpringAnimations
-    ///   - delegate: the animation's delegate
     /// - Returns: a Spring Descriptor object
     public static func from(_ from: T.KeyValueType?,
                             duration: TimeInterval? = nil,
-                            otherAnimationProperties: [PropertiesApplicableToSpringAnimations] = [],
-                            delegate: CAAnimationDelegate? = nil) -> Self {
+                            otherAnimationProperties: [PropertiesApplicableToSpringAnimations] = []) -> Self {
 
         return self.init(from: from?.keyValue,
                          by: nil,
                          to: nil,
                          duration: duration,
-                         animationProperties: otherAnimationProperties,
-                         delegate: delegate)
+                         animationProperties: otherAnimationProperties)
     }
 
     /// Creates a Descriptor for a Spring Animation
@@ -99,19 +90,16 @@ extension Descriptor.Spring {
     ///   - by: used for the byValue of the animation
     ///   - duration: the animation's duration
     ///   - otherAnimationProperties: animation properties which conform to PropertiesApplicableToSpringAnimations
-    ///   - delegate: the animation's delegate
     /// - Returns: a Spring Descriptor object
     public static func by(_ by: T.KeyValueType?,
                           duration: TimeInterval? = nil,
-                          otherAnimationProperties: [PropertiesApplicableToSpringAnimations] = [],
-                          delegate: CAAnimationDelegate? = nil) -> Self {
+                          otherAnimationProperties: [PropertiesApplicableToSpringAnimations] = []) -> Self {
 
         return self.init(from: nil,
                          by: by?.keyValue,
                          to: nil,
                          duration: duration,
-                         animationProperties: otherAnimationProperties,
-                         delegate: delegate)
+                         animationProperties: otherAnimationProperties)
     }
 
     /// Creates a Descriptor for a Spring Animation
@@ -120,19 +108,16 @@ extension Descriptor.Spring {
     ///   - to: used for the toValue of the animation
     ///   - duration: the animation's duration
     ///   - otherAnimationProperties: animation properties which conform to PropertiesApplicableToSpringAnimations
-    ///   - delegate: the animation's delegate
     /// - Returns: a Spring Descriptor object
     public static func to(_ to: T.KeyValueType?,
                           duration: TimeInterval? = nil,
-                          otherAnimationProperties: [PropertiesApplicableToSpringAnimations] = [],
-                          delegate: CAAnimationDelegate? = nil) -> Self {
+                          otherAnimationProperties: [PropertiesApplicableToSpringAnimations] = []) -> Self {
 
         return self.init(from: nil,
                          by: nil,
                          to: to?.keyValue,
                          duration: duration,
-                         animationProperties: otherAnimationProperties,
-                         delegate: delegate)
+                         animationProperties: otherAnimationProperties)
     }
 
     /// Creates a Descriptor for a Spring Animation
@@ -142,20 +127,17 @@ extension Descriptor.Spring {
     ///   - to: used for the toValue of the animation
     ///   - duration: the animation's duration
     ///   - otherAnimationProperties: animation properties which conform to PropertiesApplicableToSpringAnimations
-    ///   - delegate: the animation's delegate
     /// - Returns: a Spring Descriptor object
     public static func from(_ from: T.KeyValueType?,
                             to: T.KeyValueType?,
                             duration: TimeInterval? = nil,
-                            otherAnimationProperties: [PropertiesApplicableToSpringAnimations] = [],
-                            delegate: CAAnimationDelegate? = nil) -> Self {
+                            otherAnimationProperties: [PropertiesApplicableToSpringAnimations] = []) -> Self {
 
         return self.init(from: from?.keyValue,
                          by: nil,
                          to: to?.keyValue,
                          duration: duration,
-                         animationProperties: otherAnimationProperties,
-                         delegate: delegate)
+                         animationProperties: otherAnimationProperties)
     }
 
     /// Creates a Descriptor for a Spring Animation
@@ -165,20 +147,17 @@ extension Descriptor.Spring {
     ///   - by: used for the byValue of the animation
     ///   - duration: the animation's duration
     ///   - otherAnimationProperties: animation properties which conform to PropertiesApplicableToSpringAnimations
-    ///   - delegate: the animation's delegate
     /// - Returns: a Spring Descriptor object
     public static func from(_ from: T.KeyValueType?,
                             by: T.KeyValueType?,
                             duration: TimeInterval? = nil,
-                            otherAnimationProperties: [PropertiesApplicableToSpringAnimations] = [],
-                            delegate: CAAnimationDelegate? = nil) -> Self {
+                            otherAnimationProperties: [PropertiesApplicableToSpringAnimations] = []) -> Self {
 
         return self.init(from: from?.keyValue,
                          by: by?.keyValue,
                          to: nil,
                          duration: duration,
-                         animationProperties: otherAnimationProperties,
-                         delegate: delegate)
+                         animationProperties: otherAnimationProperties)
     }
 
     /// Creates a Descriptor for a Spring Animation
@@ -188,19 +167,16 @@ extension Descriptor.Spring {
     ///   - to: used for the toValue of the animation
     ///   - duration: the animation's duration
     ///   - otherAnimationProperties: animation properties which conform to PropertiesApplicableToSpringAnimations
-    ///   - delegate: the animation's delegate
     /// - Returns: a Spring Descriptor object
     public static func by(_ by: T.KeyValueType?,
                           to: T.KeyValueType?,
                           duration: TimeInterval? = nil,
-                          otherAnimationProperties: [PropertiesApplicableToSpringAnimations] = [],
-                          delegate: CAAnimationDelegate? = nil) -> Self {
+                          otherAnimationProperties: [PropertiesApplicableToSpringAnimations] = []) -> Self {
 
         return self.init(from: nil,
                          by: by?.keyValue,
                          to: to?.keyValue,
                          duration: duration,
-                         animationProperties: otherAnimationProperties,
-                         delegate: delegate)
+                         animationProperties: otherAnimationProperties)
     }
 }

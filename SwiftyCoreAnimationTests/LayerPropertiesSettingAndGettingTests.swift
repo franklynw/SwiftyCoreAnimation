@@ -1219,7 +1219,19 @@ class LayerPropertiesSettingAndGettingTests: XCTestCase {
 
     // MARK: - CAShapeLayer properties
 
-    func testPath() {
+    func testUIBezierPath() {
+        let path = Path(UIBezierPath(rect: CGRect(x: 0, y: 0, width: 350, height: 280)))
+        self.shapeLayer.set(path)
+        let result = self.shapeLayer.get(Path.self)
+
+        XCTAssertEqual(path.value, result, "Both should be equal")
+
+        // test that the setter is actually setting the property, not just some random keyPath
+        let layerPath = UIBezierPath(cgPath: self.shapeLayer.path!)
+        XCTAssertEqual(layerPath, path.value, "Both should be equal")
+    }
+
+    func testCGPath() {
         let path = Path.CGPath(CGPath(rect: CGRect(x: 0, y: 0, width: 350, height: 280), transform: nil))
         self.shapeLayer.set(path)
         let result = self.shapeLayer.get(Path.CGPath.self)

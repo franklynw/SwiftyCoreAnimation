@@ -52,32 +52,63 @@ public enum GroupAnimationCreationError: LocalizedError {
 
 extension Descriptor {
 
-    // MARK: - Describes an Animation Group
-    public final class Group: Root {
+    public class Group: Root {
 
-        public typealias AnimationType = CAAnimationGroup
+        // The Concurrent & Sequence classes are embedded in the Group class so we can have a sort of name-spacing,
+        // ie, Descriptor.Group.Concurrent or Descriptor.Group.Sequence
 
-        internal let descriptors: [Descriptor.Root]
-        internal let isConcurrent: Bool
+        /*
+         The Group classes don't implement AnimationDescribing as they don't produce CAAnimationGroups (or any animation) directly
+         Instead, the descriptor is used to add a group or sequence of other descriptors, including Action & Wait descriptors.
+         Because of the way CAAnimationGroup works (any animation in the group can't have a CAAnimationDelegate), the structure is
+         completely independent of CAAnimationGroup for sequences, and because the concurrent groups can have other groups inside them,
+         it means we can't just return a CAAnimationGroup animation.
+        */
 
-        fileprivate init(_ descriptors: [Descriptor.Root],
-                         duration: TimeInterval?,
-                         animationProperties: [PropertiesApplicableToAnimationGroups],
-                         isConcurrent: Bool,
-                         delegate: CAAnimationDelegate?) {
+        // MARK: - Describes a Concurrent Animations Group
+        public final class Concurrent: Group {
 
-            self.descriptors = descriptors
-            self.isConcurrent = isConcurrent
-            let propertyTypes: [BaseLayerProperty.Type] = self.descriptors.flatMap { $0.propertyTypes }
+            internal let descriptors: [Descriptor.Root]
 
-            super.init(duration: duration, animationProperties: animationProperties, propertyTypes: propertyTypes, delegate: delegate)
+            /// Creates a descriptor for a Concurrent Animations Group
+            /// The animations will run concurrently
+            ///
+            /// - Parameters:
+            ///   - descriptors: Animation descriptors for CAShapeLayer animations
+            ///   - duration: the animation duration - if the descriptors specify a longer duration than this, the animation duration will be clipped, not scaled
+            ///   - properties: animation properties which conform to PropertiesApplicableToAnimationGroups
+            public init(using descriptors: [Descriptor.Root],
+                        duration: TimeInterval?,
+                        otherAnimationProperties properties: [PropertiesApplicableToAnimationGroups] = []) {
+
+                self.descriptors = descriptors
+                let propertyTypes: [BaseLayerProperty.Type] = self.descriptors.flatMap { $0.propertyTypes }
+
+                super.init(duration: duration, animationProperties: properties, propertyTypes: propertyTypes)
+            }
         }
 
-        public override var duration: TimeInterval? {
-            get {
-                if self.isConcurrent {
-                    return super.duration
-                } else {
+        // MARK: - Describes a Sequence Animation Group
+        public final class Sequential: Group {
+
+            internal let descriptors: [Descriptor.Root]
+
+            /// Creates a descriptor for a Sequential Animations Group
+            /// The animations in the group will run in the order they're in in the array,
+            /// and the animation's duration is the added durations of the animations created by the descriptors
+            ///
+            /// - Parameters:
+            ///   - descriptors: Animation descriptors for CAShapeLayer animations; these should have durations, which are used for timing the sequence
+            public init(using descriptors: [Descriptor.Root]) {
+
+                self.descriptors = descriptors
+                let propertyTypes: [BaseLayerProperty.Type] = self.descriptors.flatMap { $0.propertyTypes }
+
+                super.init(duration: nil, animationProperties: [], propertyTypes: propertyTypes)
+            }
+
+            public override var duration: TimeInterval? {
+                get {
                     let duration = self.descriptors.reduce(into: TimeInterval(0)) {
                         $0 += ($1.duration ?? 0.25)
                     }
@@ -85,50 +116,5 @@ extension Descriptor {
                 }
             }
         }
-    }
-}
-
-
-extension Descriptor.Group {
-
-    /// Creates a descriptor for an Animation Group
-    /// The animations will run concurrently
-    ///
-    /// - Parameters:
-    ///   - descriptors: Animation descriptors for CAShapeLayer animations
-    ///   - duration: the animation duration - if the descriptors specify a longer duration than this, the animation duration will be clipped, not scaled
-    ///   - otherAnimationProperties: animation properties which conform to PropertiesApplicableToAnimationGroups
-    ///   - delegate: the animation's delegate
-    /// - Returns: a Group Descriptor object
-    public static func concurrent(using descriptors: [Descriptor.Root],
-                                  duration: TimeInterval? = nil,
-                                  otherAnimationProperties: [PropertiesApplicableToAnimationGroups] = [],
-                                  delegate: CAAnimationDelegate? = nil) -> Self {
-
-        return self.init(descriptors,
-                         duration: duration,
-                         animationProperties: otherAnimationProperties,
-                         isConcurrent: true,
-                         delegate: delegate)
-    }
-
-    /// Creates a descriptor for an Animation Group
-    /// The animations in the group will run in the order they're in in the array,
-    /// and the animation's duration is the added durations of the animations created by the descriptors
-    ///
-    /// - Parameters:
-    ///   - descriptors: Animation descriptors for CAShapeLayer animations; these should have durations, which are used for timing the sequence
-    ///   - otherAnimationProperties: animation properties which conform to PropertiesApplicableToAnimationGroups
-    ///   - delegate: the animation's delegate
-    /// - Returns: a Group Descriptor object
-    public static func sequential(using descriptors: [Descriptor.Root],
-                                  otherAnimationProperties: [PropertiesApplicableToAnimationGroups] = [],
-                                  delegate: CAAnimationDelegate? = nil) -> Self {
-
-        return self.init(descriptors,
-                         duration: nil,
-                         animationProperties: otherAnimationProperties,
-                         isConcurrent: false,
-                         delegate: delegate)
     }
 }

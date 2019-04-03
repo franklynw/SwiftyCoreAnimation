@@ -14,16 +14,14 @@ extension Descriptor {
     // MARK: - Describes an Animation Action
     public final class Wait: Root, AnimationDescribing {
 
-        public typealias AnimationType = CABasicAnimation
-
         private static let animationKey = "wait"
 
 
         public init(for duration: TimeInterval) {
-            super.init(duration: duration, animationProperties: [], propertyTypes: [], delegate: nil)
+            super.init(duration: duration, animationProperties: [], propertyTypes: [])
         }
 
-        override internal var animation: AnimationType {
+        internal var animation: CAAnimation {
 
             let animation: CABasicAnimation = CABasicAnimation(keyPath: Wait.animationKey)
             animation.fromValue = 0

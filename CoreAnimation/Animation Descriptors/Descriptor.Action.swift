@@ -14,13 +14,11 @@ extension Descriptor {
     // MARK: - Describes an Animation Action
     public final class Action: Root {
 
-        public typealias AnimationType = CABasicAnimation
-
         internal var action: () -> ()
 
         public init(action: @escaping () -> ()) {
             self.action = action
-            super.init(duration: 0, animationProperties: [], propertyTypes: [], delegate: nil)
+            super.init(duration: 0, animationProperties: [], propertyTypes: [])
         }
     }
 }
