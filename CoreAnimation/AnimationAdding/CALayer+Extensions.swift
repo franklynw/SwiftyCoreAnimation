@@ -87,7 +87,7 @@ extension CALayer {
 
         self.removeExistingAnimationsIfNecessary(removeExistingAnimations)
 
-        let animation: CABasicAnimation = animationDescriptor.animation
+        let animation: CAAnimation = animationDescriptor.animation
 
         CALayer.applyProperties(properties, to: animation)
         CALayer.addAnimationFinishedAction(animationFinished, to: animation)
@@ -106,7 +106,7 @@ extension CALayer {
 
         self.removeExistingAnimationsIfNecessary(removeExistingAnimations)
 
-        let animation: CAKeyframeAnimation = animationDescriptor.animation
+        let animation: CAAnimation = animationDescriptor.animation
 
         CALayer.applyProperties(properties, to: animation)
         CALayer.addAnimationFinishedAction(animationFinished, to: animation)
@@ -125,7 +125,7 @@ extension CALayer {
 
         self.removeExistingAnimationsIfNecessary(removeExistingAnimations)
 
-        let animation: CASpringAnimation = animationDescriptor.animation
+        let animation: CAAnimation = animationDescriptor.animation
 
         CALayer.applyProperties(properties, to: animation)
         CALayer.addAnimationFinishedAction(animationFinished, to: animation)
@@ -144,7 +144,7 @@ extension CALayer {
 
         self.removeExistingAnimationsIfNecessary(removeExistingAnimations)
 
-        let transition: CATransition = transitionDescriptor.animation
+        let transition: CAAnimation = transitionDescriptor.animation
 
         CALayer.applyProperties(properties, to: transition)
         CALayer.addAnimationFinishedAction(animationFinished, to: transition)
@@ -236,10 +236,10 @@ extension CALayer {
                 descriptor.animationDidFinish?(animation, finished)
             })
 
-        } else if let typeErasedDescriptor = descriptor as? TypeErasedAnimationDescribing {
+        } else if let typeErasedDescriptor = descriptor as? AnimationDescribing {
             // in this case it's a normal animation
 
-            let animation = typeErasedDescriptor.typeErasedAnimation
+            let animation = typeErasedDescriptor.animation
 
             animation.addAnimationFinishedAction { [weak self] animation, finished in
                 guard let self = self else { return }
@@ -348,8 +348,8 @@ extension CALayer {
                         animationFinishedAction?(animation, finished)
                     })
                     return nil
-                } else if let typeErasedDescriptor = descriptor as? TypeErasedAnimationDescribing {
-                    return typeErasedDescriptor.typeErasedAnimation
+                } else if let typeErasedDescriptor = descriptor as? AnimationDescribing {
+                    return typeErasedDescriptor.animation
                 } else {
                     return nil
                 }

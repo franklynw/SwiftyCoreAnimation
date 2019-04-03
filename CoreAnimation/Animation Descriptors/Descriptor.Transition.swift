@@ -13,8 +13,6 @@ extension Descriptor {
 
     // MARK: - Describes a Transition Animation
     public final class Transition: Root, AnimationDescribing {
-
-        public typealias AnimationType = CATransition
         
         private let type: CATransitionType
         private let subtype: CATransitionSubtype?
@@ -47,7 +45,7 @@ extension Descriptor {
         }
 
         /// Creates & returns an instance of the animation described by the class instance
-        internal var animation: AnimationType {
+        internal var animation: CAAnimation {
 
             let animation: CATransition = CATransition()
 

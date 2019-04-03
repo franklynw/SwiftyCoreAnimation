@@ -14,8 +14,6 @@ extension Descriptor {
     // MARK: - Describes an Animation Action
     public final class Wait: Root, AnimationDescribing {
 
-        public typealias AnimationType = CABasicAnimation
-
         private static let animationKey = "wait"
 
 
@@ -23,7 +21,7 @@ extension Descriptor {
             super.init(duration: duration, animationProperties: [], propertyTypes: [])
         }
 
-        internal var animation: AnimationType {
+        internal var animation: CAAnimation {
 
             let animation: CABasicAnimation = CABasicAnimation(keyPath: Wait.animationKey)
             animation.fromValue = 0
