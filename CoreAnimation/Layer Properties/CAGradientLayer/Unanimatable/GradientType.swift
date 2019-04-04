@@ -9,7 +9,23 @@
 import UIKit
 
 
-/// Wrapper for the gradientLayer's type property
+/**
+ Wrapper for the CAGradientLayer's type property
+
+ Use with SwiftyCoreAnimation's set/get functions
+ - KeyValueType: CAGradientLayerType
+
+ ## Usage Examples ##
+ ````
+ myLayer.set(GradientType(.radial))
+ let gradientType = myLayer.get(GradientType.self)
+ ````
+
+ Conforms to -
+ - Settable
+ - KeyValueProviding
+ - GradientLayerProperty
+*/
 @available(iOS 12.0, *)
 public struct GradientType: GradientLayerPropertyConformance {
     public typealias KeyValueType = CAGradientLayerType

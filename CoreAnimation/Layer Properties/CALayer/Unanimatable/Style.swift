@@ -12,7 +12,7 @@ import Foundation
 /**
  Wrapper for the CALayer's style property
 
- Use with Descriptors or SwiftyCoreAnimation's set/get functions
+ Use with SwiftyCoreAnimation's set/get functions
  - KeyValueType: [AnyHashable: Any]
 
  ## Usage Examples ##

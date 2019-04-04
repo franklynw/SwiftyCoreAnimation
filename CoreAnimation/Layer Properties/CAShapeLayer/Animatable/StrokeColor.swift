@@ -10,7 +10,7 @@ import UIKit
 
 
 /**
- Wrapper for the CAShapeLayer's strokeColor property
+ Wrapper for the CAShapeLayer's strokeColor property, as UIColor
 
  Use with Descriptors or SwiftyCoreAnimation's set/get functions
  - KeyValueType: UIColor

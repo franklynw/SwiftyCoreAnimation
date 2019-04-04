@@ -9,7 +9,25 @@
 import Foundation
 
 
-/// Wrapper for the emitterLayer's birthRate property
+/**
+ Wrapper for the CAEmitterLayer's birthRate property
+
+ Use with Descriptors or SwiftyCoreAnimation's set/get functions
+ - KeyValueType: Float
+
+ ## Usage Examples ##
+ ````
+ myLayer.set(BirthRate(2))
+ let birthRate = myLayer.get(BirthRate.self)
+ let birthRateDescriptor = Descriptor.Basic<BirthRate>.from(0.5, to: 4, duration: 3)
+ ````
+
+ Conforms to -
+ - Settable
+ - Animatable
+ - KeyValueProviding
+ - EmitterLayerProperty
+*/
 public struct BirthRate: AnimatableEmitterLayerPropertyConformance {
     public typealias KeyValueType = Float
 

@@ -12,7 +12,7 @@ import UIKit
 /**
  Wrapper for the CALayer's contentsGravity property
 
- Use with Descriptors or SwiftyCoreAnimation's set/get functions
+ Use with SwiftyCoreAnimation's set/get functions
  - KeyValueType: CALayerContentsGravity
 
  ## Usage Examples ##

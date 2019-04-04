@@ -9,7 +9,23 @@
 import UIKit
 
 
-/// Wrapper for the emitterLayer's emitterMode property
+/**
+ Wrapper for the CAEmitterLayer's emitterMode property
+
+ Use with SwiftyCoreAnimation's set/get functions
+ - KeyValueType: CAEmitterLayerEmitterMode
+
+ ## Usage Examples ##
+ ````
+ myLayer.set(EmitterMode(.surface))
+ let emitterMode = myLayer.get(EmitterMode.self)
+ ````
+
+ Conforms to -
+ - Settable
+ - KeyValueProviding
+ - EmitterLayerProperty
+*/
 public struct EmitterMode: EmitterLayerPropertyConformance {
     public typealias KeyValueType = CAEmitterLayerEmitterMode
 

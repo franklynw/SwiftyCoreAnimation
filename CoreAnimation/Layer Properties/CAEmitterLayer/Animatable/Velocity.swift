@@ -9,7 +9,25 @@
 import Foundation
 
 
-/// Wrapper for the emitterLayer's velocity property
+/**
+ Wrapper for the CAEmitterLayer's velocity property
+
+ Use with Descriptors or SwiftyCoreAnimation's set/get functions
+ - KeyValueType: Float
+
+ ## Usage Examples ##
+ ````
+ myLayer.set(Velocity(2))
+ let velocity = myLayer.get(Velocity.self)
+ let velocityDescriptor = Descriptor.Basic<Velocity>.from(0.5, to: 4, duration: 3)
+ ````
+
+ Conforms to -
+ - Settable
+ - Animatable
+ - KeyValueProviding
+ - EmitterLayerProperty
+*/
 public struct Velocity: AnimatableEmitterLayerPropertyConformance {
     public typealias KeyValueType = Float
 

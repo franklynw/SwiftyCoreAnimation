@@ -9,7 +9,23 @@
 import UIKit
 
 
-/// Wrapper for the textLayer's truncationMode property
+/**
+ Wrapper for the CATextLayer's truncationMode property
+
+ Use with SwiftyCoreAnimation's set/get functions
+ - KeyValueType: CATextLayerTruncationMode
+
+ ## Usage Examples ##
+ ````
+ myLayer.set(TruncationMode(.middle))
+ let truncationMode = myLayer.get(TruncationMode.self)
+ ````
+
+ Conforms to -
+ - Settable
+ - KeyValueProviding
+ - TextLayerProperty
+*/
 public struct TruncationMode: TextLayerPropertyConformance {
     public typealias KeyValueType = CATextLayerTruncationMode
 

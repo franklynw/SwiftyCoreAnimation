@@ -9,7 +9,23 @@
 import UIKit
 
 
-/// Wrapper for the emitterLayer's emitterDepth property
+/**
+ Wrapper for the CAEmitterLayer's emitterDepth property
+
+ Use with SwiftyCoreAnimation's set/get functions
+ - KeyValueType: CGFloat
+
+ ## Usage Examples ##
+ ````
+ myLayer.set(EmitterDepth(1))
+ let emitterDepth = myLayer.get(EmitterDepth.self)
+ ````
+
+ Conforms to -
+ - Settable
+ - KeyValueProviding
+ - EmitterLayerProperty
+*/
 public struct EmitterDepth: EmitterLayerPropertyConformance {
     public typealias KeyValueType = CGFloat
 

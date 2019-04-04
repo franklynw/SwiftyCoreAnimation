@@ -9,7 +9,25 @@
 import UIKit
 
 
-/// Wrapper for the replicatorLayer's instanceDelay property
+/**
+ Wrapper for the CAReplicatorLayer's instanceDelay property
+
+ Use with Descriptors or SwiftyCoreAnimation's set/get functions
+ - KeyValueType: TimeInterval
+
+ ## Usage Examples ##
+ ````
+ myLayer.set(InstanceDelay(2))
+ let instanceDelay = myLayer.get(InstanceDelay.self)
+ let instanceDelayDescriptor = Descriptor.Basic<InstanceDelay>.from(0, to: 2, duration: 1)
+ ````
+
+ Conforms to -
+ - Settable
+ - Animatable
+ - KeyValueProviding
+ - ReplicatorLayerProperty
+*/
 public struct InstanceDelay: AnimatableReplicatorLayerPropertyConformance {
     public typealias KeyValueType = TimeInterval
 

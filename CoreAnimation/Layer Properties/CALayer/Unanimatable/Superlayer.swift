@@ -12,7 +12,7 @@ import UIKit
 /**
  Wrapper for the CALayer's superlayer property
 
- Use with Descriptors or SwiftyCoreAnimation's set/get functions
+ Use with SwiftyCoreAnimation's get function
  - KeyValueType: CALayer
 
  ## Usage Examples ##

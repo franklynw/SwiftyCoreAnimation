@@ -12,7 +12,7 @@ import UIKit
 /**
  Wrapper for the CALayer's edgeAntialiasingMask property
 
- Use with Descriptors or SwiftyCoreAnimation's set/get functions
+ Use with SwiftyCoreAnimation's set/get functions
  - KeyValueType: CAEdgeAntialiasingMask
 
  ## Usage Examples ##

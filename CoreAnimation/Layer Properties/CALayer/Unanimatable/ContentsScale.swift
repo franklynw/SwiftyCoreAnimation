@@ -10,9 +10,9 @@ import UIKit
 
 
 /**
- Wrapper for the CALayer's contentsScale property, as CGFloat
+ Wrapper for the CALayer's contentsScale property
 
- Use with Descriptors or SwiftyCoreAnimation's set/get functions
+ Use with SwiftyCoreAnimation's set/get functions
  - KeyValueType: CGFloat
 
  ## Usage Examples ##
