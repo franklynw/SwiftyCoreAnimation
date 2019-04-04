@@ -9,7 +9,30 @@
 import UIKit
 
 
-/// Wrapper for the layer's borderWidth property
+/**
+ Wrapper for the CALayer's borderWidth property, as CGFloat
+
+ Use with Descriptors or SwiftyCoreAnimation's set/get functions
+ - KeyValueType: CGFloat
+
+ ## Usage Examples ##
+ ````
+ myLayer.set(BorderWidth(2))
+ let borderWidth = myLayer.get(BorderWidth.self)
+ let borderWidthDescriptor = Descriptor.Basic<BorderWidth>.from(1, to: 5, duration: 1)
+ ````
+
+ Conforms to -
+ - Settable
+ - Animatable
+ - KeyValueProviding
+ - LayerProperty
+ - ShapeLayerProperty
+ - EmitterLayerProperty
+ - GradientLayerProperty
+ - ReplicatorLayerProperty
+ - TextLayerProperty
+*/
 public struct BorderWidth: AnimatableLayerPropertyConformance {
     public typealias KeyValueType = CGFloat
 

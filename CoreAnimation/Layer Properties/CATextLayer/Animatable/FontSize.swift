@@ -9,7 +9,25 @@
 import UIKit
 
 
-/// Wrapper for the textLayer's fontSize property
+/**
+ Wrapper for the CALayer's fontSize property, as CGFloat
+
+ Use with Descriptors or SwiftyCoreAnimation's set/get functions
+ - KeyValueType: CGFloat
+
+ ## Usage Examples ##
+ ````
+ myLayer.set(FontSize(12))
+ let fontSize = myLayer.get(FontSize.self)
+ let fontSizeDescriptor = Descriptor.Basic<FontSize>.from(10, to: 15, duration: 1)
+ ````
+
+ Conforms to -
+ - Settable
+ - Animatable
+ - KeyValueProviding
+ - TextLayerProperty
+*/
 public struct FontSize: AnimatableTextLayerPropertyConformance {
     public typealias KeyValueType = CGFloat
 

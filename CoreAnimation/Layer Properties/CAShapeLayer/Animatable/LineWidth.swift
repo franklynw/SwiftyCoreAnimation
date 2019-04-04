@@ -9,7 +9,25 @@
 import UIKit
 
 
-/// Wrapper for the shapeLayer's lineWidth property
+/**
+ Wrapper for the CAShapeLayer's lineWidth property
+
+ Use with Descriptors or SwiftyCoreAnimation's set/get functions
+ - KeyValueType: CGFloat
+
+ ## Usage Examples ##
+ ````
+ myLayer.set(LineWidth(3))
+ let lineWidth = myLayer.get(LineWidth.self)
+ let lineWidthDescriptor = Descriptor.Basic<LineWidth>.from(1, to: 5, duration: 1)
+ ````
+
+ Conforms to -
+ - Settable
+ - Animatable
+ - KeyValueProviding
+ - ShapeLayerProperty
+*/
 public struct LineWidth: AnimatableShapeLayerPropertyConformance {
     public typealias KeyValueType = CGFloat
 

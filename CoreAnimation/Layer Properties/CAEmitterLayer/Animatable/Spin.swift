@@ -9,7 +9,25 @@
 import Foundation
 
 
-/// Wrapper for the emitterLayer's spin property
+/**
+ Wrapper for the CAEmitterLayer's spin property
+
+ Use with Descriptors or SwiftyCoreAnimation's set/get functions
+ - KeyValueType: Float
+
+ ## Usage Examples ##
+ ````
+ myLayer.set(Spin(2))
+ let spin = myLayer.get(Spin.self)
+ let spinDescriptor = Descriptor.Basic<Spin>.from(0.5, to: 2, duration: 3)
+ ````
+
+ Conforms to -
+ - Settable
+ - Animatable
+ - KeyValueProviding
+ - EmitterLayerProperty
+*/
 public struct Spin: AnimatableEmitterLayerPropertyConformance {
     public typealias KeyValueType = Float
 

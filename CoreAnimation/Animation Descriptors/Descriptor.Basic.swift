@@ -11,7 +11,18 @@ import UIKit
 
 extension Descriptor {
 
-    // MARK: - Describes a Basic Animation on the specified property T
+    /**
+     A Descriptor for creating a CABasicAnimation
+
+     Animate property 'T' - conforming to BaseLayerProperty, KeyValueProviding & Animatable
+
+     ## Usage Example ##
+     Create a Descriptor for a Transform.Scale basic animation, & add it to a layer:
+     ````
+     let scaleDescriptor = Descriptor.Basic<Transform.Scale>.from(0, to: 1, duration: 0.5)
+     myShapeLayer.addBasicAnimation(describedBy: scaleDescriptor)
+     ````
+    */
     public final class Basic<T: BaseLayerProperty & KeyValueProviding & Animatable>: Root, AnimationDescribing {
 
         private let from: Any?

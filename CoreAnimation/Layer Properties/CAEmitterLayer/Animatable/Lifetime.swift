@@ -9,7 +9,25 @@
 import Foundation
 
 
-/// Wrapper for the emitterLayer's lifetime property
+/**
+ Wrapper for the CAEmitterLayer's lifetime property
+
+ Use with Descriptors or SwiftyCoreAnimation's set/get functions
+ - KeyValueType: Float
+
+ ## Usage Examples ##
+ ````
+ myLayer.set(Lifetime(2))
+ let lifetime = myLayer.get(Lifetime.self)
+ let lifetimeDescriptor = Descriptor.Basic<Lifetime>.from(0.1, to: 2, duration: 3)
+ ````
+
+ Conforms to -
+ - Settable
+ - Animatable
+ - KeyValueProviding
+ - EmitterLayerProperty
+*/
 public struct Lifetime: AnimatableEmitterLayerPropertyConformance {
     public typealias KeyValueType = Float
 

@@ -9,7 +9,30 @@
 import UIKit
 
 
-/// Wrapper for the layer's shadowColor property
+/**
+ Wrapper for the CALayer's shadowColor property, as UIColor
+
+ Use with Descriptors or SwiftyCoreAnimation's set/get functions
+ - KeyValueType: UIColor
+
+ ## Usage Examples ##
+ ````
+ myLayer.set(ShadowColor(.green))
+ let shadowColor = myLayer.get(ShadowColor.self)
+ let shadowColorDescriptor = Descriptor.Basic<ShadowColor>.from(.clear, to: .red, duration: 1)
+ ````
+
+ Conforms to -
+ - Settable
+ - Animatable
+ - KeyValueProviding
+ - LayerProperty
+ - ShapeLayerProperty
+ - EmitterLayerProperty
+ - GradientLayerProperty
+ - ReplicatorLayerProperty
+ - TextLayerProperty
+*/
 public struct ShadowColor: AnimatableLayerPropertyConformance {
     public typealias KeyValueType = UIColor
 
@@ -20,7 +43,30 @@ public struct ShadowColor: AnimatableLayerPropertyConformance {
         self.value = value
     }
 
-    /// Wrapper for the layer's shadowColor property, but as CGColor
+    /**
+     Wrapper for the CALayer's shadowColor property
+
+     Use with Descriptors or SwiftyCoreAnimation's set/get functions
+     - KeyValueType: CGColor
+
+     ## Usage Examples ##
+     ````
+     myLayer.set(ShadowColor.CGColor(UIColor.green.cgColor))
+     let shadowColor = myLayer.get(ShadowColor.CGColor.self)
+     let shadowColorDescriptor = Descriptor.Basic<ShadowColor.CGColor>.from(UIColor.clear.cgColor, to: UIColor.red.cgColor, duration: 1)
+     ````
+
+     Conforms to -
+     - Settable
+     - Animatable
+     - KeyValueProviding
+     - LayerProperty
+     - ShapeLayerProperty
+     - EmitterLayerProperty
+     - GradientLayerProperty
+     - ReplicatorLayerProperty
+     - TextLayerProperty
+    */
     public struct CGColor: AnimatableLayerPropertyConformance {
         public typealias KeyValueType = UIKit.CGColor
 

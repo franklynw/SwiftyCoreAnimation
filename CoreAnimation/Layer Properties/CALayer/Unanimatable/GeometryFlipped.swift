@@ -9,7 +9,28 @@
 import Foundation
 
 
-/// Wrapper for the layer's isGeometryFlipped property
+/**
+ Wrapper for the CALayer's isGeometryFlipped property
+
+ Use with SwiftyCoreAnimation's set/get functions
+ - KeyValueType: Bool
+
+ ## Usage Examples ##
+ ````
+ myLayer.set(GeometryFlipped(false))
+ let isGeometryFlipped = myLayer.get(GeometryFlipped.self)
+ ````
+
+ Conforms to -
+ - Settable
+ - KeyValueProviding
+ - LayerProperty
+ - ShapeLayerProperty
+ - EmitterLayerProperty
+ - GradientLayerProperty
+ - ReplicatorLayerProperty
+ - TextLayerProperty
+*/
 public struct GeometryFlipped: LayerPropertyConformance {
     public typealias KeyValueType = Bool
 

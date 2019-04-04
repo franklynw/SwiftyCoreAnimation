@@ -9,7 +9,28 @@
 import Foundation
 
 
-/// Wrapper for the layer's needsDisplayOnBoundsChange property
+/**
+ Wrapper for the CALayer's needsDisplayOnBoundsChange property
+
+ Use with SwiftyCoreAnimation's set/get functions
+ - KeyValueType: Bool
+
+ ## Usage Examples ##
+ ````
+ myLayer.set(NeedsDisplayOnBoundsChange(false))
+ let needsDisplayOnBoundsChange = myLayer.get(NeedsDisplayOnBoundsChange.self)
+ ````
+
+ Conforms to -
+ - Settable
+ - KeyValueProviding
+ - LayerProperty
+ - ShapeLayerProperty
+ - EmitterLayerProperty
+ - GradientLayerProperty
+ - ReplicatorLayerProperty
+ - TextLayerProperty
+*/
 public struct NeedsDisplayOnBoundsChange: LayerPropertyConformance {
     public typealias KeyValueType = Bool
 

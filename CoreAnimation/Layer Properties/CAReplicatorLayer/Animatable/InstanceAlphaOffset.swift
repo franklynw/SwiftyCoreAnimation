@@ -9,7 +9,25 @@
 import Foundation
 
 
-/// Wrapper for the replicatorLayer's instanceAlphaOffset property
+/**
+ Wrapper for the CAReplicatorLayer's instanceAlphaOffset property
+
+ Use with Descriptors or SwiftyCoreAnimation's set/get functions
+ - KeyValueType: Float
+
+ ## Usage Examples ##
+ ````
+ myLayer.set(InstanceAlphaOffset(0.7))
+ let instanceAlphaOffset = myLayer.get(InstanceAlphaOffset.self)
+ let instanceAlphaOffsetDescriptor = Descriptor.Basic<InstanceAlphaOffset>.from(0, to: 0.5, duration: 1)
+ ````
+
+ Conforms to -
+ - Settable
+ - Animatable
+ - KeyValueProviding
+ - ReplicatorLayerProperty
+*/
 public struct InstanceAlphaOffset: AnimatableReplicatorLayerPropertyConformance {
     public typealias KeyValueType = Float
 

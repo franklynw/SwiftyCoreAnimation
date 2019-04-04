@@ -9,7 +9,28 @@
 import UIKit
 
 
-/// Wrapper for the layer's actions property
+/**
+ Wrapper for the CALayer's actions property
+
+ Use with SwiftyCoreAnimation's set/get functions
+ - KeyValueType: [String: CAAction]
+
+ ## Usage Examples ##
+ ````
+ myLayer.set(Actions(someActionsDict))
+ let actions = myLayer.get(Actions.self)
+ ````
+
+ Conforms to -
+ - Settable
+ - KeyValueProviding
+ - LayerProperty
+ - ShapeLayerProperty
+ - EmitterLayerProperty
+ - GradientLayerProperty
+ - ReplicatorLayerProperty
+ - TextLayerProperty
+*/
 public struct Actions: LayerPropertyConformance {
     public typealias KeyValueType = [String: CAAction]
 

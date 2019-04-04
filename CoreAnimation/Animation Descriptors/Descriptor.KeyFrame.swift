@@ -11,7 +11,20 @@ import UIKit
 
 extension Descriptor {
 
-    // MARK: - Describes a KeyFrame Animation on the specified property T
+    /**
+     A Descriptor for creating a CAKeyframeAnimation
+
+     Animate property 'T' - conforming to BaseLayerProperty, KeyValueProviding & Animatable
+
+     ## Usage Example ##
+     Create a Descriptor for a Position keyframe animation, & add it to a layer:
+     ````
+     let keyFrameProperties: [Properties.KeyFrameAnimation] = [.calculationMode(.paced)]
+     let moveDescriptor = Descriptor.KeyFrame<Position>.path(ellipsePath, otherAnimationProperties: keyFrameProperties)
+
+     myLayer.addKeyFrameAnimation(describedBy: moveDescriptor)
+     ````
+    */
     public final class KeyFrame<T: BaseLayerProperty & KeyValueProviding & Animatable>: Root, AnimationDescribing {
 
         private let values: [Any]?

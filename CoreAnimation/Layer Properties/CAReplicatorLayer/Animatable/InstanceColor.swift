@@ -9,7 +9,25 @@
 import UIKit
 
 
-/// Wrapper for the replicatorLayer's instanceColor property
+/**
+ Wrapper for the CAReplicatorLayer's instanceColor property, as UIColor
+
+ Use with Descriptors or SwiftyCoreAnimation's set/get functions
+ - KeyValueType: UIColor
+
+ ## Usage Examples ##
+ ````
+ myLayer.set(InstanceColor(.green))
+ let instanceColor = myLayer.get(InstanceColor.self)
+ let instanceColorDescriptor = Descriptor.Basic<InstanceColor>.from(.clear, to: .red, duration: 1)
+ ````
+
+ Conforms to -
+ - Settable
+ - Animatable
+ - KeyValueProviding
+ - ReplicatorLayerProperty
+*/
 public struct InstanceColor: AnimatableReplicatorLayerPropertyConformance {
     public typealias KeyValueType = UIColor
 
@@ -20,7 +38,25 @@ public struct InstanceColor: AnimatableReplicatorLayerPropertyConformance {
         self.value = value
     }
 
-    /// Wrapper for the replicatorLayer's instanceColor property, but as CGColor
+    /**
+     Wrapper for the CAReplicatorLayer's instanceColor property
+
+     Use with Descriptors or SwiftyCoreAnimation's set/get functions
+     - KeyValueType: CGColor
+
+     ## Usage Examples ##
+     ````
+     myLayer.set(InstanceColor.CGColor(UIColor.green.cgColor))
+     let instanceColor = myLayer.get(InstanceColor.CGColor.self)
+     let instanceColorDescriptor = Descriptor.Basic<InstanceColor.CGColor>.from(UIColor.clear.cgColor, to: UIColor.red.cgColor, duration: 1)
+     ````
+
+     Conforms to -
+     - Settable
+     - Animatable
+     - KeyValueProviding
+     - ReplicatorLayerProperty
+    */
     public struct CGColor: AnimatableReplicatorLayerPropertyConformance {
         public typealias KeyValueType = UIKit.CGColor
 

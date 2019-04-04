@@ -9,7 +9,23 @@
 import Foundation
 
 
-/// Wrapper for the textLayer's string property
+/**
+ Wrapper for the CATextLayer's string property
+
+ Use with SwiftyCoreAnimation's set/get functions
+ - KeyValueType: String
+
+ ## Usage Examples ##
+ ````
+ myLayer.set(TextString("some text"))
+ let string = myLayer.get(TextString.self)
+ ````
+
+ Conforms to -
+ - Settable
+ - KeyValueProviding
+ - TextLayerProperty
+*/
 public struct TextString: TextLayerPropertyConformance {
     public typealias KeyValueType = String
 

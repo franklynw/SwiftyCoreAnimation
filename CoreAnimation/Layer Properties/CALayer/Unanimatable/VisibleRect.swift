@@ -9,7 +9,27 @@
 import UIKit
 
 
-/// Wrapper for the layer's visibleRect property
+/**
+ Wrapper for the CALayer's visibleRect property
+
+ Use with SwiftyCoreAnimation's get function
+ - KeyValueType: CGRect
+
+ ## Usage Examples ##
+ ````
+ let visibleRect = myLayer.get(VisibleRect.self)
+ ````
+
+ Conforms to -
+ - Settable
+ - KeyValueProviding
+ - LayerProperty
+ - ShapeLayerProperty
+ - EmitterLayerProperty
+ - GradientLayerProperty
+ - ReplicatorLayerProperty
+ - TextLayerProperty
+*/
 public struct VisibleRect: UnsettableLayerPropertyConformance {
     public typealias KeyValueType = CGRect
 

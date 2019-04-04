@@ -9,7 +9,23 @@
 import Foundation
 
 
-/// Wrapper for the emitterLayer's preservesDepth property
+/**
+ Wrapper for the CAEmitterLayer's preservesDepth property
+
+ Use with SwiftyCoreAnimation's set/get functions
+ - KeyValueType: Bool
+
+ ## Usage Examples ##
+ ````
+ myLayer.set(EmitterPreservesDepth(false))
+ let preservesDepth = myLayer.get(EmitterPreservesDepth.self)
+ ````
+
+ Conforms to -
+ - Settable
+ - KeyValueProviding
+ - EmitterLayerProperty
+*/
 public struct EmitterPreservesDepth: EmitterLayerPropertyConformance {
     public typealias KeyValueType = Bool
 

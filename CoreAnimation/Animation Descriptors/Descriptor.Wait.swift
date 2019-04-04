@@ -11,7 +11,30 @@ import UIKit
 
 extension Descriptor {
 
-    // MARK: - Describes an Animation Action
+    /**
+     A Descriptor for creating an empty CABasicAnimation, for the purposes of waiting
+
+     The use case for this is as part of an animation sequence, using Descriptor.Group.Sequence,
+     as a descriptor in the array of descriptors used to construct the group.
+
+     They will work outside of this, but there's not really any point as the animation literally does nothing
+
+     ## Usage Example ##
+     Create a Descriptor for a 2-second wait, & add it to a sequence:
+     ````
+     let fillColorDescriptor = Descriptor.Basic<FillColor>.from(.red, to: .blue)
+     let waitDescriptor = Descriptor.Wait(for: 2)
+     let lineWidthDescriptor = Descriptor.Basic<LineWidth>.from(currentLineWidth, to: 10, duration: 1)
+
+     let groupDescriptor = Descriptor.Group.Sequential(using: [fillColorDescriptor, waitDescriptor, lineWidthDescriptor])
+
+     do {
+        try myShapeLayer.addAnimationsGroup(describedBy: groupDescriptor)
+     } catch {
+        // handle the error thrown if any of the animatable properties are not appropriate for the layer type (eg, fillColor on CAGradientLayer)
+     }
+     ````
+    */
     public final class Wait: Root, AnimationDescribing {
 
         private static let animationKey = "wait"

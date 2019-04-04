@@ -9,7 +9,28 @@
 import Foundation
 
 
-/// Wrapper for the layer's drawsAsynchronously property
+/**
+ Wrapper for the CALayer's drawsAsynchronously property
+
+ Use with SwiftyCoreAnimation's set/get functions
+ - KeyValueType: Bool
+
+ ## Usage Examples ##
+ ````
+ myLayer.set(DrawsAsynchronously(false))
+ let drawsAsynchronously = myLayer.get(DrawsAsynchronously.self)
+ ````
+
+ Conforms to -
+ - Settable
+ - KeyValueProviding
+ - LayerProperty
+ - ShapeLayerProperty
+ - EmitterLayerProperty
+ - GradientLayerProperty
+ - ReplicatorLayerProperty
+ - TextLayerProperty
+*/
 public struct DrawsAsynchronously: LayerPropertyConformance {
     public typealias KeyValueType = Bool
 

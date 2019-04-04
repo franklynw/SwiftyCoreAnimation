@@ -9,7 +9,25 @@
 import UIKit
 
 
-/// Wrapper for the shapeLayer's strokeStart property
+/**
+ Wrapper for the CAShapeLayer's strokeStart property
+
+ Use with Descriptors or SwiftyCoreAnimation's set/get functions
+ - KeyValueType: CGFloat
+
+ ## Usage Examples ##
+ ````
+ myLayer.set(StrokeStart(0))
+ let strokeStart = myLayer.get(StrokeStart.self)
+ let strokeStartDescriptor = Descriptor.Basic<StrokeStart>.from(1, to: 0, duration: 3)
+ ````
+
+ Conforms to -
+ - Settable
+ - Animatable
+ - KeyValueProviding
+ - ShapeLayerProperty
+*/
 public struct StrokeStart: AnimatableShapeLayerPropertyConformance {
     public typealias KeyValueType = CGFloat
 

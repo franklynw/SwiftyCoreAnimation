@@ -9,7 +9,25 @@
 import UIKit
 
 
-/// Wrapper for the gradientLayer's colors property
+/**
+ Wrapper for the CAGradientLayer's colors property, as [UIColor]
+
+ Use with Descriptors or SwiftyCoreAnimation's set/get functions
+ - KeyValueType: [UIColor]
+
+ ## Usage Examples ##
+ ````
+ myLayer.set(Colors([.green, .blue, .red]))
+ let colors = myLayer.get(Colors.self)
+ let colorsDescriptor = Descriptor.Basic<Colors>.from([.green, .blue, .red], to: [.red, .green, .blue], duration: 1)
+ ````
+
+ Conforms to -
+ - Settable
+ - Animatable
+ - KeyValueProviding
+ - GradientLayerProperty
+*/
 public struct Colors: AnimatableGradientLayerPropertyConformance {
     public typealias KeyValueType = Array<UIColor>
 
@@ -20,7 +38,25 @@ public struct Colors: AnimatableGradientLayerPropertyConformance {
         self.value = value
     }
 
-    /// Wrapper for the gradientLayer's colors property, but as [CGColor]
+    /**
+     Wrapper for the CAGradientLayer's colors property
+
+     Use with Descriptors or SwiftyCoreAnimation's set/get functions
+     - KeyValueType: [CGColor]
+
+     ## Usage Examples ##
+     ````
+     myLayer.set(Colors.CGColors([UIColor.green.cgColor, UIColor.blue.cgColor, UIColor.red.cgColor]))
+     let colors = myLayer.get(Colors.CGColors.self)
+     let colorsDescriptor = Descriptor.Basic<Colors.CGColors>.from([UIColor.green.cgColor, UIColor.blue.cgColor, UIColor.red.cgColor], to: [UIColor.red.cgColor, UIColor.green.cgColor, UIColor.blue.cgColor], duration: 1)
+     ````
+
+     Conforms to -
+     - Settable
+     - Animatable
+     - KeyValueProviding
+     - GradientLayerProperty
+     */
     public struct CGColors: AnimatableGradientLayerPropertyConformance {
         public typealias KeyValueType = Array<CGColor>
 

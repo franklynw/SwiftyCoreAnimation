@@ -9,7 +9,30 @@
 import Foundation
 
 
-/// Wrapper for the layer's isDoubleSided property
+/**
+ Wrapper for the CALayer's isDoubleSided property
+
+ Use with Descriptors or SwiftyCoreAnimation's set/get functions
+ - KeyValueType: Bool
+
+ ## Usage Examples ##
+ ````
+ myLayer.set(DoubleSided(false))
+ let doubleSided = myLayer.get(DoubleSided.self)
+ let doubleSidedDescriptor = Descriptor.Basic<DoubleSided>.from(true, to: false, duration: 1)
+ ````
+
+ Conforms to -
+ - Settable
+ - Animatable
+ - KeyValueProviding
+ - LayerProperty
+ - ShapeLayerProperty
+ - EmitterLayerProperty
+ - GradientLayerProperty
+ - ReplicatorLayerProperty
+ - TextLayerProperty
+*/
 public struct DoubleSided: AnimatableLayerPropertyConformance {
     public typealias KeyValueType = Bool
 

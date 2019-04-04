@@ -9,7 +9,23 @@
 import UIKit
 
 
-/// Wrapper for the textLayer's alignmentMode property
+/**
+ Wrapper for the CATextLayer's alignmentMode property
+
+ Use with SwiftyCoreAnimation's set/get functions
+ - KeyValueType: CATextLayerAlignmentMode
+
+ ## Usage Examples ##
+ ````
+ myLayer.set(AlignmentMode(.justified))
+ let alignmentMode = myLayer.get(AlignmentMode.self)
+ ````
+
+ Conforms to -
+ - Settable
+ - KeyValueProviding
+ - TextLayerProperty
+*/
 public struct AlignmentMode: TextLayerPropertyConformance {
     public typealias KeyValueType = CATextLayerAlignmentMode
 

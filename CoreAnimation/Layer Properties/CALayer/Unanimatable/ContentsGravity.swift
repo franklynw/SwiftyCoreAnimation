@@ -9,7 +9,28 @@
 import UIKit
 
 
-/// Wrapper for the layer's contentsGravity property
+/**
+ Wrapper for the CALayer's contentsGravity property
+
+ Use with SwiftyCoreAnimation's set/get functions
+ - KeyValueType: CALayerContentsGravity
+
+ ## Usage Examples ##
+ ````
+ myLayer.set(ContentsGravity(gravity))
+ let contentsGravity = myLayer.get(ContentsGravity.self)
+ ````
+
+ Conforms to -
+ - Settable
+ - KeyValueProviding
+ - LayerProperty
+ - ShapeLayerProperty
+ - EmitterLayerProperty
+ - GradientLayerProperty
+ - ReplicatorLayerProperty
+ - TextLayerProperty
+*/
 public struct ContentsGravity: LayerPropertyConformance {
     public typealias KeyValueType = CALayerContentsGravity
 

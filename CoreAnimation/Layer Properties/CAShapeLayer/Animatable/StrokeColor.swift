@@ -9,7 +9,25 @@
 import UIKit
 
 
-/// Wrapper for the shapeLayer's strokeColor property
+/**
+ Wrapper for the CAShapeLayer's strokeColor property, as UIColor
+
+ Use with Descriptors or SwiftyCoreAnimation's set/get functions
+ - KeyValueType: UIColor
+
+ ## Usage Examples ##
+ ````
+ myLayer.set(StrokeColor(.green))
+ let strokeColor = myLayer.get(StrokeColor.self)
+ let strokeColorDescriptor = Descriptor.Basic<StrokeColor>.from(.clear, to: .red, duration: 1)
+ ````
+
+ Conforms to -
+ - Settable
+ - Animatable
+ - KeyValueProviding
+ - ShapeLayerProperty
+*/
 public struct StrokeColor: AnimatableShapeLayerPropertyConformance {
     public typealias KeyValueType = UIColor
 
@@ -20,7 +38,25 @@ public struct StrokeColor: AnimatableShapeLayerPropertyConformance {
         self.value = value
     }
 
-    /// Wrapper for the layer's strokeColor property, but as CGColor
+    /**
+     Wrapper for the CAShapeLayer's strokeColor property
+
+     Use with Descriptors or SwiftyCoreAnimation's set/get functions
+     - KeyValueType: CGColor
+
+     ## Usage Examples ##
+     ````
+     myLayer.set(StrokeColor.CGColor(UIColor.green.cgColor))
+     let strokeColor = myLayer.get(StrokeColor.CGColor.self)
+     let strokeColorDescriptor = Descriptor.Basic<StrokeColor.CGColor>.from(UIColor.clear.cgColor, to: UIColor.red.cgColor, duration: 1)
+     ````
+
+     Conforms to -
+     - Settable
+     - Animatable
+     - KeyValueProviding
+     - ShapeLayerProperty
+    */
     public struct CGColor: AnimatableShapeLayerPropertyConformance {
         public typealias KeyValueType = UIKit.CGColor
 
