@@ -21,7 +21,6 @@ import UIKit
  ````
 
  Conforms to -
- - Settable
  - KeyValueProviding
  - LayerProperty
  - ShapeLayerProperty
