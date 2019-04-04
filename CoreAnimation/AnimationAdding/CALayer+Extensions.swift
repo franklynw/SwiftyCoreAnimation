@@ -34,17 +34,14 @@ public extension CALayer {
     /// - Parameters:
     ///   - transition: a CATransition object
     ///   - key: key for the animation
-    ///   - properties: an array of Descriptor.Properties applicable to CATransitions
     ///   - removeExistingAnimations: removes any existing layer animations if true
     ///   - animationFinished: invoked when the animation completes
     public func addTransition(_ transition: CATransition,
                               forKey key: String? = nil,
-                              applyingOtherProperties properties: [PropertiesApplicableToTransitions] = [],
                               removeExistingAnimations: Bool = false,
                               animationFinished: AnimationFinishedAction? = nil) {
 
         self.removeExistingAnimationsIfNecessary(removeExistingAnimations)
-        CALayer.applyProperties(properties, to: transition)
         CALayer.addAnimationFinishedAction(animationFinished, to: transition)
         self.add(transition, forKey: key ?? self.defaultKey)
     }
@@ -289,6 +286,7 @@ extension CALayer {
             CALayer.addAnimationFinishedAction(animationDescriptor.animationDidFinish, to: animationGroup)
 
             descriptors.forEach {
+                $0.animationWillBegin?()
                 CALayer.addAnimationFinishedAction($0.animationDidFinish, to: animationGroup)
             }
 
