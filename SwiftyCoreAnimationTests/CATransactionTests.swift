@@ -44,8 +44,8 @@ class CATransactionTests: XCTestCase {
         let disabledAnimations = self.layer.disabledImplicitAnimations(for: properties)
         
         let animations: () -> () = {
-            self.layer.addBasicAnimation(describedBy: basicAnchorPointDescriptor)
-            self.shapeLayer.addKeyFrameAnimation(describedBy: keyFrameColorsDescriptor)
+            self.layer.addAnimation(describedBy: basicAnchorPointDescriptor)
+            self.shapeLayer.addAnimation(describedBy: keyFrameColorsDescriptor)
             self.layer.borderColor = UIColor.red.cgColor
         }
 
@@ -96,8 +96,8 @@ class CATransactionTests: XCTestCase {
         let disabledAnimations = self.layer.disabledImplicitAnimations(for: properties)
 
         let animations: () -> () = {
-            self.layer.addBasicAnimation(describedBy: basicAnchorPointDescriptor)
-            self.shapeLayer.addKeyFrameAnimation(describedBy: keyFrameColorsDescriptor)
+            self.layer.addAnimation(describedBy: basicAnchorPointDescriptor)
+            self.shapeLayer.addAnimation(describedBy: keyFrameColorsDescriptor)
             self.layer.borderColor = UIColor.red.cgColor
         }
 

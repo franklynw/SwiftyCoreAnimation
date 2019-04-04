@@ -9,66 +9,44 @@
 import UIKit
 
 
+// MARK: - Convenience functions to add animations to CALayers
 public extension CALayer {
 
-    /// Adds a CABasicAnimation to the layer
+    /// Adds a CAPropertyAnimation (CABasicAnimation, CAKeyframeAnimation, CASpringAnimation) to the layer
     ///
     /// - Parameters:
-    ///   - animation: a CABasicAnimation object
+    ///   - animation: a CAPropertyAnimation object
     ///   - key: key for the animation
-    ///   - properties: an array of Descriptor.Properties applicable to CAPropertyAnimations
     ///   - removeExistingAnimations: removes any existing layer animations if true
     ///   - animationFinished: invoked when the animation completes
-    public func addBasicAnimation(_ animation: CABasicAnimation,
-                                  forKey key: String? = nil,
-                                  applyingOtherProperties properties: [PropertiesApplicableToBasicAnimations] = [],
-                                  removeExistingAnimations: Bool = false,
-                                  animationFinished: AnimationFinishedAction? = nil) {
+    public func addAnimation(_ animation: CAPropertyAnimation,
+                             forKey key: String? = nil,
+                             removeExistingAnimations: Bool = false,
+                             animationFinished: AnimationFinishedAction? = nil) {
 
         self.removeExistingAnimationsIfNecessary(removeExistingAnimations)
-        CALayer.applyProperties(properties, to: animation)
         CALayer.addAnimationFinishedAction(animationFinished, to: animation)
         self.add(animation, forKey: key ?? self.defaultKey)
     }
 
-    /// Adds a CAKeyFrameAnimation to the layer
+    /// Adds a CATransition to the layer
     ///
     /// - Parameters:
-    ///   - animation: a CAKeyFrameAnimation object
+    ///   - transition: a CATransition object
     ///   - key: key for the animation
-    ///   - properties: an array of Descriptor.Properties applicable to CAKeyFrameAnimations
+    ///   - properties: an array of Descriptor.Properties applicable to CATransitions
     ///   - removeExistingAnimations: removes any existing layer animations if true
     ///   - animationFinished: invoked when the animation completes
-    public func addKeyFrameAnimation(_ animation: CAKeyframeAnimation,
-                                     forKey key: String? = nil,
-                                     applyingOtherProperties properties: [PropertiesApplicableToKeyFrameAnimations] = [],
-                                     removeExistingAnimations: Bool = false,
-                                     animationFinished: AnimationFinishedAction? = nil) {
-        
-        self.removeExistingAnimationsIfNecessary(removeExistingAnimations)
-        CALayer.applyProperties(properties, to: animation)
-        CALayer.addAnimationFinishedAction(animationFinished, to: animation)
-        self.add(animation, forKey: key ?? self.defaultKey)
-    }
-
-    /// Adds a CASpringAnimation to the layer
-    ///
-    /// - Parameters:
-    ///   - animation: a CASpringAnimation object
-    ///   - key: key for the animation
-    ///   - properties: an array of Descriptor.Properties applicable to CASpringAnimations
-    ///   - removeExistingAnimations: removes any existing layer animations if true
-    ///   - animationFinished: invoked when the animation completes
-    public func addSpringAnimation(_ animation: CASpringAnimation,
-                                   forKey key: String? = nil,
-                                   applyingOtherProperties properties: [PropertiesApplicableToSpringAnimations] = [],
-                                   removeExistingAnimations: Bool = false,
-                                   animationFinished: AnimationFinishedAction? = nil) {
+    public func addTransition(_ transition: CATransition,
+                              forKey key: String? = nil,
+                              applyingOtherProperties properties: [PropertiesApplicableToTransitions] = [],
+                              removeExistingAnimations: Bool = false,
+                              animationFinished: AnimationFinishedAction? = nil) {
 
         self.removeExistingAnimationsIfNecessary(removeExistingAnimations)
-        CALayer.applyProperties(properties, to: animation)
-        CALayer.addAnimationFinishedAction(animationFinished, to: animation)
-        self.add(animation, forKey: key ?? self.defaultKey)
+        CALayer.applyProperties(properties, to: transition)
+        CALayer.addAnimationFinishedAction(animationFinished, to: transition)
+        self.add(transition, forKey: key ?? self.defaultKey)
     }
 }
 
@@ -79,11 +57,11 @@ extension CALayer {
         return UUID().uuidString
     }
 
-    func addBasicAnimation<T: BaseLayerProperty>(_ animationDescriptor: Descriptor.Basic<T>,
-                                                 forKey key: String?,
-                                                 applyingProperties properties: [AnimationPropertiesApplicable],
-                                                 removeExistingAnimations: Bool,
-                                                 animationFinished: AnimationFinishedAction?) {
+    func addAnimation(_ animationDescriptor: Descriptor.Root & AnimationDescribing,
+                      forKey key: String?,
+                      applyingProperties properties: [AnimationPropertiesApplicable],
+                      removeExistingAnimations: Bool,
+                      animationFinished: AnimationFinishedAction?) {
 
         self.removeExistingAnimationsIfNecessary(removeExistingAnimations)
 
@@ -96,63 +74,6 @@ extension CALayer {
         animationDescriptor.animationWillBegin?()
 
         self.add(animation, forKey: key ?? self.defaultKey)
-    }
-
-    func addKeyFrameAnimation<T: BaseLayerProperty>(_ animationDescriptor: Descriptor.KeyFrame<T>,
-                                                    forKey key: String?,
-                                                    applyingProperties properties: [AnimationPropertiesApplicable],
-                                                    removeExistingAnimations: Bool,
-                                                    animationFinished: AnimationFinishedAction?) {
-
-        self.removeExistingAnimationsIfNecessary(removeExistingAnimations)
-
-        let animation: CAAnimation = animationDescriptor.animation
-
-        CALayer.applyProperties(properties, to: animation)
-        CALayer.addAnimationFinishedAction(animationFinished, to: animation)
-        CALayer.addAnimationFinishedAction(animationDescriptor.animationDidFinish, to: animation)
-
-        animationDescriptor.animationWillBegin?()
-
-        self.add(animation, forKey: key ?? self.defaultKey)
-    }
-
-    func addSpringAnimation<T: BaseLayerProperty>(_ animationDescriptor: Descriptor.Spring<T>,
-                                                  forKey key: String?,
-                                                  applyingProperties properties: [AnimationPropertiesApplicable],
-                                                  removeExistingAnimations: Bool,
-                                                  animationFinished: AnimationFinishedAction?) {
-
-        self.removeExistingAnimationsIfNecessary(removeExistingAnimations)
-
-        let animation: CAAnimation = animationDescriptor.animation
-
-        CALayer.applyProperties(properties, to: animation)
-        CALayer.addAnimationFinishedAction(animationFinished, to: animation)
-        CALayer.addAnimationFinishedAction(animationDescriptor.animationDidFinish, to: animation)
-
-        animationDescriptor.animationWillBegin?()
-
-        self.add(animation, forKey: key ?? self.defaultKey)
-    }
-
-    func addTransition(_ transitionDescriptor: Descriptor.Transition,
-                       forKey key: String?,
-                       applyingProperties properties: [AnimationPropertiesApplicable],
-                       removeExistingAnimations: Bool,
-                       animationFinished: AnimationFinishedAction?) {
-
-        self.removeExistingAnimationsIfNecessary(removeExistingAnimations)
-
-        let transition: CAAnimation = transitionDescriptor.animation
-
-        CALayer.applyProperties(properties, to: transition)
-        CALayer.addAnimationFinishedAction(animationFinished, to: transition)
-        CALayer.addAnimationFinishedAction(transitionDescriptor.animationDidFinish, to: transition)
-
-        transitionDescriptor.animationWillBegin?()
-
-        self.add(transition, forKey: key ?? self.defaultKey)
     }
 
     func addAnimationsGroup(_ animationDescriptor: Descriptor.Group,

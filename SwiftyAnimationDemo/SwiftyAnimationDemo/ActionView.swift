@@ -74,7 +74,7 @@ class ActionView: UIView, AnimationsView {
 
         self.shapeLayer.set(Transform.Scale(1))
 
-        self.shapeLayer.addBasicAnimation(describedBy: scaleDescriptor, removeExistingAnimations: true) { [weak self] _, _ in
+        self.shapeLayer.addAnimation(describedBy: scaleDescriptor, removeExistingAnimations: true) { [weak self] _, _ in
             guard let self = self else { return }
             Async.after(2, action: {
                 self.getGoing()
@@ -258,7 +258,7 @@ class ActionView: UIView, AnimationsView {
         let properties: [PropertiesApplicableToBasicAnimations] = []//[Properties.MediaTiming.fillMode(.forwards), Properties.isRemovedOnCompletion(false)]
 
         self.shapeLayer.set(Transform.Scale(0))
-        self.shapeLayer.addBasicAnimation(describedBy: scaleDescriptor, applyingOtherProperties: properties, removeExistingAnimations: true) { [weak self] _, _ in
+        self.shapeLayer.addAnimation(describedBy: scaleDescriptor, applyingOtherProperties: properties, removeExistingAnimations: true) { [weak self] _, _ in
             guard let self = self else { return }
             self.animationsViewDelegate?.showMessage("Shrunk!")
             self.shapeLayer.set(FillColor(.yellow))

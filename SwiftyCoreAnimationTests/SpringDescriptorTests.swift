@@ -24,7 +24,7 @@ class SpringDescriptorTests: XCTestCase {
 
         let duration: TimeInterval = 2
         let springSublayersDescriptor = Descriptor.Spring<SwiftyCoreAnimation.Sublayers>(duration: duration)
-        self.layer.addSpringAnimation(describedBy: springSublayersDescriptor, forKey: "animation")
+        self.layer.addAnimation(describedBy: springSublayersDescriptor, forKey: "animation")
         let animation = self.layer.animation(forKey: "animation") as! CASpringAnimation
 
         XCTAssertNil(animation.fromValue, "From value should be nil")
@@ -42,7 +42,7 @@ class SpringDescriptorTests: XCTestCase {
         let start: [CALayer] = [CALayer(), CAShapeLayer()]
         let duration: TimeInterval = 2
         let springSublayersFromDescriptor = Descriptor.Spring<SwiftyCoreAnimation.Sublayers>.from(start, duration: duration)
-        self.layer.addSpringAnimation(describedBy: springSublayersFromDescriptor, forKey: "animation")
+        self.layer.addAnimation(describedBy: springSublayersFromDescriptor, forKey: "animation")
         let animation = self.layer.animation(forKey: "animation") as! CASpringAnimation
 
         let fromValue: [CALayer] = animation.fromValue as! [CALayer]
@@ -62,7 +62,7 @@ class SpringDescriptorTests: XCTestCase {
         let by: [CALayer] = [CALayer(), CAShapeLayer()]
         let duration: TimeInterval = 2
         let springSublayersByDescriptor = Descriptor.Spring<SwiftyCoreAnimation.Sublayers>.by(by, duration: duration)
-        self.layer.addSpringAnimation(describedBy: springSublayersByDescriptor, forKey: "animation")
+        self.layer.addAnimation(describedBy: springSublayersByDescriptor, forKey: "animation")
         let animation = self.layer.animation(forKey: "animation") as! CASpringAnimation
 
         XCTAssertNil(animation.fromValue, "From value should be nil")
@@ -83,7 +83,7 @@ class SpringDescriptorTests: XCTestCase {
         let finish: [CALayer] = [CALayer(), CAShapeLayer()]
         let duration: TimeInterval = 2
         let springSublayersToDescriptor = Descriptor.Spring<SwiftyCoreAnimation.Sublayers>.to(finish, duration: duration)
-        self.layer.addSpringAnimation(describedBy: springSublayersToDescriptor, forKey: "animation")
+        self.layer.addAnimation(describedBy: springSublayersToDescriptor, forKey: "animation")
         let animation = self.layer.animation(forKey: "animation") as! CASpringAnimation
 
         XCTAssertNil(animation.fromValue, "From value should be nil")
@@ -105,7 +105,7 @@ class SpringDescriptorTests: XCTestCase {
         let duration: TimeInterval = 2
         let springSublayersFromToDescriptor = Descriptor.Spring<SwiftyCoreAnimation.Sublayers>.from(start, to: finish, duration: duration)
 
-        self.layer.addSpringAnimation(describedBy: springSublayersFromToDescriptor, forKey: "animation")
+        self.layer.addAnimation(describedBy: springSublayersFromToDescriptor, forKey: "animation")
         let animation = self.layer.animation(forKey: "animation") as! CASpringAnimation
 
         let fromValue: [CALayer] = animation.fromValue as! [CALayer]
@@ -130,7 +130,7 @@ class SpringDescriptorTests: XCTestCase {
 
         let timingProperties: [SwiftyCoreAnimation.PropertiesApplicableToSpringAnimations] = [SwiftyCoreAnimation.Properties.MediaTiming.fillMode(.backwards), Properties.isRemovedOnCompletion(false)]
         let springSublayersFromByDescriptor = Descriptor.Spring<SwiftyCoreAnimation.Sublayers>.from(start, by: by, duration: duration, otherAnimationProperties: timingProperties)
-        self.layer.addSpringAnimation(describedBy: springSublayersFromByDescriptor, forKey: "animation")
+        self.layer.addAnimation(describedBy: springSublayersFromByDescriptor, forKey: "animation")
         let animation = self.layer.animation(forKey: "animation") as! CASpringAnimation
 
         let fromValue: [CALayer] = animation.fromValue as! [CALayer]
@@ -154,7 +154,7 @@ class SpringDescriptorTests: XCTestCase {
         let finish: [CALayer] = [CALayer(), CAShapeLayer(), CAGradientLayer()]
         let duration: TimeInterval = 2
         let springSublayersByToDescriptor = Descriptor.Spring<SwiftyCoreAnimation.Sublayers>.by(start, to: finish, duration: duration)
-        self.layer.addSpringAnimation(describedBy: springSublayersByToDescriptor, forKey: "animation")
+        self.layer.addAnimation(describedBy: springSublayersByToDescriptor, forKey: "animation")
         let animation = self.layer.animation(forKey: "animation") as! CASpringAnimation
 
         XCTAssertNil(animation.fromValue, "From value should be nil")

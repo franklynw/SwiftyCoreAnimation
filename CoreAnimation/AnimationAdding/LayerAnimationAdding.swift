@@ -39,17 +39,17 @@ public extension LayerAnimationAdding where Self: CALayer {
     ///             these will be over-ridden by the values passed in here
     ///   - removeExistingAnimations: removes any existing layer animations if true
     ///   - animationFinished: invoked when the animation completes
-    public func addBasicAnimation<T: LayerProperty & Animatable>(describedBy animationDescriptor: Descriptor.Basic<T>,
-                                                                 forKey key: String? = nil,
-                                                                 applyingOtherProperties properties: [PropertiesApplicableToBasicAnimations] = [],
-                                                                 removeExistingAnimations: Bool = false,
-                                                                 animationFinished: AnimationFinishedAction? = nil) {
+    public func addAnimation<T: LayerProperty & Animatable>(describedBy animationDescriptor: Descriptor.Basic<T>,
+                                                            forKey key: String? = nil,
+                                                            applyingOtherProperties properties: [PropertiesApplicableToBasicAnimations] = [],
+                                                            removeExistingAnimations: Bool = false,
+                                                            animationFinished: AnimationFinishedAction? = nil) {
 
-        self.addBasicAnimation(animationDescriptor,
-                               forKey: key,
-                               applyingProperties: properties,
-                               removeExistingAnimations: removeExistingAnimations,
-                               animationFinished: animationFinished)
+        self.addAnimation(animationDescriptor,
+                          forKey: key,
+                          applyingProperties: properties,
+                          removeExistingAnimations: removeExistingAnimations,
+                          animationFinished: animationFinished)
     }
 
     /// Adds a CAKeyFrameAnimation to a CALayer
@@ -61,17 +61,17 @@ public extension LayerAnimationAdding where Self: CALayer {
     ///             these will be over-ridden by the values passed in here
     ///   - removeExistingAnimations: removes any existing layer animations if true
     ///   - animationFinished: invoked when the animation completes
-    public func addKeyFrameAnimation<T: LayerProperty & Animatable>(describedBy animationDescriptor: Descriptor.KeyFrame<T>,
-                                                                    forKey key: String? = nil,
-                                                                    applyingOtherProperties properties: [PropertiesApplicableToKeyFrameAnimations] = [],
-                                                                    removeExistingAnimations: Bool = false,
-                                                                    animationFinished: AnimationFinishedAction? = nil) {
+    public func addAnimation<T: LayerProperty & Animatable>(describedBy animationDescriptor: Descriptor.KeyFrame<T>,
+                                                            forKey key: String? = nil,
+                                                            applyingOtherProperties properties: [PropertiesApplicableToKeyFrameAnimations] = [],
+                                                            removeExistingAnimations: Bool = false,
+                                                            animationFinished: AnimationFinishedAction? = nil) {
 
-        self.addKeyFrameAnimation(animationDescriptor,
-                                  forKey: key,
-                                  applyingProperties: properties,
-                                  removeExistingAnimations: removeExistingAnimations,
-                                  animationFinished: animationFinished)
+        self.addAnimation(animationDescriptor,
+                          forKey: key,
+                          applyingProperties: properties,
+                          removeExistingAnimations: removeExistingAnimations,
+                          animationFinished: animationFinished)
     }
 
     /// Adds a CASpringAnimation to a CALayer
@@ -83,17 +83,17 @@ public extension LayerAnimationAdding where Self: CALayer {
     ///             these will be over-ridden by the values passed in here
     ///   - removeExistingAnimations: removes any existing layer animations if true
     ///   - animationFinished: invoked when the animation completes
-    public func addSpringAnimation<T: LayerProperty & Animatable>(describedBy animationDescriptor: Descriptor.Spring<T>,
-                                                                  forKey key: String? = nil,
-                                                                  applyingOtherProperties properties: [PropertiesApplicableToSpringAnimations] = [],
-                                                                  removeExistingAnimations: Bool = false,
-                                                                  animationFinished: AnimationFinishedAction? = nil) {
+    public func addAnimation<T: LayerProperty & Animatable>(describedBy animationDescriptor: Descriptor.Spring<T>,
+                                                            forKey key: String? = nil,
+                                                            applyingOtherProperties properties: [PropertiesApplicableToSpringAnimations] = [],
+                                                            removeExistingAnimations: Bool = false,
+                                                            animationFinished: AnimationFinishedAction? = nil) {
         
-        self.addSpringAnimation(animationDescriptor,
-                                forKey: key,
-                                applyingProperties: properties,
-                                removeExistingAnimations: removeExistingAnimations,
-                                animationFinished: animationFinished)
+        self.addAnimation(animationDescriptor,
+                          forKey: key,
+                          applyingProperties: properties,
+                          removeExistingAnimations: removeExistingAnimations,
+                          animationFinished: animationFinished)
     }
 
     /// Adds a CATransition to a CALayer
@@ -111,11 +111,11 @@ public extension LayerAnimationAdding where Self: CALayer {
                               removeExistingAnimations: Bool = false,
                               animationFinished: AnimationFinishedAction? = nil) {
 
-        self.addTransition(transitionDescriptor,
-                           forKey: key,
-                           applyingProperties: properties,
-                           removeExistingAnimations: removeExistingAnimations,
-                           animationFinished: animationFinished)
+        self.addAnimation(transitionDescriptor,
+                          forKey: key,
+                          applyingProperties: properties,
+                          removeExistingAnimations: removeExistingAnimations,
+                          animationFinished: animationFinished)
     }
 
     /// Adds an animation group to a CALayer

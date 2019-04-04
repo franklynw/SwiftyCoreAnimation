@@ -29,7 +29,7 @@ class AnimationFinishedActionsTests: XCTestCase {
 
         let expectation: XCTestExpectation = self.expectation(description: "Animation finished")
 
-        self.layer.addBasicAnimation(describedBy: basicAnchorPointDescriptor) { _, _ in
+        self.layer.addAnimation(describedBy: basicAnchorPointDescriptor) { _, _ in
             expectation.fulfill()
         }
 
@@ -56,7 +56,7 @@ class AnimationFinishedActionsTests: XCTestCase {
             expectation2.fulfill()
         }
 
-        self.layer.addBasicAnimation(animation)
+        self.layer.addAnimation(animation)
 
         self.waitForExpectations(timeout: 5, handler: { error in
             XCTAssertNil(error, "Timed out")
@@ -86,7 +86,7 @@ class AnimationFinishedActionsTests: XCTestCase {
 
         animation.removeAnimationFinishedAction(withID: id1)
 
-        self.layer.addBasicAnimation(animation)
+        self.layer.addAnimation(animation)
 
         self.waitForExpectations(timeout: 5, handler: { error in
             XCTAssertNil(error, "Timed out")
@@ -113,7 +113,7 @@ class AnimationFinishedActionsTests: XCTestCase {
 
         animation.removeAllAnimationFinishedActions()
 
-        self.layer.addBasicAnimation(animation)
+        self.layer.addAnimation(animation)
 
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.5) {
             expectation1.fulfill()

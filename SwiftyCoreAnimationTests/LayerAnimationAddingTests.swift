@@ -47,17 +47,17 @@ class LayerAnimationAddingTests: XCTestCase {
 
         // we can't use an array of CALayer because it won't call the functions specific to layer types
 
-        self.layer.addBasicAnimation(describedBy: animationDescriptor, forKey: "animation")
+        self.layer.addAnimation(describedBy: animationDescriptor, forKey: "animation")
         animations.append(self.layer.animation(forKey: "animation") as! CABasicAnimation)
-        self.shapeLayer.addBasicAnimation(describedBy: animationDescriptor, forKey: "animation")
+        self.shapeLayer.addAnimation(describedBy: animationDescriptor, forKey: "animation")
         animations.append(self.shapeLayer.animation(forKey: "animation") as! CABasicAnimation)
-        self.emitterLayer.addBasicAnimation(describedBy: animationDescriptor, forKey: "animation")
+        self.emitterLayer.addAnimation(describedBy: animationDescriptor, forKey: "animation")
         animations.append(self.emitterLayer.animation(forKey: "animation") as! CABasicAnimation)
-        self.gradientLayer.addBasicAnimation(describedBy: animationDescriptor, forKey: "animation")
+        self.gradientLayer.addAnimation(describedBy: animationDescriptor, forKey: "animation")
         animations.append(self.gradientLayer.animation(forKey: "animation") as! CABasicAnimation)
-        self.replicatorLayer.addBasicAnimation(describedBy: animationDescriptor, forKey: "animation")
+        self.replicatorLayer.addAnimation(describedBy: animationDescriptor, forKey: "animation")
         animations.append(self.replicatorLayer.animation(forKey: "animation") as! CABasicAnimation)
-        self.textLayer.addBasicAnimation(describedBy: animationDescriptor, forKey: "animation")
+        self.textLayer.addAnimation(describedBy: animationDescriptor, forKey: "animation")
         animations.append(self.textLayer.animation(forKey: "animation") as! CABasicAnimation)
 
         animations.forEach {
@@ -75,17 +75,17 @@ class LayerAnimationAddingTests: XCTestCase {
 
         var animations: [CAKeyframeAnimation] = []
 
-        self.layer.addKeyFrameAnimation(describedBy: animationDescriptor, forKey: "animation")
+        self.layer.addAnimation(describedBy: animationDescriptor, forKey: "animation")
         animations.append(self.layer.animation(forKey: "animation") as! CAKeyframeAnimation)
-        self.shapeLayer.addKeyFrameAnimation(describedBy: animationDescriptor, forKey: "animation")
+        self.shapeLayer.addAnimation(describedBy: animationDescriptor, forKey: "animation")
         animations.append(self.shapeLayer.animation(forKey: "animation") as! CAKeyframeAnimation)
-        self.emitterLayer.addKeyFrameAnimation(describedBy: animationDescriptor, forKey: "animation")
+        self.emitterLayer.addAnimation(describedBy: animationDescriptor, forKey: "animation")
         animations.append(self.emitterLayer.animation(forKey: "animation") as! CAKeyframeAnimation)
-        self.gradientLayer.addKeyFrameAnimation(describedBy: animationDescriptor, forKey: "animation")
+        self.gradientLayer.addAnimation(describedBy: animationDescriptor, forKey: "animation")
         animations.append(self.gradientLayer.animation(forKey: "animation") as! CAKeyframeAnimation)
-        self.replicatorLayer.addKeyFrameAnimation(describedBy: animationDescriptor, forKey: "animation")
+        self.replicatorLayer.addAnimation(describedBy: animationDescriptor, forKey: "animation")
         animations.append(self.replicatorLayer.animation(forKey: "animation") as! CAKeyframeAnimation)
-        self.textLayer.addKeyFrameAnimation(describedBy: animationDescriptor, forKey: "animation")
+        self.textLayer.addAnimation(describedBy: animationDescriptor, forKey: "animation")
         animations.append(self.textLayer.animation(forKey: "animation") as! CAKeyframeAnimation)
 
         animations.forEach {
@@ -104,17 +104,17 @@ class LayerAnimationAddingTests: XCTestCase {
 
         var animations: [CASpringAnimation] = []
 
-        self.layer.addSpringAnimation(describedBy: animationDescriptor, forKey: "animation")
+        self.layer.addAnimation(describedBy: animationDescriptor, forKey: "animation")
         animations.append(self.layer.animation(forKey: "animation") as! CASpringAnimation)
-        self.shapeLayer.addSpringAnimation(describedBy: animationDescriptor, forKey: "animation")
+        self.shapeLayer.addAnimation(describedBy: animationDescriptor, forKey: "animation")
         animations.append(self.shapeLayer.animation(forKey: "animation") as! CASpringAnimation)
-        self.emitterLayer.addSpringAnimation(describedBy: animationDescriptor, forKey: "animation")
+        self.emitterLayer.addAnimation(describedBy: animationDescriptor, forKey: "animation")
         animations.append(self.emitterLayer.animation(forKey: "animation") as! CASpringAnimation)
-        self.gradientLayer.addSpringAnimation(describedBy: animationDescriptor, forKey: "animation")
+        self.gradientLayer.addAnimation(describedBy: animationDescriptor, forKey: "animation")
         animations.append(self.gradientLayer.animation(forKey: "animation") as! CASpringAnimation)
-        self.replicatorLayer.addSpringAnimation(describedBy: animationDescriptor, forKey: "animation")
+        self.replicatorLayer.addAnimation(describedBy: animationDescriptor, forKey: "animation")
         animations.append(self.replicatorLayer.animation(forKey: "animation") as! CASpringAnimation)
-        self.textLayer.addSpringAnimation(describedBy: animationDescriptor, forKey: "animation")
+        self.textLayer.addAnimation(describedBy: animationDescriptor, forKey: "animation")
         animations.append(self.textLayer.animation(forKey: "animation") as! CASpringAnimation)
 
         animations.forEach {
@@ -492,7 +492,7 @@ class LayerAnimationAddingTests: XCTestCase {
         let layers: [CALayer] = [self.layer, self.shapeLayer, self.emitterLayer, self.gradientLayer, self.replicatorLayer, self.textLayer]
 
         layers.forEach {
-            $0.addBasicAnimation(basicAnimation, forKey: "basicAnimation")
+            $0.addAnimation(basicAnimation, forKey: "basicAnimation")
         }
 
         // test that we've actually added the animations to the layers
@@ -511,7 +511,7 @@ class LayerAnimationAddingTests: XCTestCase {
         let keyFrameAnimation = keyFrameAnimationDescriptor.animation as! CAKeyframeAnimation
 
         layers.forEach {
-            $0.addKeyFrameAnimation(keyFrameAnimation, forKey: "keyFrameAnimation")
+            $0.addAnimation(keyFrameAnimation, forKey: "keyFrameAnimation")
         }
 
         // test that we've actually added the animations to the layers
@@ -529,7 +529,7 @@ class LayerAnimationAddingTests: XCTestCase {
         let springAnimation = springAnimationDescriptor.animation as! CASpringAnimation
 
         layers.forEach {
-            $0.addSpringAnimation(springAnimation, forKey: "springAnimation")
+            $0.addAnimation(springAnimation, forKey: "springAnimation")
         }
 
         // test that we've actually added the animations to the layers
@@ -540,6 +540,24 @@ class LayerAnimationAddingTests: XCTestCase {
             XCTAssertEqual(layerSpringAnimation.fromValue as! CGColor, from.cgColor, "Should be equal for \($0)")
             XCTAssertEqual(layerSpringAnimation.byValue as! CGColor, by.cgColor, "Should be equal for \($0)")
             XCTAssertEqual(layerSpringAnimation.duration, duration, "Should be equal for \($0)")
+        }
+
+
+        let transitionDescriptor = Descriptor.Transition(type: .push, startProgress: 0, endProgress: 1, duration: duration)
+        let transition = transitionDescriptor.animation as! CATransition
+
+        layers.forEach {
+            $0.addTransition(transition, forKey: "transition")
+        }
+
+        // test that we've actually added the transitions to the layers
+
+        layers.forEach {
+            let layerTransition: CATransition = $0.animation(forKey: "transition") as! CATransition
+
+            XCTAssertEqual(layerTransition.startProgress, 0, "Should be equal for \($0)")
+            XCTAssertEqual(layerTransition.endProgress, 1, "Should be equal for \($0)")
+            XCTAssertEqual(layerTransition.duration, duration, "Should be equal for \($0)")
         }
     }
 }

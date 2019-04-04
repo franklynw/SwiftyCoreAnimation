@@ -27,10 +27,6 @@ public struct VisibleRect: UnsettableLayerPropertyConformance {
 
             public let value: KeyValueType?
             public static var keyPath: String { return Origin.keyPath.appendingKeyPath("x") }
-
-            public init(_ value: KeyValueType) {
-                self.value = value
-            }
         }
 
         public struct Y: UnsettableLayerPropertyConformance {
@@ -38,10 +34,6 @@ public struct VisibleRect: UnsettableLayerPropertyConformance {
 
             public let value: KeyValueType?
             public static var keyPath: String { return Origin.keyPath.appendingKeyPath("y") }
-
-            public init(_ value: KeyValueType) {
-                self.value = value
-            }
         }
     }
 
@@ -51,19 +43,11 @@ public struct VisibleRect: UnsettableLayerPropertyConformance {
         public let value: KeyValueType?
         public static var keyPath: String { return VisibleRect.keyPath.appendingKeyPath("size") }
 
-        public init(_ value: KeyValueType) {
-            self.value = value
-        }
-
         public struct Width: UnsettableLayerPropertyConformance {
             public typealias KeyValueType = CGFloat
 
             public let value: KeyValueType?
             public static var keyPath: String { return Size.keyPath.appendingKeyPath("width") }
-
-            public init(_ value: KeyValueType) {
-                self.value = value
-            }
         }
 
         public struct Height: UnsettableLayerPropertyConformance {
@@ -71,10 +55,6 @@ public struct VisibleRect: UnsettableLayerPropertyConformance {
 
             public let value: KeyValueType?
             public static var keyPath: String { return Size.keyPath.appendingKeyPath("height") }
-
-            public init(_ value: KeyValueType) {
-                self.value = value
-            }
         }
     }
 }

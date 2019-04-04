@@ -39,17 +39,17 @@ public extension GradientLayerAnimationAdding where Self: CAGradientLayer {
     ///             these will be over-ridden by the values passed in here
     ///   - removeExistingAnimations: removes any existing layer animations if true
     ///   - animationFinished: invoked when the animation completes
-    public func addBasicAnimation<T: GradientLayerProperty & Animatable>(describedBy animationDescriptor: Descriptor.Basic<T>,
-                                                                         forKey key: String? = nil,
-                                                                         applyingOtherProperties properties: [PropertiesApplicableToBasicAnimations] = [],
-                                                                         removeExistingAnimations: Bool = false,
-                                                                         animationFinished: AnimationFinishedAction? = nil) {
+    public func addAnimation<T: GradientLayerProperty & Animatable>(describedBy animationDescriptor: Descriptor.Basic<T>,
+                                                                    forKey key: String? = nil,
+                                                                    applyingOtherProperties properties: [PropertiesApplicableToBasicAnimations] = [],
+                                                                    removeExistingAnimations: Bool = false,
+                                                                    animationFinished: AnimationFinishedAction? = nil) {
         
-        self.addBasicAnimation(animationDescriptor,
-                               forKey: key,
-                               applyingProperties: properties,
-                               removeExistingAnimations: removeExistingAnimations,
-                               animationFinished: animationFinished)
+        self.addAnimation(animationDescriptor,
+                          forKey: key,
+                          applyingProperties: properties,
+                          removeExistingAnimations: removeExistingAnimations,
+                          animationFinished: animationFinished)
     }
 
     /// Adds a CAKeyFrameAnimation to a CAGradientLayer
@@ -61,17 +61,17 @@ public extension GradientLayerAnimationAdding where Self: CAGradientLayer {
     ///             these will be over-ridden by the values passed in here
     ///   - removeExistingAnimations: removes any existing layer animations if true
     ///   - animationFinished: invoked when the animation completes
-    public func addKeyFrameAnimation<T: GradientLayerProperty & Animatable>(describedBy animationDescriptor: Descriptor.KeyFrame<T>,
-                                                                            forKey key: String? = nil,
-                                                                            applyingOtherProperties properties: [PropertiesApplicableToKeyFrameAnimations] = [],
-                                                                            removeExistingAnimations: Bool = false,
-                                                                            animationFinished: AnimationFinishedAction? = nil) {
+    public func addAnimation<T: GradientLayerProperty & Animatable>(describedBy animationDescriptor: Descriptor.KeyFrame<T>,
+                                                                    forKey key: String? = nil,
+                                                                    applyingOtherProperties properties: [PropertiesApplicableToKeyFrameAnimations] = [],
+                                                                    removeExistingAnimations: Bool = false,
+                                                                    animationFinished: AnimationFinishedAction? = nil) {
 
-        self.addKeyFrameAnimation(animationDescriptor,
-                                  forKey: key,
-                                  applyingProperties: properties,
-                                  removeExistingAnimations: removeExistingAnimations,
-                                  animationFinished: animationFinished)
+        self.addAnimation(animationDescriptor,
+                          forKey: key,
+                          applyingProperties: properties,
+                          removeExistingAnimations: removeExistingAnimations,
+                          animationFinished: animationFinished)
     }
 
     /// Adds a CASpringAnimation to a CAGradientLayer
@@ -83,17 +83,17 @@ public extension GradientLayerAnimationAdding where Self: CAGradientLayer {
     ///             these will be over-ridden by the values passed in here
     ///   - removeExistingAnimations: removes any existing layer animations if true
     ///   - animationFinished: invoked when the animation completes
-    public func addSpringAnimation<T: GradientLayerProperty & Animatable>(describedBy animationDescriptor: Descriptor.Spring<T>,
-                                                                          forKey key: String? = nil,
-                                                                          applyingOtherProperties properties: [PropertiesApplicableToSpringAnimations] = [],
-                                                                          removeExistingAnimations: Bool = false,
-                                                                          animationFinished: AnimationFinishedAction? = nil) {
+    public func addAnimation<T: GradientLayerProperty & Animatable>(describedBy animationDescriptor: Descriptor.Spring<T>,
+                                                                    forKey key: String? = nil,
+                                                                    applyingOtherProperties properties: [PropertiesApplicableToSpringAnimations] = [],
+                                                                    removeExistingAnimations: Bool = false,
+                                                                    animationFinished: AnimationFinishedAction? = nil) {
 
-        self.addSpringAnimation(animationDescriptor,
-                                forKey: key,
-                                applyingProperties: properties,
-                                removeExistingAnimations: removeExistingAnimations,
-                                animationFinished: animationFinished)
+        self.addAnimation(animationDescriptor,
+                          forKey: key,
+                          applyingProperties: properties,
+                          removeExistingAnimations: removeExistingAnimations,
+                          animationFinished: animationFinished)
     }
 
     /// Adds an animation group to a CAGradientLayer
@@ -158,7 +158,7 @@ public extension GradientLayerAnimationAdding where Self: CAGradientLayer {
                                      removeExistingAnimations: removeExistingAnimations,
                                      animationFinished: animationFinished)
     }
-
+    
     /// Adds an animation group to a CAGradientLayer
     /// The animations in the group will run in the order they're in in the array,
     /// and the animation's duration is the added durations of the animations created by the descriptors.

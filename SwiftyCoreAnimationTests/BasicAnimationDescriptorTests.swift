@@ -24,7 +24,7 @@ class BasicAnimationDescriptorTests: XCTestCase {
 
         let duration: TimeInterval = 2
         let basicAnchorPointDescriptor = Descriptor.Basic<SwiftyCoreAnimation.AnchorPoint.X>(duration: duration)
-        self.layer.addBasicAnimation(describedBy: basicAnchorPointDescriptor, forKey: "animation")
+        self.layer.addAnimation(describedBy: basicAnchorPointDescriptor, forKey: "animation")
         let animation = self.layer.animation(forKey: "animation") as! CABasicAnimation
 
         XCTAssertNil(animation.fromValue, "From value should be nil")
@@ -42,7 +42,7 @@ class BasicAnimationDescriptorTests: XCTestCase {
         let start: CGFloat = 0
         let duration: TimeInterval = 2
         let basicAnchorPointFromDescriptor = Descriptor.Basic<SwiftyCoreAnimation.AnchorPoint.Z>.from(start, duration: duration)
-        self.layer.addBasicAnimation(describedBy: basicAnchorPointFromDescriptor, forKey: "animation")
+        self.layer.addAnimation(describedBy: basicAnchorPointFromDescriptor, forKey: "animation")
         let animation = self.layer.animation(forKey: "animation") as! CABasicAnimation
 
         let fromValue: CGFloat = CGFloat((animation.fromValue as? NSNumber)!.doubleValue)
@@ -62,7 +62,7 @@ class BasicAnimationDescriptorTests: XCTestCase {
         let by: CGFloat = 0
         let duration: TimeInterval = 2
         let basicAnchorPointByDescriptor = Descriptor.Basic<SwiftyCoreAnimation.AnchorPoint.Z>.by(by, duration: duration)
-        self.layer.addBasicAnimation(describedBy: basicAnchorPointByDescriptor, forKey: "animation")
+        self.layer.addAnimation(describedBy: basicAnchorPointByDescriptor, forKey: "animation")
         let animation = self.layer.animation(forKey: "animation") as! CABasicAnimation
 
         XCTAssertNil(animation.fromValue, "From value should be nil")
@@ -83,7 +83,7 @@ class BasicAnimationDescriptorTests: XCTestCase {
         let finish: CGFloat = 0.4
         let duration: TimeInterval = 2
         let basicAnchorPointToDescriptor = Descriptor.Basic<SwiftyCoreAnimation.AnchorPoint.Y>.to(finish, duration: duration)
-        self.layer.addBasicAnimation(describedBy: basicAnchorPointToDescriptor, forKey: "animation")
+        self.layer.addAnimation(describedBy: basicAnchorPointToDescriptor, forKey: "animation")
         let animation = self.layer.animation(forKey: "animation") as! CABasicAnimation
 
         XCTAssertNil(animation.fromValue, "From value should be nil")
@@ -105,7 +105,7 @@ class BasicAnimationDescriptorTests: XCTestCase {
         let duration: TimeInterval = 2
         let basicAnchorPointFromToDescriptor = Descriptor.Basic<SwiftyCoreAnimation.AnchorPoint>.from(startPoint, to: finishPoint, duration: duration)
 
-        self.layer.addBasicAnimation(describedBy: basicAnchorPointFromToDescriptor, forKey: "animation1")
+        self.layer.addAnimation(describedBy: basicAnchorPointFromToDescriptor, forKey: "animation1")
         let animation1 = self.layer.animation(forKey: "animation1") as! CABasicAnimation
 
         let fromValue1: CGPoint? = (animation1.fromValue as? NSValue)?.cgPointValue
@@ -125,7 +125,7 @@ class BasicAnimationDescriptorTests: XCTestCase {
         let start: CGFloat = 0
         let finish: CGFloat = 0.5
         let basicAnchorPointXFromToDescriptor = Descriptor.Basic<SwiftyCoreAnimation.AnchorPoint.X>.from(start, to: finish, duration: duration)
-        self.layer.addBasicAnimation(describedBy: basicAnchorPointXFromToDescriptor, forKey: "animation2")
+        self.layer.addAnimation(describedBy: basicAnchorPointXFromToDescriptor, forKey: "animation2")
         let animation2 = self.layer.animation(forKey: "animation2") as! CABasicAnimation
 
         let fromValue2: CGFloat = CGFloat((animation2.fromValue as? NSNumber)!.doubleValue)
@@ -152,7 +152,7 @@ class BasicAnimationDescriptorTests: XCTestCase {
 
         let timingProperties: [SwiftyCoreAnimation.PropertiesApplicableToBasicAnimations] = [SwiftyCoreAnimation.Properties.MediaTiming.fillMode(.backwards), Properties.isRemovedOnCompletion(false)]
         let basicAnchorPointFromByDescriptor = Descriptor.Basic<SwiftyCoreAnimation.AnchorPoint.X>.from(start, by: by, duration: duration, otherAnimationProperties: timingProperties)
-        self.layer.addBasicAnimation(describedBy: basicAnchorPointFromByDescriptor, forKey: "animation")
+        self.layer.addAnimation(describedBy: basicAnchorPointFromByDescriptor, forKey: "animation")
         let animation = self.layer.animation(forKey: "animation") as! CABasicAnimation
 
         let fromValue: CGFloat = CGFloat((animation.fromValue as? NSNumber)!.doubleValue)
@@ -176,7 +176,7 @@ class BasicAnimationDescriptorTests: XCTestCase {
         let finish: CGFloat = 0.5
         let duration: TimeInterval = 2
         let basicAnchorPointByToDescriptor = Descriptor.Basic<SwiftyCoreAnimation.AnchorPoint.X>.by(start, to: finish, duration: duration)
-        self.layer.addBasicAnimation(describedBy: basicAnchorPointByToDescriptor, forKey: "animation")
+        self.layer.addAnimation(describedBy: basicAnchorPointByToDescriptor, forKey: "animation")
         let animation = self.layer.animation(forKey: "animation") as! CABasicAnimation
 
         XCTAssertNil(animation.fromValue, "From value should be nil")

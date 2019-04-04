@@ -197,32 +197,32 @@ class HelloView: UIView, AnimationsView {
             let rotationDescriptor = Descriptor.Basic<Transform.Rotation.Z>.from(0, to: CGFloat.pi * 4, duration: duration)
             let scaleDescriptor = Descriptor.Basic<Transform.Scale>.from(5, to: 1, duration: duration)
 
-            // to see how to do this using group descriptors, see ActionView
+            // to see how to do this using Group Descriptors, see ActionView
 
-            self.emitterLayer.addKeyFrameAnimation(describedBy: emitterFollowingDescriptor)
-            self.emitterLayer.addBasicAnimation(describedBy: rotationDescriptor)
-            self.emitterLayer.addBasicAnimation(describedBy: scaleDescriptor)
+            self.emitterLayer.addAnimation(describedBy: emitterFollowingDescriptor)
+            self.emitterLayer.addAnimation(describedBy: rotationDescriptor)
+            self.emitterLayer.addAnimation(describedBy: scaleDescriptor)
 
-            self.textLayer.addBasicAnimation(describedBy: strokeDescriptor)
-            self.textLayer.addBasicAnimation(describedBy: rotationDescriptor)
-            self.textLayer.addBasicAnimation(describedBy: scaleDescriptor, animationFinished: { [weak self] _, _ in
+            self.textLayer.addAnimation(describedBy: strokeDescriptor)
+            self.textLayer.addAnimation(describedBy: rotationDescriptor)
+            self.textLayer.addAnimation(describedBy: scaleDescriptor, animationFinished: { [weak self] _, _ in
                 guard let self = self else { return }
 
                 self.gradientLayer.set(Opacity(1))
                 let opacityDescriptor = Descriptor.Basic<Opacity>.from(0, to: 1, duration: 1)
-                self.gradientLayer.addBasicAnimation(describedBy: opacityDescriptor)
+                self.gradientLayer.addAnimation(describedBy: opacityDescriptor)
 
                 self.emitterLayer.set(Opacity(0))
                 let fadeOutDescriptor = Descriptor.Basic<Opacity>.from(1, to: 0, duration: 1)
-                self.emitterLayer.addBasicAnimation(describedBy: fadeOutDescriptor)
+                self.emitterLayer.addAnimation(describedBy: fadeOutDescriptor)
 
                 self.containerLayer.set(Transform.Scale(2))
                 let stretchDescriptor = Descriptor.Spring<Transform.Scale>.from(1, to: 2, duration: 0.5)
-                self.containerLayer.addSpringAnimation(describedBy: stretchDescriptor, animationFinished: { [weak self] _, _ in
+                self.containerLayer.addAnimation(describedBy: stretchDescriptor, animationFinished: { [weak self] _, _ in
 
                     self?.containerLayer.set(Transform.Scale.X(1))
                     let stretchDescriptor = Descriptor.Spring<Transform.Scale.X>.from(2, to: 1, duration: 0.5)
-                    self?.containerLayer.addSpringAnimation(describedBy: stretchDescriptor, animationFinished: { [weak self] _, _ in
+                    self?.containerLayer.addAnimation(describedBy: stretchDescriptor, animationFinished: { [weak self] _, _ in
                         self?.animateGradient()
                     })
                 })
@@ -243,10 +243,11 @@ class HelloView: UIView, AnimationsView {
 
         let pathChangeDescriptor = Descriptor.Basic<Path.CGPath>.from(currentPath, to: textPath, duration: 0.5)
 
-        self.textLayer.addBasicAnimation(describedBy: pathChangeDescriptor)
-        self.maskLayer.addBasicAnimation(describedBy: pathChangeDescriptor, animationFinished: { [weak self] _, _ in
+        self.textLayer.addAnimation(describedBy: pathChangeDescriptor)
+        self.maskLayer.addAnimation(describedBy: pathChangeDescriptor, animationFinished: { [weak self] _, _ in
             guard let self = self else { return }
 
+            // the delay here can be done using a Wait Descriptor in a sequence - see ActionView
             Async.after(2) {
 
                 self.containerLayer.set(Transform.Scale(15))
@@ -258,10 +259,10 @@ class HelloView: UIView, AnimationsView {
                 let scaleYDescriptor = Descriptor.Basic<Transform.Scale.Y>.from(2, to: 15, duration: 1)
                 let opacityDescriptor = Descriptor.Basic<Opacity>.from(1, to: 0, duration: 1)
 
-                self.containerLayer.addBasicAnimation(describedBy: rotationDescriptor)
-                self.containerLayer.addBasicAnimation(describedBy: scaleXDescriptor)
-                self.containerLayer.addBasicAnimation(describedBy: scaleYDescriptor)
-                self.containerLayer.addBasicAnimation(describedBy: opacityDescriptor, animationFinished: { [weak self] _, _ in
+                self.containerLayer.addAnimation(describedBy: rotationDescriptor)
+                self.containerLayer.addAnimation(describedBy: scaleXDescriptor)
+                self.containerLayer.addAnimation(describedBy: scaleYDescriptor)
+                self.containerLayer.addAnimation(describedBy: opacityDescriptor, animationFinished: { [weak self] _, _ in
                     guard let self = self else { return }
 
                     self.textLayer.set(Opacity(0))
@@ -327,11 +328,11 @@ class HelloView: UIView, AnimationsView {
         self.backgroundGradientLayer.set(StartPoint(newStartPoint))
         self.backgroundGradientLayer.set(EndPoint(newEndPoint))
 
-        self.backgroundGradientLayer.addBasicAnimation(describedBy: startPointDescriptor, animationFinished: { [weak self] _, _ in
+        self.backgroundGradientLayer.addAnimation(describedBy: startPointDescriptor, animationFinished: { [weak self] _, _ in
             guard self != nil else { return }
             self?.animateBackground()
         })
-        self.backgroundGradientLayer.addBasicAnimation(describedBy: endPointDescriptor)
+        self.backgroundGradientLayer.addAnimation(describedBy: endPointDescriptor)
     }
 
     private func positionLayer(_ layer: CALayer) {
