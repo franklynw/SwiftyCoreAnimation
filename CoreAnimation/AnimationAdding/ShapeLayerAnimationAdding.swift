@@ -38,18 +38,18 @@ public extension ShapeLayerAnimationAdding where Self: CAShapeLayer {
     ///   - properties: an array of Descriptor.Properties applicable to CAPropertyAnimations; if the Descriptor already has animation properties,
     ///             these will be over-ridden by the values passed in here
     ///   - removeExistingAnimations: removes any existing layer animations if true
-    ///   - animationFinished: invoked when the animation completes
+    ///   - animationDidFinish: invoked when the animation completes
     public func addAnimation<T: ShapeLayerProperty & Animatable>(describedBy animationDescriptor: Descriptor.Basic<T>,
                                                                  forKey key: String? = nil,
                                                                  applyingOtherProperties properties: [PropertiesApplicableToBasicAnimations] = [],
                                                                  removeExistingAnimations: Bool = false,
-                                                                 animationFinished: AnimationFinishedAction? = nil) {
+                                                                 animationDidFinish: AnimationDidFinishAction? = nil) {
 
         self.addAnimation(animationDescriptor,
                           forKey: key,
                           applyingProperties: properties,
                           removeExistingAnimations: removeExistingAnimations,
-                          animationFinished: animationFinished)
+                          animationDidFinish: animationDidFinish)
     }
 
     /// Adds a CAKeyFrameAnimation to a CAShapeLayer
@@ -60,18 +60,18 @@ public extension ShapeLayerAnimationAdding where Self: CAShapeLayer {
     ///   - properties: an array of Descriptor.Properties applicable to CAKeyFrameAnimations; if the Descriptor already has animation properties,
     ///             these will be over-ridden by the values passed in here
     ///   - removeExistingAnimations: removes any existing layer animations if true
-    ///   - animationFinished: invoked when the animation completes
+    ///   - animationDidFinish: invoked when the animation completes
     public func addAnimation<T: ShapeLayerProperty & Animatable>(describedBy animationDescriptor: Descriptor.KeyFrame<T>,
                                                                  forKey key: String? = nil,
                                                                  applyingOtherProperties properties: [PropertiesApplicableToKeyFrameAnimations] = [],
                                                                  removeExistingAnimations: Bool = false,
-                                                                 animationFinished: AnimationFinishedAction? = nil) {
+                                                                 animationDidFinish: AnimationDidFinishAction? = nil) {
 
         self.addAnimation(animationDescriptor,
                           forKey: key,
                           applyingProperties: properties,
                           removeExistingAnimations: removeExistingAnimations,
-                          animationFinished: animationFinished)
+                          animationDidFinish: animationDidFinish)
     }
 
     /// Adds a CASpringAnimation to a CAShapeLayer
@@ -82,18 +82,18 @@ public extension ShapeLayerAnimationAdding where Self: CAShapeLayer {
     ///   - properties: an array of Descriptor.Properties applicable to CASpringAnimations; if the Descriptor already has animation properties,
     ///             these will be over-ridden by the values passed in here
     ///   - removeExistingAnimations: removes any existing layer animations if true
-    ///   - animationFinished: invoked when the animation completes
+    ///   - animationDidFinish: invoked when the animation completes
     public func addAnimation<T: ShapeLayerProperty & Animatable>(describedBy animationDescriptor: Descriptor.Spring<T>,
                                                                  forKey key: String? = nil,
                                                                  applyingOtherProperties properties: [PropertiesApplicableToSpringAnimations] = [],
                                                                  removeExistingAnimations: Bool = false,
-                                                                 animationFinished: AnimationFinishedAction? = nil) {
+                                                                 animationDidFinish: AnimationDidFinishAction? = nil) {
         
         self.addAnimation(animationDescriptor,
                           forKey: key,
                           applyingProperties: properties,
                           removeExistingAnimations: removeExistingAnimations,
-                          animationFinished: animationFinished)
+                          animationDidFinish: animationDidFinish)
     }
 
     /// Adds an animation group to a CAShapeLayer
@@ -104,12 +104,12 @@ public extension ShapeLayerAnimationAdding where Self: CAShapeLayer {
     ///   - animationDescriptor: a Group Animation descriptor - whether it is concurrent or sequential is determined by the descriptor
     ///   - key: key for the animation
     ///   - removeExistingAnimations: removes any existing layer animations if true
-    ///   - animationFinished: invoked when the animation completes - any animationFinished actions on the individual descriptors will be ignored
+    ///   - animationDidFinish: invoked when the animation completes - any animationDidFinish actions on the individual descriptors will be ignored
     public func addAnimationsGroup(describedBy animationDescriptor: Descriptor.Group,
                                    forKey key: String? = nil,
                                    applyingOtherProperties properties: [PropertiesApplicableToAnimationGroups] = [],
                                    removeExistingAnimations: Bool = false,
-                                   animationFinished: AnimationFinishedAction? = nil) throws {
+                                   animationDidFinish: AnimationDidFinishAction? = nil) throws {
 
         try animationDescriptor.propertyTypes.forEach {
             guard $0 is LayerProperty.Type || $0 is ShapeLayerProperty.Type else {
@@ -120,7 +120,7 @@ public extension ShapeLayerAnimationAdding where Self: CAShapeLayer {
         self.addAnimationsGroup(animationDescriptor,
                                 forKey: key,
                                 removeExistingAnimations: removeExistingAnimations,
-                                animationFinished: animationFinished)
+                                animationDidFinish: animationDidFinish)
     }
 
     /// Adds an animation group to a CAShapeLayer
@@ -132,17 +132,17 @@ public extension ShapeLayerAnimationAdding where Self: CAShapeLayer {
     ///   - key: key for the animation
     ///   - duration: the animation duration - if the descriptors specify a longer duration than this, the animation duration will be clipped, not scaled
     ///             (if no duration is specified here, the default will be used, which would clip any longer animations from the descriptors)
-    ///             NB - if an animation sequence is added, it isn't clipped & will run its full sequence; this means that any animationFinished action
+    ///             NB - if an animation sequence is added, it isn't clipped & will run its full sequence; this means that any animationDidFinish action
     ///             could be invoked BEFORE the sequence is ended, as it runs when the group finishes
     ///   - properties: an array of Descriptor.Properties applicable to CAAnimationGroups
     ///   - removeExistingAnimations: removes any existing layer animations if true
-    ///   - animationFinished: invoked when the animation completes - any animationFinished actions on the individual descriptors will be ignored
+    ///   - animationDidFinish: invoked when the animation completes - any animationDidFinish actions on the individual descriptors will be ignored
     public func addConcurrentAnimations(describedBy animationDescriptors: [Descriptor.Root],
                                         forKey key: String? = nil,
                                         duration: TimeInterval? = nil,
                                         applyingOtherProperties properties: [PropertiesApplicableToAnimationGroups] = [],
                                         removeExistingAnimations: Bool = false,
-                                        animationFinished: AnimationFinishedAction? = nil) throws {
+                                        animationDidFinish: AnimationDidFinishAction? = nil) throws {
 
         try animationDescriptors.forEach {
             try $0.propertyTypes.forEach {
@@ -157,7 +157,7 @@ public extension ShapeLayerAnimationAdding where Self: CAShapeLayer {
         self.addConcurrentAnimations(concurrentAnimationsDescriptor,
                                      forKey: key,
                                      removeExistingAnimations: removeExistingAnimations,
-                                     animationFinished: animationFinished)
+                                     animationDidFinish: animationDidFinish)
     }
 
     /// Adds an animation group to a CAShapeLayer
@@ -169,11 +169,11 @@ public extension ShapeLayerAnimationAdding where Self: CAShapeLayer {
     ///   - animationDescriptors: Animation descriptors for CAShapeLayer animations; these should have durations, which are used for timing the sequence
     ///   - key: key for the animation
     ///   - removeExistingAnimations: removes any existing layer animations if true (continues down the sequence - each animation will remove other existing animations)
-    ///   - animationFinished: invoked when the animation completes - any animationFinished actions on the individual descriptors will be ignored
+    ///   - animationDidFinish: invoked when the animation completes - any animationDidFinish actions on the individual descriptors will be ignored
     public func addAnimationSequence(describedBy animationDescriptors: [Descriptor.Root],
                                      forKey key: String? = nil,
                                      removeExistingAnimations: Bool = false,
-                                     animationFinished: AnimationFinishedAction? = nil) throws {
+                                     animationDidFinish: AnimationDidFinishAction? = nil) throws {
         
         try animationDescriptors.forEach {
             try $0.propertyTypes.forEach {
@@ -186,6 +186,6 @@ public extension ShapeLayerAnimationAdding where Self: CAShapeLayer {
         self.addAnimationSequence(animationDescriptors,
                                   forKey: key,
                                   removeExistingAnimations: removeExistingAnimations,
-                                  animationFinished: animationFinished)
+                                  animationDidFinish: animationDidFinish)
     }
 }

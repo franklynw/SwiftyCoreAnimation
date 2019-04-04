@@ -17,7 +17,7 @@ import SwiftyCoreAnimation
  For sequences, it expands upon what is available using existing CAAnimationGroup functionality -
  'Action' descriptors can be put into the sequence - they are invoked when their turn comes in the sequence
  'Wait' descriptors can be put into the sequence - they just tell the sequence to wait before continuing to the next animation element
- Unlike CAAnimationGroup animations, each animation in the sequence can have its own animationFinished action
+ Unlike CAAnimationGroup animations, each animation in the sequence can have its own animationDidFinish action
  Both concurrent & sequence group descriptors can be added to new group descriptors
 */
 
@@ -144,7 +144,7 @@ class ActionView: UIView, AnimationsView {
         let fillColorDescriptor2 = Descriptor.Basic<FillColor>.from(.purple, to: .orange, duration: 2, otherAnimationProperties: properties)
 
         // if we just wanted the sequence, we can create it like so
-//        try? shapeLayer.addAnimationSequence(describedBy: [waitDescriptor, setFillColorActionDescriptor, fillColorDescriptor, waitDescriptor, setLineWidthActionDescriptor, lineWidthDescriptor, setFillColorActionDescriptor2, fillColorDescriptor2], animationFinished: { _, _ in
+//        try? shapeLayer.addAnimationSequence(describedBy: [waitDescriptor, setFillColorActionDescriptor, fillColorDescriptor, waitDescriptor, setLineWidthActionDescriptor, lineWidthDescriptor, setFillColorActionDescriptor2, fillColorDescriptor2], animationDidFinish: { _, _ in
 //            self.animationsViewDelegate?.showMessage("All done!")
 //        })
 
@@ -153,11 +153,11 @@ class ActionView: UIView, AnimationsView {
         let groupDescriptor = Descriptor.Group.Sequential(using: [waitDescriptor, setFillColorActionDescriptor, fillColorDescriptor, waitDescriptor, setLineWidthActionDescriptor, lineWidthDescriptor, setFillColorActionDescriptor2, fillColorDescriptor2])
 
         // if we want to run the sequence concurrently with another animation, we can put it into a concurrent animation group
-        // the main thing to note here is that the animationFinished action will be invoked after the group's duration, not the sequence's duration
+        // the main thing to note here is that the animationDidFinish action will be invoked after the group's duration, not the sequence's duration
         // so if the action is required after all the animations finish, either set the duration of the group so it matches the sequences,
         // or add it as an actionDescriptor at the end of the animation sequence
 //        let rotateDescriptor = Descriptor.Basic<Transform.Rotation.Z>.from(0, to: CGFloat.pi * 2)
-//        try? shapeLayer.addConcurrentAnimations(describedBy: [groupDescriptor, rotateDescriptor], duration: 9, animationFinished: { _, _ in
+//        try? shapeLayer.addConcurrentAnimations(describedBy: [groupDescriptor, rotateDescriptor], duration: 9, animationDidFinish: { _, _ in
 //            self.animationsViewDelegate?.showMessage("All done!") // will be executed after setFillColorActionDescriptor & setLineWidthActionDescriptor, but before setFillColorActionDescriptor2
 //        })
 
@@ -171,7 +171,7 @@ class ActionView: UIView, AnimationsView {
         let groupDescriptor2 = Descriptor.Group.Concurrent(using: [moveDescriptor, rotateDescriptor], duration: 2)
 
         // then put everything into a sequence
-        try? shapeLayer.addAnimationSequence(describedBy: [groupDescriptor, waitDescriptor, groupDescriptor2], animationFinished: { [weak self] _, _ in
+        try? shapeLayer.addAnimationSequence(describedBy: [groupDescriptor, waitDescriptor, groupDescriptor2], animationDidFinish: { [weak self] _, _ in
             guard let self = self else { return }
             self.animationsViewDelegate?.showMessage("Finished move & rotate #1")
             Async.after(2, action: {
@@ -243,7 +243,7 @@ class ActionView: UIView, AnimationsView {
 
         let waitDescriptor2 = Descriptor.Wait(for: 1.5)
 
-        try? shapeLayer.addAnimationSequence(describedBy: [groupDescriptor, waitDescriptor2], animationFinished: { [weak self] _, _ in
+        try? shapeLayer.addAnimationSequence(describedBy: [groupDescriptor, waitDescriptor2], animationDidFinish: { [weak self] _, _ in
             guard let self = self else { return }
             self.animationsViewDelegate?.showMessage("Shrinking...")
             self.shrink()
