@@ -54,6 +54,16 @@ extension Descriptor {
 
     public class Group: Root {
 
+        internal let descriptors: [Descriptor.Root]
+
+        public init(using descriptors: [Descriptor.Root]) {
+
+            self.descriptors = descriptors
+            let propertyTypes: [BaseLayerProperty.Type] = self.descriptors.flatMap { $0.propertyTypes }
+
+            super.init(duration: nil, animationProperties: [], propertyTypes: propertyTypes)
+        }
+
         // The Concurrent & Sequence classes are embedded in the Group class so we can have a sort of name-spacing,
         // ie, Descriptor.Group.Concurrent or Descriptor.Group.Sequence
 
@@ -85,21 +95,6 @@ extension Descriptor {
          ````
         */
         public final class Concurrent: Group {
-
-            internal let descriptors: [Descriptor.Root]
-
-            /// Creates a descriptor for a Concurrent Animations Group
-            /// The animations will run concurrently
-            ///
-            /// - Parameters:
-            ///   - descriptors: Animation descriptors for CALayer animations; the group's duration is taken as being the longest duration + beginTime of any of the descriptors
-            public init(using descriptors: [Descriptor.Root]) {
-
-                self.descriptors = descriptors
-                let propertyTypes: [BaseLayerProperty.Type] = self.descriptors.flatMap { $0.propertyTypes }
-
-                super.init(duration: nil, animationProperties: [], propertyTypes: propertyTypes)
-            }
 
             /// We take the duration of the longest animation (plus its beginTime) as being the group's duration
             public override var duration: TimeInterval? {
@@ -133,22 +128,7 @@ extension Descriptor {
         */
         public final class Sequential: Group {
 
-            internal let descriptors: [Descriptor.Root]
-
-            /// Creates a descriptor for a Sequential Animations Group
-            /// The animations in the group will run in the order they're in in the array,
-            /// and the animation's duration is the added durations of the animations created by the descriptors
-            ///
-            /// - Parameters:
-            ///   - descriptors: Animation descriptors for CALayer animations; these should have durations, which are used for timing the sequence
-            public init(using descriptors: [Descriptor.Root]) {
-
-                self.descriptors = descriptors
-                let propertyTypes: [BaseLayerProperty.Type] = self.descriptors.flatMap { $0.propertyTypes }
-
-                super.init(duration: nil, animationProperties: [], propertyTypes: propertyTypes)
-            }
-
+            /// The group's duration is the added durations (plus their beginTimes) of the individual animations
             public override var duration: TimeInterval? {
                 get {
                     let duration = self.descriptors.reduce(into: TimeInterval(0)) {

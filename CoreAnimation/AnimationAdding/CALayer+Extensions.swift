@@ -55,8 +55,6 @@ extension CALayer {
     }
 
     func addAnimation(_ animationDescriptor: Descriptor.Root & AnimationDescribing,
-                      forKey key: String?,
-                      applyingProperties properties: [AnimationPropertiesApplicable],
                       removeExistingAnimations: Bool,
                       animationDidFinish: AnimationDidFinishAction?) {
 
@@ -64,39 +62,31 @@ extension CALayer {
 
         let animation: CAAnimation = animationDescriptor.animation
 
-        CALayer.applyProperties(properties, to: animation)
+        CALayer.addAnimationDidBeginAction(animationDescriptor.animationDidBegin, to: animation)
         CALayer.addAnimationDidFinishAction(animationDidFinish, to: animation)
         CALayer.addAnimationDidFinishAction(animationDescriptor.animationDidFinish, to: animation)
 
         animationDescriptor.animationWillBegin?()
 
-        self.add(animation, forKey: key ?? self.defaultKey)
+        self.add(animation, forKey: animationDescriptor.animationKey ?? self.defaultKey)
     }
 
     func addAnimationsGroup(_ animationDescriptor: Descriptor.Group,
-                            forKey key: String?,
                             removeExistingAnimations: Bool,
                             animationDidFinish: AnimationDidFinishAction?) {
 
         if let animationDescriptor = animationDescriptor as? Descriptor.Group.Concurrent {
             self.addConcurrentAnimations(animationDescriptor,
-                                         forKey: key,
                                          removeExistingAnimations: removeExistingAnimations,
                                          animationDidFinish: animationDidFinish)
         } else {
             self.addAnimationSequence([animationDescriptor],
-                                      forKey: key,
                                       removeExistingAnimations: removeExistingAnimations,
                                       animationDidFinish: animationDidFinish)
         }
     }
 
-    /*
-     A large part of this function isn't testable by the unit tests, as it has UI dependencies
-     TODO: - write UI tests for Animation Sequence groups
-    */
     func addAnimationSequence(_ animationDescriptors: [Descriptor.Root],
-                              forKey key: String?,
                               removeExistingAnimations: Bool,
                               animationDidFinish: AnimationDidFinishAction?) {
 
@@ -125,19 +115,13 @@ extension CALayer {
         if let concurrentAnimationsDescriptor = descriptor as? Descriptor.Group.Concurrent {
 
             self.addConcurrentAnimations(concurrentAnimationsDescriptor,
-                                         forKey: key,
                                          removeExistingAnimations: removeExistingAnimations,
                                          animationDidFinish: { [weak self] _, _ in
 
                 guard let self = self else { return }
                 self.addAnimationSequence(descriptors,
-                                          forKey: key,
                                           removeExistingAnimations: removeExistingAnimations,
-                                          animationDidFinish: { animation, finished in
-
-                    animationDidFinish?(animation, finished)
-                    descriptor.animationDidFinish?(animation, finished)
-                })
+                                          animationDidFinish: animationDidFinish)
             })
 
         } else if let sequentialAnimationsDescriptor = descriptor as? Descriptor.Group.Sequential {
@@ -146,7 +130,6 @@ extension CALayer {
 
             let allDescriptors = sequentialAnimationsDescriptor.descriptors + descriptors
             self.addAnimationSequence(allDescriptors,
-                                      forKey: key,
                                       removeExistingAnimations: removeExistingAnimations,
                                       animationDidFinish: { animation, finished in
 
@@ -159,14 +142,11 @@ extension CALayer {
 
             let animation = animationDescriptor.animation
 
-            if let animationDidBeginAction = animationDescriptor.animationDidBegin {
-                animation.addAnimationDidBeginAction(animationDidBeginAction)
-            }
+            CALayer.addAnimationDidBeginAction(animationDescriptor.animationDidBegin, to: animation)
 
             animation.addAnimationDidFinishAction { [weak self] animation, finished in
                 guard let self = self else { return }
                 self.addAnimationSequence(descriptors,
-                                          forKey: key,
                                           removeExistingAnimations: removeExistingAnimations,
                                           animationDidFinish: animationDidFinish)
 
@@ -175,16 +155,11 @@ extension CALayer {
 
             descriptor.animationWillBegin?()
 
-            self.add(animation, forKey: key)
+            self.add(animation, forKey: animationDescriptor.animationKey)
         }
     }
 
-    /*
-     A large part of this function isn't testable by the unit tests, as it has UI dependencies
-     TODO: - write UI tests for Concurrent Animation groups
-     */
     func addConcurrentAnimations(_ animationDescriptor: Descriptor.Group.Concurrent,
-                                 forKey key: String?,
                                  removeExistingAnimations: Bool,
                                  animationDidFinish: AnimationDidFinishAction?) {
 
@@ -220,11 +195,8 @@ extension CALayer {
                     animationDescriptorFinishedAction = animationDescriptor.animationDidFinish // this is the action added when the descriptor was created
                 }
                 self.addConcurrentAnimations(concurrentAnimationsDescriptor,
-                                             forKey: key,
                                              removeExistingAnimations: removeExistingAnimations,
                                              animationDidFinish: { [animationFinishedAction, animationDescriptorFinishedAction] animation, finished in
-
-                    descriptor.animationDidFinish?(animation, finished) // each descriptor in the group can have its own animationFinished action
 
                     // these next two are invoked only if they haven't already been used
                     animationFinishedAction?(animation, finished)
@@ -239,7 +211,6 @@ extension CALayer {
                     animationDescriptorFinishedAction = animationDescriptor.animationDidFinish // this is the action added when the descriptor was created
                 }
                 self.addAnimationSequence(sequentialAnimationsDescriptor.descriptors,
-                                          forKey: key,
                                           removeExistingAnimations: removeExistingAnimations,
                                           animationDidFinish: { [animationFinishedAction, animationDescriptorFinishedAction] animation, finished in
 
@@ -254,28 +225,19 @@ extension CALayer {
 
                 let animation = singleAnimationDescriptor.animation
 
-                if let animationDidBeginAction = singleAnimationDescriptor.animationDidBegin {
-                    // this is only available for individual animations, as it uses CAAnimationDelegate behind the scenes
-                    animation.addAnimationDidBeginAction(animationDidBeginAction)
-                }
-                if let animationDidFinishAction = descriptor.animationDidFinish {
-                    animation.addAnimationDidFinishAction(animationDidFinishAction)
-                }
+                CALayer.addAnimationDidBeginAction(singleAnimationDescriptor.animationDidBegin, to: animation)
+                CALayer.addAnimationDidFinishAction(descriptor.animationDidFinish, to: animation)
 
                 // if it's the longest animation in the group, we add the group's animationFinished action to it (only if they haven't already been used)
                 if animationFinishedActionAdded == false, let groupDuration = groupDuration, animation.duration + animation.beginTime >= groupDuration {
                     animationFinishedActionAdded = true
-                    if let animationDidFinishAction = animationDidFinish {
-                        animation.addAnimationDidFinishAction(animationDidFinishAction)
-                    }
-                    if let animationDidFinishAction = animationDescriptor.animationDidFinish {
-                        animation.addAnimationDidFinishAction(animationDidFinishAction)
-                    }
+                    CALayer.addAnimationDidFinishAction(animationDidFinish, to: animation)
+                    CALayer.addAnimationDidFinishAction(animationDescriptor.animationDidFinish, to: animation)
                 }
 
                 descriptor.animationWillBegin?()
 
-                self.add(animation, forKey: key)
+                self.add(animation, forKey: singleAnimationDescriptor.animationKey)
             }
         }
 
@@ -291,15 +253,15 @@ extension CALayer {
         }
     }
 
-    private static func addAnimationDidFinishAction(_ completion: AnimationDidFinishAction?, to animation: CAAnimation) {
-        if let completion = completion {
-            animation.addAnimationDidFinishAction(completion)
+    private static func addAnimationDidBeginAction(_ action: AnimationBeginAction?, to animation: CAAnimation) {
+        if let action = action {
+            animation.addAnimationDidBeginAction(action)
         }
     }
 
-    private static func applyProperties(_ properties: [AnimationPropertiesApplicable], to animation: CAAnimation) {
-        properties.forEach {
-            ($0 as? InternalAnimationPropertiesApplying)?.applyProperty(to: animation)
+    private static func addAnimationDidFinishAction(_ action: AnimationDidFinishAction?, to animation: CAAnimation) {
+        if let action = action {
+            animation.addAnimationDidFinishAction(action)
         }
     }
 }

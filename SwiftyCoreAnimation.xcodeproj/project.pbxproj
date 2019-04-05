@@ -150,7 +150,7 @@
 		79D4DE60222FB6CF005160A0 /* TransitionDescriptorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79D4DE5F222FB6CF005160A0 /* TransitionDescriptorTests.swift */; };
 		79D4DE62222FC50D005160A0 /* AnimationPropertiesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79D4DE61222FC50D005160A0 /* AnimationPropertiesTests.swift */; };
 		79D4DE6A2231099E005160A0 /* LayerAnimationAddingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79D4DE692231099E005160A0 /* LayerAnimationAddingTests.swift */; };
-		79D4DE6C223126AF005160A0 /* AnimationFinishedActionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79D4DE6B223126AF005160A0 /* AnimationFinishedActionsTests.swift */; };
+		79D4DE6C223126AF005160A0 /* AnimationActionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79D4DE6B223126AF005160A0 /* AnimationActionsTests.swift */; };
 		79D4DE6E223185D3005160A0 /* CATransactionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79D4DE6D223185D3005160A0 /* CATransactionTests.swift */; };
 /* End PBXBuildFile section */
 
@@ -311,7 +311,7 @@
 		79D4DE5F222FB6CF005160A0 /* TransitionDescriptorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransitionDescriptorTests.swift; sourceTree = "<group>"; };
 		79D4DE61222FC50D005160A0 /* AnimationPropertiesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationPropertiesTests.swift; sourceTree = "<group>"; };
 		79D4DE692231099E005160A0 /* LayerAnimationAddingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayerAnimationAddingTests.swift; sourceTree = "<group>"; };
-		79D4DE6B223126AF005160A0 /* AnimationFinishedActionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationFinishedActionsTests.swift; sourceTree = "<group>"; };
+		79D4DE6B223126AF005160A0 /* AnimationActionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationActionsTests.swift; sourceTree = "<group>"; };
 		79D4DE6D223185D3005160A0 /* CATransactionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CATransactionTests.swift; sourceTree = "<group>"; };
 		79F6AD842217EEBF00FE812E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		79F6AD892217EEBF00FE812E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -666,7 +666,7 @@
 				79430557224404B200C9EDFC /* WaitDescriptorTests.swift */,
 				79D4DE61222FC50D005160A0 /* AnimationPropertiesTests.swift */,
 				79D4DE692231099E005160A0 /* LayerAnimationAddingTests.swift */,
-				79D4DE6B223126AF005160A0 /* AnimationFinishedActionsTests.swift */,
+				79D4DE6B223126AF005160A0 /* AnimationActionsTests.swift */,
 				79D4DE6D223185D3005160A0 /* CATransactionTests.swift */,
 				7988B87F22205A6E0093DF65 /* Info.plist */,
 			);
@@ -971,7 +971,7 @@
 				79D4DE6E223185D3005160A0 /* CATransactionTests.swift in Sources */,
 				794305562244018E00C9EDFC /* ActionDescriptorTests.swift in Sources */,
 				79D4DE5C222EC10C005160A0 /* KeyFrameDescriptorTests.swift in Sources */,
-				79D4DE6C223126AF005160A0 /* AnimationFinishedActionsTests.swift in Sources */,
+				79D4DE6C223126AF005160A0 /* AnimationActionsTests.swift in Sources */,
 				7988B87E22205A6E0093DF65 /* BasicAnimationDescriptorTests.swift in Sources */,
 				79D4DE62222FC50D005160A0 /* AnimationPropertiesTests.swift in Sources */,
 				79D4DE60222FB6CF005160A0 /* TransitionDescriptorTests.swift in Sources */,

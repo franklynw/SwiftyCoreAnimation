@@ -40,7 +40,7 @@ public extension CAAnimation {
     /// Removes the specified action from the animation
     ///
     /// - Parameter id: the action's id as returned when it was originally set
-    public func removeAnimation(withID id: Int) {
+    public func removeAnimationAction(withID id: Int) {
         AnimationActions.removeAction(withID: id, for: self)
     }
 
@@ -56,8 +56,7 @@ public extension CAAnimation {
 
     /// Removes all actions from the animation
     public func removeAllActions() {
-        AnimationActions.removeBeginActions(for: self)
-        AnimationActions.removeFinishActions(for: self)
+        AnimationActions.removeAllActions(for: self)
     }
 }
 
@@ -124,11 +123,6 @@ fileprivate class AnimationActions {
         }
 
         func removeAllFinishActions() {
-            self.finishActions.removeAll()
-        }
-
-        func removeAllActions() {
-            self.beginActions.removeAll()
             self.finishActions.removeAll()
         }
 
@@ -207,5 +201,10 @@ fileprivate class AnimationActions {
         if animationDelegate?.beginActions.isEmpty == true {
             self.animationDelegates.removeObject(forKey: animation)
         }
+    }
+
+    class func removeAllActions(for animation: CAAnimation) {
+        self.removeBeginActions(for: animation)
+        self.removeFinishActions(for: animation)
     }
 }

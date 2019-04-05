@@ -16,4 +16,6 @@ protocol AnimationDescribing {
 
     /// The implementor adds an animationDidBegin action to the animation it creates, which is invoked immediately *after* the animation begins
     var animationDidBegin: AnimationBeginAction? { get set }
+
+    var animationKey: String? { get set }
 }

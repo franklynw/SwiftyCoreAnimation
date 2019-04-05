@@ -24,8 +24,8 @@ class KeyFrameDescriptorTests: XCTestCase {
 
         let duration: TimeInterval = 2
         let path = UIBezierPath(ovalIn: CGRect(x: 0, y: 0, width: 400, height: 250))
-        let keyFrameColorsDescriptor = Descriptor.KeyFrame<SwiftyCoreAnimation.FillColor>.path(path, duration: duration)
-        self.layer.addAnimation(describedBy: keyFrameColorsDescriptor, forKey: "animation")
+        let keyFrameColorsDescriptor = Descriptor.KeyFrame<SwiftyCoreAnimation.FillColor>.path(path, duration: duration, key: "animation")
+        self.layer.addAnimation(describedBy: keyFrameColorsDescriptor)
         let animation = self.layer.animation(forKey: "animation") as! CAKeyframeAnimation
 
         let pathValue: UIBezierPath? = UIBezierPath(cgPath: animation.path!)
@@ -41,8 +41,8 @@ class KeyFrameDescriptorTests: XCTestCase {
 
         let duration: TimeInterval = 2
         let path = CGPath(ellipseIn: CGRect(x: 0, y: 0, width: 400, height: 250), transform: nil)
-        let keyFrameColorsDescriptor = Descriptor.KeyFrame<SwiftyCoreAnimation.FillColor>.path(path, duration: duration)
-        self.layer.addAnimation(describedBy: keyFrameColorsDescriptor, forKey: "animation")
+        let keyFrameColorsDescriptor = Descriptor.KeyFrame<SwiftyCoreAnimation.FillColor>.path(path, duration: duration, key: "animation")
+        self.layer.addAnimation(describedBy: keyFrameColorsDescriptor)
         let animation = self.layer.animation(forKey: "animation") as! CAKeyframeAnimation
 
         let pathValue: CGPath? = animation.path
@@ -58,8 +58,8 @@ class KeyFrameDescriptorTests: XCTestCase {
 
         let duration: TimeInterval = 2
         let values: [UIColor] = [.red, .green, .blue]
-        let keyFrameColorsDescriptor = Descriptor.KeyFrame<SwiftyCoreAnimation.FillColor>.values(values, duration: duration)
-        self.layer.addAnimation(describedBy: keyFrameColorsDescriptor, forKey: "animation")
+        let keyFrameColorsDescriptor = Descriptor.KeyFrame<SwiftyCoreAnimation.FillColor>.values(values, duration: duration, key: "animation")
+        self.layer.addAnimation(describedBy: keyFrameColorsDescriptor)
         let animation = self.layer.animation(forKey: "animation") as! CAKeyframeAnimation
 
         let animationValues: [CGColor]? = animation.values as? [CGColor]

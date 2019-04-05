@@ -29,17 +29,20 @@ extension Descriptor {
 
         private let values: [Any]?
         private let path: CGPath?
-        
+
+        internal var animationKey: String?
         public var animationDidBegin: AnimationBeginAction?
 
 
         fileprivate init(values: [Any]?,
                          path: CGPath?,
                          duration: TimeInterval?,
-                         animationProperties: [PropertiesApplicableToKeyFrameAnimations]) {
+                         animationProperties: [PropertiesApplicableToKeyFrameAnimations],
+                         key: String?) {
 
             self.values = values
             self.path = path
+            self.animationKey = key
 
             super.init(duration: duration, animationProperties: animationProperties, propertyTypes: [T.self])
         }
@@ -68,15 +71,18 @@ extension Descriptor.KeyFrame {
     ///   - path: the animation's path (as CGPath)
     ///   - duration: the animation's duration
     ///   - otherAnimationProperties: animation properties which conform to PropertiesApplicableToKeyFrameAnimations
+    ///   - key: the animation's key when added to the CALayer
     /// - Returns: a KeyFrame Descriptor object
     public static func path(_ path: CGPath,
                             duration: TimeInterval? = nil,
-                            otherAnimationProperties: [PropertiesApplicableToKeyFrameAnimations] = []) -> Self {
+                            otherAnimationProperties: [PropertiesApplicableToKeyFrameAnimations] = [],
+                            key: String? = nil) -> Self {
 
         return self.init(values: nil,
                          path: path,
                          duration: duration,
-                         animationProperties: otherAnimationProperties)
+                         animationProperties: otherAnimationProperties,
+                         key: key)
     }
 
     /// Creates a Descriptor for a KeyFrame Animation
@@ -85,15 +91,18 @@ extension Descriptor.KeyFrame {
     ///   - path: the animation's path (as UIBezierPath)
     ///   - duration: the animation's duration
     ///   - otherAnimationProperties: animation properties which conform to PropertiesApplicableToKeyFrameAnimations
+    ///   - key: the animation's key when added to the CALayer
     /// - Returns: a KeyFrame Descriptor object
     public static func path(_ path: UIBezierPath,
                             duration: TimeInterval? = nil,
-                            otherAnimationProperties: [PropertiesApplicableToKeyFrameAnimations] = []) -> Self {
+                            otherAnimationProperties: [PropertiesApplicableToKeyFrameAnimations] = [],
+                            key: String? = nil) -> Self {
 
         return self.init(values: nil,
                          path: path.cgPath,
                          duration: duration,
-                         animationProperties: otherAnimationProperties)
+                         animationProperties: otherAnimationProperties,
+                         key: key)
     }
 
     /// Creates a Descriptor for a KeyFrame Animation
@@ -102,14 +111,17 @@ extension Descriptor.KeyFrame {
     ///   - values: the animation's values
     ///   - duration: the animation's duration
     ///   - otherAnimationProperties: animation properties which conform to PropertiesApplicableToKeyFrameAnimations
+    ///   - key: the animation's key when added to the CALayer
     /// - Returns: a KeyFrame Descriptor object
     public static func values(_ values: [T.KeyValueType],
                               duration: TimeInterval? = nil,
-                              otherAnimationProperties: [PropertiesApplicableToKeyFrameAnimations] = []) -> Self {
+                              otherAnimationProperties: [PropertiesApplicableToKeyFrameAnimations] = [],
+                              key: String? = nil) -> Self {
 
         return self.init(values: values.compactMap { $0.keyValue },
                          path: nil,
                          duration: duration,
-                         animationProperties: otherAnimationProperties)
+                         animationProperties: otherAnimationProperties,
+                         key: key)
     }
 }

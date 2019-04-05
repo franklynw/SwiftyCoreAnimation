@@ -39,10 +39,12 @@ extension Descriptor {
 
         private static let animationKey = "wait"
 
+        internal var animationKey: String?
         public var animationDidBegin: AnimationBeginAction?
 
 
-        public init(for duration: TimeInterval) {
+        public init(for duration: TimeInterval, key: String? = nil) {
+            self.animationKey = key
             super.init(duration: duration, animationProperties: [], propertyTypes: [])
         }
 

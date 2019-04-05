@@ -1929,7 +1929,7 @@ class LayerPropertiesSettingAndGettingTests: XCTestCase {
 
         XCTAssertEqual(self.round(scaleTransform.value!, 3), scaleResult, "Both should be equal")
 
-        let scaleTransformX = InstanceTransform.Rotation.X(0.7)
+        let scaleTransformX = InstanceTransform.Scale.X(0.7)
         self.replicatorLayer.set(scaleTransformX)
         let scaleXResult = self.round(self.replicatorLayer.get(InstanceTransform.Scale.X.self)!, 3)
 
