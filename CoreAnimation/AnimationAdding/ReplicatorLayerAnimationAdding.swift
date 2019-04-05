@@ -129,17 +129,10 @@ public extension ReplicatorLayerAnimationAdding where Self: CAReplicatorLayer {
     /// - Parameters:
     ///   - animationDescriptors: Animation descriptors for CAReplicatorLayer animations
     ///   - key: key for the animation
-    ///   - duration: the animation duration - if the descriptors specify a longer duration than this, the animation duration will be clipped, not scaled
-    ///             (if no duration is specified here, the default will be used, which would clip any longer animations from the descriptors)
-    ///             NB - if an animation sequence is added, it isn't clipped & will run its full sequence; this means that any animationDidFinish action
-    ///             could be invoked BEFORE the sequence is ended, as it runs when the group finishes
-    ///   - properties: an array of Descriptor.Properties applicable to CAAnimationGroups
     ///   - removeExistingAnimations: removes any existing layer animations if true
     ///   - animationDidFinish: invoked when the animation completes - any animationDidFinish actions on the individual descriptors will be ignored
     public func addConcurrentAnimations(describedBy animationDescriptors: [Descriptor.Root],
                                         forKey key: String? = nil,
-                                        duration: TimeInterval? = nil,
-                                        applyingOtherProperties properties: [PropertiesApplicableToAnimationGroups] = [],
                                         removeExistingAnimations: Bool = false,
                                         animationDidFinish: AnimationDidFinishAction? = nil) throws {
 
@@ -151,7 +144,7 @@ public extension ReplicatorLayerAnimationAdding where Self: CAReplicatorLayer {
             }
         }
 
-        let concurrentAnimationsDescriptor = Descriptor.Group.Concurrent(using: animationDescriptors, duration: duration, otherAnimationProperties: properties)
+        let concurrentAnimationsDescriptor = Descriptor.Group.Concurrent(using: animationDescriptors)
 
         self.addConcurrentAnimations(concurrentAnimationsDescriptor,
                                      forKey: key,

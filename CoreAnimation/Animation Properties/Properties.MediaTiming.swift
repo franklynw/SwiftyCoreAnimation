@@ -24,18 +24,24 @@ extension Properties {
         PropertiesApplicableToKeyFrameAnimations,
         PropertiesApplicableToSpringAnimations,
         PropertiesApplicableToTransitions,
-        PropertiesApplicableToAnimationGroups,
         AnimationPropertiesApplying,
         InternalAnimationPropertiesApplying {
 
         public typealias AnimationType = CAAnimation
 
+        /// The animation's beginTime property
         case beginTime(TimeInterval)
+        /// The animation's timeOffset property
         case timeOffset(TimeInterval)
+        /// The animation's repeatCount property
         case repeatCount(Int)
+        /// The animation's repeatDuration property
         case repeatDuration(TimeInterval)
+        /// The animation's speed property
         case speed(CGFloat)
+        /// The animation's autoreverses property
         case autoreverses(Bool)
+        /// The animation's fillMode property
         case fillMode(CAMediaTimingFillMode)
 
         public func apply(to animation: AnimationType) {

@@ -165,10 +165,10 @@ class ActionView: UIView, AnimationsView {
         let keyFrameProperties: [Properties.KeyFrameAnimation] = [.calculationMode(.paced)]
         let translate = CGAffineTransform(translationX: width / -2, y: 0)
         ellipsePath.apply(translate)
-        let moveDescriptor = Descriptor.KeyFrame<Position>.path(ellipsePath, otherAnimationProperties: keyFrameProperties)
-        let rotateDescriptor = Descriptor.Basic<Transform.Rotation>.from(0, to: CGFloat.pi * 4)
+        let moveDescriptor = Descriptor.KeyFrame<Position>.path(ellipsePath, duration: 2, otherAnimationProperties: keyFrameProperties)
+        let rotateDescriptor = Descriptor.Basic<Transform.Rotation>.from(0, to: CGFloat.pi * 4, duration: 2)
 
-        let groupDescriptor2 = Descriptor.Group.Concurrent(using: [moveDescriptor, rotateDescriptor], duration: 2)
+        let groupDescriptor2 = Descriptor.Group.Concurrent(using: [moveDescriptor, rotateDescriptor])
 
         // then put everything into a sequence
         try? shapeLayer.addAnimationSequence(describedBy: [groupDescriptor, waitDescriptor, groupDescriptor2], animationDidFinish: { [weak self] _, _ in
@@ -207,11 +207,11 @@ class ActionView: UIView, AnimationsView {
             shapeLayer.set(StrokeColor(.red))
         }
         let currentFillColor = shapeLayer.get(FillColor.self) ?? .clear
-        let fillColorDescriptor = Descriptor.Basic<FillColor>.from(currentFillColor, to: .blue)
+        let fillColorDescriptor = Descriptor.Basic<FillColor>.from(currentFillColor, to: .blue, duration: 2)
         let currentLineColor = shapeLayer.get(StrokeColor.self) ?? .clear
-        let strokeColorDescriptor = Descriptor.Basic<StrokeColor>.from(currentLineColor, to: .red)
+        let strokeColorDescriptor = Descriptor.Basic<StrokeColor>.from(currentLineColor, to: .red, duration: 2)
 
-        let colorsGroupDescriptor = Descriptor.Group.Concurrent(using: [fillColorDescriptor, strokeColorDescriptor], duration: 2)
+        let colorsGroupDescriptor = Descriptor.Group.Concurrent(using: [fillColorDescriptor, strokeColorDescriptor])
 
         let currentLineWidth = shapeLayer.get(LineWidth.self) ?? 0
         let lineWidthDescriptor = Descriptor.Basic<LineWidth>.from(currentLineWidth, to: 40, duration: 2)
@@ -227,19 +227,19 @@ class ActionView: UIView, AnimationsView {
         // create the first 'sequence' descriptor using the above descriptors
         let sequenceDescriptor = Descriptor.Group.Sequential(using: [waitDescriptor, actionDescriptor1, colorsGroupDescriptor, waitDescriptor, lineWidthDescriptor])
 
+        let sequenceDuration = sequenceDescriptor.duration
+
         let keyFrameProperties: [Properties.KeyFrameAnimation] = [.calculationMode(.paced)]
         let translate = CGAffineTransform(translationX: width / -2, y: 0)
         ellipsePath.apply(translate)
-        let moveDescriptor = Descriptor.KeyFrame<Position>.path(ellipsePath, otherAnimationProperties: keyFrameProperties)
-        let rotateDescriptor = Descriptor.Basic<Transform.Rotation>.from(0, to: CGFloat.pi * 4)
-
-        let sequenceDuration = sequenceDescriptor.duration
+        let moveDescriptor = Descriptor.KeyFrame<Position>.path(ellipsePath, duration: sequenceDuration, otherAnimationProperties: keyFrameProperties)
+        let rotateDescriptor = Descriptor.Basic<Transform.Rotation>.from(0, to: CGFloat.pi * 4, duration: sequenceDuration)
 
         // create a 'concurrent' descriptor to move & rotate
-        let concurrentDescriptor = Descriptor.Group.Concurrent(using: [moveDescriptor, rotateDescriptor], duration: sequenceDuration)
+        let concurrentDescriptor = Descriptor.Group.Concurrent(using: [moveDescriptor, rotateDescriptor])
 
         // put the two group animations together in another concurrent group (to run them at the same time)
-        let groupDescriptor = Descriptor.Group.Concurrent(using: [sequenceDescriptor, concurrentDescriptor], duration: sequenceDuration)
+        let groupDescriptor = Descriptor.Group.Concurrent(using: [sequenceDescriptor, concurrentDescriptor])
 
         let waitDescriptor2 = Descriptor.Wait(for: 1.5)
 
@@ -255,10 +255,8 @@ class ActionView: UIView, AnimationsView {
         let currentScale = self.shapeLayer.get(Transform.Scale.self) ?? 1
         let scaleDescriptor = Descriptor.Basic<Transform.Scale>.from(currentScale, to: 0, duration: 0.5)
 
-        let properties: [PropertiesApplicableToBasicAnimations] = []//[Properties.MediaTiming.fillMode(.forwards), Properties.isRemovedOnCompletion(false)]
-
         self.shapeLayer.set(Transform.Scale(0))
-        self.shapeLayer.addAnimation(describedBy: scaleDescriptor, applyingOtherProperties: properties, removeExistingAnimations: true) { [weak self] _, _ in
+        self.shapeLayer.addAnimation(describedBy: scaleDescriptor, removeExistingAnimations: true) { [weak self] _, _ in
             guard let self = self else { return }
             self.animationsViewDelegate?.showMessage("Shrunk!")
             self.shapeLayer.set(FillColor(.yellow))

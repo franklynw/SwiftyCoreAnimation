@@ -23,9 +23,13 @@ extension Properties {
 
         public typealias AnimationType = CASpringAnimation
 
+        /// The animation's damping property
         case damping(CGFloat)
+        /// The animation's initialVelocity property
         case initialVelocity(CGFloat)
+        /// The animation's mass property
         case mass(CGFloat)
+        /// The animation's stiffness property
         case stiffness(CGFloat)
 
         public func apply(to animation: AnimationType) {

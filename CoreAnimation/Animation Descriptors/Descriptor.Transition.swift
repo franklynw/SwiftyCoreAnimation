@@ -28,6 +28,8 @@ extension Descriptor {
         private let startProgress: CGFloat?
         private let endProgress: CGFloat?
 
+        public var animationDidBegin: AnimationBeginAction?
+
 
         /// Initializer for a Descriptor for a CATransition
         ///

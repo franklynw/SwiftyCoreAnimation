@@ -28,6 +28,8 @@ extension Descriptor {
         private let from: Any?
         private let by: Any?
         private let to: Any?
+        
+        public var animationDidBegin: AnimationBeginAction?
 
 
         /// Initializer for a Descriptor for a Spring Animation

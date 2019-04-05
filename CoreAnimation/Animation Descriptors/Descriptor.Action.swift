@@ -43,6 +43,10 @@ extension Descriptor {
         // handle the error thrown if any of the animatable properties are not appropriate for the layer type (eg, fillColor on CAGradientLayer)
      }
      ````
+
+     ## See also: ##
+     animationWillBegin, for AnimationDescribing Descriptors. Possibly a better option for setting properties immediately prior
+     to animating them, as it will be invoked on the same run loop cycle as the animation start
     */
     public final class Action: Root {
 

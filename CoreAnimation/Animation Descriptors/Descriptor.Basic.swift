@@ -29,6 +29,8 @@ extension Descriptor {
         private let by: Any?
         private let to: Any?
 
+        public var animationDidBegin: AnimationBeginAction?
+
         
         /// Initializer for a Descriptor for a Basic Animation
         ///

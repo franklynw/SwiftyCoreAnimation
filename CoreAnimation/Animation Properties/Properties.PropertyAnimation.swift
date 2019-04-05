@@ -24,8 +24,11 @@ extension Properties {
 
         public typealias AnimationType = CAPropertyAnimation
 
+        /// The animation's isCumulative property
         case isCumulative(Bool)
+        /// The animation's isAdditive property
         case isAdditive(Bool)
+        /// The animation's valueFunction property
         case valueFunction(CAValueFunction?)
 
         public func apply(to animation: AnimationType) {

@@ -29,6 +29,8 @@ extension Descriptor {
 
         private let values: [Any]?
         private let path: CGPath?
+        
+        public var animationDidBegin: AnimationBeginAction?
 
 
         fileprivate init(values: [Any]?,

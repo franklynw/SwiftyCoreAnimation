@@ -39,6 +39,8 @@ extension Descriptor {
 
         private static let animationKey = "wait"
 
+        public var animationDidBegin: AnimationBeginAction?
+
 
         public init(for duration: TimeInterval) {
             super.init(duration: duration, animationProperties: [], propertyTypes: [])

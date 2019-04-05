@@ -33,6 +33,3 @@ public protocol PropertiesApplicableToSpringAnimations: AnimationPropertiesAppli
 
 /// Properties which can be applied to CATransitions implement this
 public protocol PropertiesApplicableToTransitions: AnimationPropertiesApplicable {}
-
-/// Properties which can be applied to CAAnimationGroup implement this
-public protocol PropertiesApplicableToAnimationGroups: AnimationPropertiesApplicable {}

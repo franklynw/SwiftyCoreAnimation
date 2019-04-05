@@ -10,19 +10,19 @@ import UIKit
 
 
 public typealias AnimationDidFinishAction = (CAAnimation?, Bool) -> ()
-public typealias AnimationWillBeginAction = () -> ()
+public typealias AnimationBeginAction = () -> ()
 
 
 public extension CAAnimation {
 
-    /// Adds an AnimationWillBeginAction to the animation
+    /// Adds an AnimationBeginAction to the animation
     /// If the animation delegate has already been set, this remains unchanged,
     /// however if the animation delegate is subsequently changed, the finished action will not be called
     ///
     /// - Parameter action: action invoked when animation finishes
     /// - Returns: the action identifier
     @discardableResult
-    public func addAnimationWillBeginAction(_ action: @escaping AnimationWillBeginAction) -> Int {
+    public func addAnimationDidBeginAction(_ action: @escaping AnimationBeginAction) -> Int {
         return AnimationActions.addBeginAction(action, to: self, realDelegate: self.delegate)
     }
 
@@ -44,13 +44,19 @@ public extension CAAnimation {
         AnimationActions.removeAction(withID: id, for: self)
     }
 
-    /// Removes all AnimationWillBeginActions from the animation
-    public func removeAllAnimationWillBeginActions() {
+    /// Removes all AnimationDidBeginActions from the animation
+    public func removeAllAnimationDidBeginActions() {
         AnimationActions.removeBeginActions(for: self)
     }
 
     /// Removes all AnimationDidFinishActions from the animation
     public func removeAllAnimationDidFinishActions() {
+        AnimationActions.removeFinishActions(for: self)
+    }
+
+    /// Removes all actions from the animation
+    public func removeAllActions() {
+        AnimationActions.removeBeginActions(for: self)
         AnimationActions.removeFinishActions(for: self)
     }
 }
@@ -76,10 +82,10 @@ fileprivate class AnimationActions {
     private class AnimationDelegate: NSObject, CAAnimationDelegate {
 
         weak var realDelegate: CAAnimationDelegate?
-        var beginActions: [Int: AnimationWillBeginAction] = [:]
+        var beginActions: [Int: AnimationBeginAction] = [:]
         var finishActions: [Int: AnimationDidFinishAction] = [:]
 
-        class func setup(realDelegate: CAAnimationDelegate?, beginAction action: @escaping AnimationWillBeginAction) -> ActionWithID {
+        class func setup(realDelegate: CAAnimationDelegate?, beginAction action: @escaping AnimationBeginAction) -> ActionWithID {
             let animationDelegate = AnimationDelegate(realDelegate: realDelegate)
             let animationID: Int = animationDelegate.addBeginAction(action)
             return (animationID, animationDelegate)
@@ -96,7 +102,7 @@ fileprivate class AnimationActions {
             self.realDelegate = realDelegate
         }
 
-        func addBeginAction(_ action: @escaping AnimationWillBeginAction) -> Int {
+        func addBeginAction(_ action: @escaping AnimationBeginAction) -> Int {
             let animationID: Int = AnimationActions.animationID
             self.beginActions[animationID] = action
             return animationID
@@ -143,7 +149,7 @@ fileprivate class AnimationActions {
         }
     }
 
-    class func addBeginAction(_ action: @escaping AnimationWillBeginAction, to animation: CAAnimation, realDelegate: CAAnimationDelegate?) -> Int {
+    class func addBeginAction(_ action: @escaping AnimationBeginAction, to animation: CAAnimation, realDelegate: CAAnimationDelegate?) -> Int {
 
         if let animationDelegate: AnimationDelegate = self.animationDelegates.object(forKey: animation) {
             return animationDelegate.addBeginAction(action)
