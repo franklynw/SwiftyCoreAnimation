@@ -153,7 +153,7 @@ class ActionView: UIView, AnimationsView {
         let groupDescriptor = Descriptor.Group.Sequential(using: [waitDescriptor, setFillColorActionDescriptor, fillColorDescriptor, waitDescriptor, setLineWidthActionDescriptor, lineWidthDescriptor, setFillColorActionDescriptor2, fillColorDescriptor2])
 
         // if we want to run the sequence concurrently with another animation, we can put it into a concurrent animation group
-        // the main thing to note here is that the animationDidFinish action will be invoked after the group's duration, not the sequence's duration
+        // the main thing to note here is that the animationDidFinish action will be invoked after the concurrent group's duration, not the sequence's duration,
         // so if the action is required after all the animations finish, either set the duration of the group so it matches the sequences,
         // or add it as an actionDescriptor at the end of the animation sequence
 //        let rotateDescriptor = Descriptor.Basic<Transform.Rotation.Z>.from(0, to: CGFloat.pi * 2)
@@ -187,7 +187,7 @@ class ActionView: UIView, AnimationsView {
         do {
             try shapeLayer.addAnimationSequence(describedBy: [fillColorDescriptor, gradientColorsDescriptor])
         } catch {
-            print("Not allowed! ", error.localizedDescription)
+            print("Not allowed!", error.localizedDescription)
         }
     }
 

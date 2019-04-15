@@ -329,8 +329,8 @@ class HelloView: UIView, AnimationsView {
         self.backgroundGradientLayer.set(EndPoint(newEndPoint))
 
         self.backgroundGradientLayer.addAnimation(describedBy: startPointDescriptor, animationDidFinish: { [weak self] _, _ in
-            guard self != nil else { return }
-            self?.animateBackground()
+            guard let self = self else { return }
+            self.animateBackground()
         })
         self.backgroundGradientLayer.addAnimation(describedBy: endPointDescriptor)
     }
