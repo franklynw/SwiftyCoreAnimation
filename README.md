@@ -77,7 +77,7 @@ These extend the functionality of CAAnimationGroup so sequence items can be 'act
         try? myShapeLayer.addAnimationsGroup(describedBy: groupDescriptor, animationFinished: { _, _ in
             print("We're all done now")
         })
-\
+
 Adding groups will throw if any of the descriptors are for properties not present on the type of layer being used, eg, CAShapeLayer properties on a CAGradientLayer.
 
 
@@ -86,5 +86,16 @@ Everything is type-safe, ie, CAShapeLayer property animations can only be applie
 See the 'HelloView' & 'ActionView' classes in the demo app for further examples.
 
 
+## Current limitations
+
+If used in Descriptor.Groups, behaviour is currently undefined for animations where -
+
+- repeatCount > 0
+- repeatDuration > 0
+
+Also, as yet (Beta-4) I haven't investigated the implications of using speed & autoreverses.
+
+
 ## Licence
+
 MIT
