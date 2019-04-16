@@ -9,7 +9,23 @@
 import Foundation
 
 
-/// Wrapper for the textLayer's allowsFontSubpixelQuantization property
+/**
+ Wrapper for the CATextLayer's allowsFontSubpixelQuantization property
+
+ Use with SwiftyCoreAnimation's set/get functions
+ - KeyValueType: Bool
+
+ ## Usage Examples ##
+ ````
+ myLayer.set(AllowsFontSubpixelQuantization(true))
+ let allowsFontSubpixelQuantization = myLayer.get(AllowsFontSubpixelQuantization.self)
+ ````
+
+ Conforms to -
+ - Settable
+ - KeyValueProviding
+ - TextLayerProperty
+*/
 public struct AllowsFontSubpixelQuantization: TextLayerPropertyConformance {
     public typealias KeyValueType = Bool
 

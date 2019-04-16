@@ -9,7 +9,23 @@
 import Foundation
 
 
-/// Wrapper for the replicatorLayer's instanceCount property
+/**
+ Wrapper for the CAReplicatorLayer's instanceCount property
+
+ Use with SwiftyCoreAnimation's set/get functions
+ - KeyValueType: Int
+
+ ## Usage Examples ##
+ ````
+ myLayer.set(InstanceCount(4))
+ let instanceCount = myLayer.get(InstanceCount.self)
+ ````
+
+ Conforms to -
+ - Settable
+ - KeyValueProviding
+ - ReplicatorLayerProperty
+*/
 public struct InstanceCount: ReplicatorLayerPropertyConformance {
     public typealias KeyValueType = Int
 

@@ -8,9 +8,12 @@
 
 import Foundation
 
+/// For properties which can be animated
+public protocol Animatable {}
 
-public protocol Animatable {} // for properties which can be animated
-public protocol Settable {} // for properties which are settable
+/// For properties which are settable (ie, not read-only)
+public protocol Settable {}
+
 public protocol BaseLayerProperty: KeyPathProviding {}
 
 

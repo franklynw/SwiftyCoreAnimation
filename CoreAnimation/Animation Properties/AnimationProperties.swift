@@ -22,7 +22,7 @@ protocol InternalAnimationPropertiesApplying {
 
 public protocol AnimationPropertiesApplicable {}
 
-/// Properties which can be applied to CAPropertyAnimations implement this
+/// Properties which can be applied to CABasicAnimations implement this
 public protocol PropertiesApplicableToBasicAnimations: AnimationPropertiesApplicable {}
 
 /// Properties which can be applied to CAKeyFrameAnimations implement this
@@ -33,6 +33,3 @@ public protocol PropertiesApplicableToSpringAnimations: AnimationPropertiesAppli
 
 /// Properties which can be applied to CATransitions implement this
 public protocol PropertiesApplicableToTransitions: AnimationPropertiesApplicable {}
-
-/// Properties which can be applied to CAAnimationGroup implement this
-public protocol PropertiesApplicableToAnimationGroups: AnimationPropertiesApplicable {}

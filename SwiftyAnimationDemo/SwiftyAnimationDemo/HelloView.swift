@@ -191,40 +191,42 @@ class HelloView: UIView, AnimationsView {
             self.emitterLayer.set(Opacity(1))
             self.textLayer.set(Opacity(1))
 
-            let strokeDescriptor = Descriptor.Basic<StrokeEnd>.from(0, to: 1)
+            let strokeDescriptor = Descriptor.Basic<StrokeEnd>.from(0, to: 1, duration: duration)
             let properties: [Properties.KeyFrameAnimation] = [.calculationMode(.paced)]
-            let emitterFollowingDescriptor = Descriptor.KeyFrame<EmitterPosition>.path(textPath, otherAnimationProperties: properties)
-            let rotationDescriptor = Descriptor.Basic<Transform.Rotation.Z>.from(0, to: CGFloat.pi * 4)
-            let scaleDescriptor = Descriptor.Basic<Transform.Scale>.from(5, to: 1)
+            let emitterFollowingDescriptor = Descriptor.KeyFrame<EmitterPosition>.path(textPath, duration: duration, otherAnimationProperties: properties)
+            let rotationDescriptor = Descriptor.Basic<Transform.Rotation.Z>.from(0, to: CGFloat.pi * 4, duration: duration)
+            let scaleDescriptor = Descriptor.Basic<Transform.Scale>.from(5, to: 1, duration: duration)
 
-            do {
-                try self.emitterLayer.addConcurrentAnimations(describedBy: [emitterFollowingDescriptor, rotationDescriptor, scaleDescriptor], duration: duration)
+            // to see how to do this using Group Descriptors, see ActionView
 
-                try self.textLayer.addConcurrentAnimations(describedBy: [strokeDescriptor, rotationDescriptor, scaleDescriptor], duration: duration, animationFinished: { [weak self] _, _ in
-                    guard let self = self else { return }
+            self.emitterLayer.addAnimation(describedBy: emitterFollowingDescriptor)
+            self.emitterLayer.addAnimation(describedBy: rotationDescriptor)
+            self.emitterLayer.addAnimation(describedBy: scaleDescriptor)
 
-                    self.gradientLayer.set(Opacity(1))
-                    let opacityDescriptor = Descriptor.Basic<Opacity>.from(0, to: 1, duration: 1)
-                    self.gradientLayer.addBasicAnimation(describedBy: opacityDescriptor)
+            self.textLayer.addAnimation(describedBy: strokeDescriptor)
+            self.textLayer.addAnimation(describedBy: rotationDescriptor)
+            self.textLayer.addAnimation(describedBy: scaleDescriptor, animationDidFinish: { [weak self] _, _ in
+                guard let self = self else { return }
 
-                    self.emitterLayer.set(Opacity(0))
-                    let fadeOutDescriptor = Descriptor.Basic<Opacity>.from(1, to: 0, duration: 1)
-                    self.emitterLayer.addBasicAnimation(describedBy: fadeOutDescriptor)
+                self.gradientLayer.set(Opacity(1))
+                let opacityDescriptor = Descriptor.Basic<Opacity>.from(0, to: 1, duration: 1)
+                self.gradientLayer.addAnimation(describedBy: opacityDescriptor)
 
-                    self.containerLayer.set(Transform.Scale(2))
-                    let stretchDescriptor = Descriptor.Spring<Transform.Scale>.from(1, to: 2, duration: 0.5)
-                    self.containerLayer.addSpringAnimation(describedBy: stretchDescriptor, animationFinished: { [weak self] _, _ in
+                self.emitterLayer.set(Opacity(0))
+                let fadeOutDescriptor = Descriptor.Basic<Opacity>.from(1, to: 0, duration: 1)
+                self.emitterLayer.addAnimation(describedBy: fadeOutDescriptor)
 
-                        self?.containerLayer.set(Transform.Scale.X(1))
-                        let stretchDescriptor = Descriptor.Spring<Transform.Scale.X>.from(2, to: 1, duration: 0.5)
-                        self?.containerLayer.addSpringAnimation(describedBy: stretchDescriptor, animationFinished: { [weak self] _, _ in
-                            self?.animateGradient()
-                        })
+                self.containerLayer.set(Transform.Scale(2))
+                let stretchDescriptor = Descriptor.Spring<Transform.Scale>.from(1, to: 2, duration: 0.5)
+                self.containerLayer.addAnimation(describedBy: stretchDescriptor, animationDidFinish: { [weak self] _, _ in
+
+                    self?.containerLayer.set(Transform.Scale.X(1))
+                    let stretchDescriptor = Descriptor.Spring<Transform.Scale.X>.from(2, to: 1, duration: 0.5)
+                    self?.containerLayer.addAnimation(describedBy: stretchDescriptor, animationDidFinish: { [weak self] _, _ in
+                        self?.animateGradient()
                     })
                 })
-            } catch {
-                print(error.localizedDescription)
-            }
+            })
         }
     }
 
@@ -241,33 +243,33 @@ class HelloView: UIView, AnimationsView {
 
         let pathChangeDescriptor = Descriptor.Basic<Path.CGPath>.from(currentPath, to: textPath, duration: 0.5)
 
-        self.textLayer.addBasicAnimation(describedBy: pathChangeDescriptor)
-        self.maskLayer.addBasicAnimation(describedBy: pathChangeDescriptor, animationFinished: { [weak self] _, _ in
+        self.textLayer.addAnimation(describedBy: pathChangeDescriptor)
+        self.maskLayer.addAnimation(describedBy: pathChangeDescriptor, animationDidFinish: { [weak self] _, _ in
             guard let self = self else { return }
 
+            // the delay here can be done using a Wait Descriptor in a sequence - see ActionView
             Async.after(2) {
 
                 self.containerLayer.set(Transform.Scale(15))
                 self.containerLayer.set(Transform.Rotation(0))
                 self.containerLayer.set(Opacity(0))
 
-                let rotationDescriptor = Descriptor.Basic<Transform.Rotation.Z>.from(0, to: CGFloat.pi * -2)
-                let scaleXDescriptor = Descriptor.Basic<Transform.Scale.X>.from(1, to: 15)
-                let scaleYDescriptor = Descriptor.Basic<Transform.Scale.Y>.from(2, to: 15)
-                let opacityDescriptor = Descriptor.Basic<Opacity>.from(1, to: 0)
+                let rotationDescriptor = Descriptor.Basic<Transform.Rotation.Z>.from(0, to: CGFloat.pi * -2, duration: 1)
+                let scaleXDescriptor = Descriptor.Basic<Transform.Scale.X>.from(1, to: 15, duration: 1)
+                let scaleYDescriptor = Descriptor.Basic<Transform.Scale.Y>.from(2, to: 15, duration: 1)
+                let opacityDescriptor = Descriptor.Basic<Opacity>.from(1, to: 0, duration: 1)
 
-                do {
-                    try self.containerLayer.addConcurrentAnimations(describedBy: [rotationDescriptor, scaleXDescriptor, scaleYDescriptor, opacityDescriptor], duration: 1, animationFinished: { [weak self] _, _ in
-                        guard let self = self else { return }
+                self.containerLayer.addAnimation(describedBy: rotationDescriptor)
+                self.containerLayer.addAnimation(describedBy: scaleXDescriptor)
+                self.containerLayer.addAnimation(describedBy: scaleYDescriptor)
+                self.containerLayer.addAnimation(describedBy: opacityDescriptor, animationDidFinish: { [weak self] _, _ in
+                    guard let self = self else { return }
 
-                        self.textLayer.set(Opacity(0))
-                        self.gradientLayer.set(Opacity(0))
+                    self.textLayer.set(Opacity(0))
+                    self.gradientLayer.set(Opacity(0))
 
-                        self.isInProgress = false
-                    })
-                } catch {
-                    print(error.localizedDescription)
-                }
+                    self.isInProgress = false
+                })
             }
         })
     }
@@ -326,11 +328,11 @@ class HelloView: UIView, AnimationsView {
         self.backgroundGradientLayer.set(StartPoint(newStartPoint))
         self.backgroundGradientLayer.set(EndPoint(newEndPoint))
 
-        self.backgroundGradientLayer.addBasicAnimation(describedBy: startPointDescriptor, animationFinished: { [weak self] _, _ in
-            guard self != nil else { return }
-            self?.animateBackground()
+        self.backgroundGradientLayer.addAnimation(describedBy: startPointDescriptor, animationDidFinish: { [weak self] _, _ in
+            guard let self = self else { return }
+            self.animateBackground()
         })
-        self.backgroundGradientLayer.addBasicAnimation(describedBy: endPointDescriptor)
+        self.backgroundGradientLayer.addAnimation(describedBy: endPointDescriptor)
     }
 
     private func positionLayer(_ layer: CALayer) {

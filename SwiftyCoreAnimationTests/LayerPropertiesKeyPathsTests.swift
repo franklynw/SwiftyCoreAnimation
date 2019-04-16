@@ -237,6 +237,12 @@ class LayerPropertiesKeyPathsTests: XCTestCase {
 
     func testVisibleRect() {
         XCTAssertEqual(VisibleRect.keyPath, "visibleRect", "keyPath should be 'visibleRect'")
+        XCTAssertEqual(VisibleRect.Origin.keyPath, "visibleRect.origin", "keyPath should be 'visibleRect.origin'")
+        XCTAssertEqual(VisibleRect.Origin.X.keyPath, "visibleRect.origin.x", "keyPath should be 'visibleRect.origin.x'")
+        XCTAssertEqual(VisibleRect.Origin.Y.keyPath, "visibleRect.origin.y", "keyPath should be 'visibleRect.origin.y'")
+        XCTAssertEqual(VisibleRect.Size.keyPath, "visibleRect.size", "keyPath should be 'visibleRect.size'")
+        XCTAssertEqual(VisibleRect.Size.Width.keyPath, "visibleRect.size.width", "keyPath should be 'visibleRect.size.width'")
+        XCTAssertEqual(VisibleRect.Size.Height.keyPath, "visibleRect.size.height", "keyPath should be 'visibleRect.size.height'")
     }
 
 

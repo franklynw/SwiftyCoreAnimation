@@ -11,13 +11,25 @@ import UIKit
 
 extension Descriptor {
 
-    // MARK: - Describes a Transition Animation
+    /**
+     A Descriptor for creating a CATransition
+
+     ## Usage Example ##
+     Create a Descriptor for a transition, & add it to a layer:
+     ````
+     let transitionDescriptor = Descriptor.Transition(type: .push, subtype: .fromBottom, duration: 1.5)
+     myLayer.addTransition(describedBy: transitionDescriptor)
+     ````
+    */
     public final class Transition: Root, AnimationDescribing {
         
         private let type: CATransitionType
         private let subtype: CATransitionSubtype?
         private let startProgress: CGFloat?
         private let endProgress: CGFloat?
+
+        internal var animationKey: String?
+        public var animationDidBegin: AnimationBeginAction?
 
 
         /// Initializer for a Descriptor for a CATransition
@@ -29,17 +41,20 @@ extension Descriptor {
         ///   - endProgress: the transition animation's endProgress
         ///   - duration: the transition animation's duration
         ///   - otherAnimationProperties: animation properties which conform to PropertiesApplicableToTransitions
+        ///   - key: the animation's key when added to the CALayer
         public init(type: CATransitionType,
                     subtype: CATransitionSubtype? = nil,
                     startProgress: CGFloat? = nil,
                     endProgress: CGFloat? = nil,
                     duration: TimeInterval? = nil,
-                    otherAnimationProperties: [PropertiesApplicableToTransitions] = []) {
+                    otherAnimationProperties: [PropertiesApplicableToTransitions] = [],
+                    key: String? = nil) {
 
             self.type = type
             self.subtype = subtype
             self.startProgress = startProgress
             self.endProgress = endProgress
+            self.animationKey = key
 
             super.init(duration: duration, animationProperties: otherAnimationProperties, propertyTypes: [])
         }

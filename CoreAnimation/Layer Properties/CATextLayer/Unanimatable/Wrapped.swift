@@ -9,7 +9,23 @@
 import Foundation
 
 
-/// Wrapper for the textLayer's isWrapped property
+/**
+ Wrapper for the CATextLayer's isWrapped property
+
+ Use with SwiftyCoreAnimation's set/get functions
+ - KeyValueType: Bool
+
+ ## Usage Examples ##
+ ````
+ myLayer.set(Wrapped(true))
+ let isWrapped = myLayer.get(Wrapped.self)
+ ````
+
+ Conforms to -
+ - Settable
+ - KeyValueProviding
+ - TextLayerProperty
+*/
 public struct Wrapped: TextLayerPropertyConformance {
     public typealias KeyValueType = Bool
 

@@ -9,7 +9,23 @@
 import UIKit
 
 
-/// Wrapper for the shapeLayer's lineJoin property
+/**
+ Wrapper for the CAShapeLayer's lineJoin property
+
+ Use with SwiftyCoreAnimation's set/get functions
+ - KeyValueType: CAShapeLayerLineJoin
+
+ ## Usage Examples ##
+ ````
+ myLayer.set(LineJoin(.round))
+ let lineJoin = myLayer.get(LineJoin.self)
+ ````
+
+ Conforms to -
+ - Settable
+ - KeyValueProviding
+ - ShapeLayerProperty
+*/
 public struct LineJoin: ShapeLayerPropertyConformance {
     public typealias KeyValueType = CAShapeLayerLineJoin
 

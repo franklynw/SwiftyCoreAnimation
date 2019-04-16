@@ -9,7 +9,23 @@
 import UIKit
 
 
-/// Wrapper for the emitterLayer's emitterShape property
+/**
+ Wrapper for the CAEmitterLayer's emitterShape property
+
+ Use with SwiftyCoreAnimation's set/get functions
+ - KeyValueType: CAEmitterLayerEmitterShape
+
+ ## Usage Examples ##
+ ````
+ myLayer.set(EmitterShape(.cuboid))
+ let emitterShape = myLayer.get(EmitterShape.self)
+ ````
+
+ Conforms to -
+ - Settable
+ - KeyValueProviding
+ - EmitterLayerProperty
+*/
 public struct EmitterShape: EmitterLayerPropertyConformance {
     public typealias KeyValueType = CAEmitterLayerEmitterShape
 

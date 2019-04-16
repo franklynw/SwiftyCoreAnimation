@@ -9,7 +9,23 @@
 import Foundation
 
 
-/// Wrapper for the emitterLayer's seed property
+/**
+ Wrapper for the CAEmitterLayer's seed property
+
+ Use with SwiftyCoreAnimation's set/get functions
+ - KeyValueType: UInt32
+
+ ## Usage Examples ##
+ ````
+ myLayer.set(Seed(5))
+ let seed = myLayer.get(Seed.self)
+ ````
+
+ Conforms to -
+ - Settable
+ - KeyValueProviding
+ - EmitterLayerProperty
+*/
 public struct Seed: EmitterLayerPropertyConformance {
     public typealias KeyValueType = UInt32
 

@@ -1211,9 +1211,34 @@ class LayerPropertiesSettingAndGettingTests: XCTestCase {
     }
 
     func testVisibleRect() {
+
         let rect = self.layer.get(VisibleRect.self)
         let layerRect = self.layer.visibleRect
         XCTAssertEqual(layerRect, rect, "Both should be equal")
+
+        let origin = self.layer.get(VisibleRect.Origin.self)
+        let layerOrigin = self.layer.visibleRect.origin
+        XCTAssertEqual(origin, layerOrigin, "Both should be equal")
+
+        let x = self.layer.get(VisibleRect.Origin.X.self)
+        let layerX = self.layer.visibleRect.origin.x
+        XCTAssertEqual(x, layerX, "Both should be equal")
+
+        let y = self.layer.get(VisibleRect.Origin.Y.self)
+        let layerY = self.layer.visibleRect.origin.y
+        XCTAssertEqual(y, layerY, "Both should be equal")
+
+        let size = self.layer.get(VisibleRect.Size.self)
+        let layerSize = self.layer.visibleRect.size
+        XCTAssertEqual(layerSize, size, "Both should be equal")
+
+        let width = self.layer.get(VisibleRect.Size.Width.self)
+        let layerWidth = self.layer.visibleRect.size.width
+        XCTAssertEqual(layerWidth, width, "Both should be equal")
+
+        let height = self.layer.get(VisibleRect.Size.Height.self)
+        let layerHeight = self.layer.visibleRect.size.height
+        XCTAssertEqual(layerHeight, height, "Both should be equal")
     }
 
 
@@ -1904,7 +1929,7 @@ class LayerPropertiesSettingAndGettingTests: XCTestCase {
 
         XCTAssertEqual(self.round(scaleTransform.value!, 3), scaleResult, "Both should be equal")
 
-        let scaleTransformX = InstanceTransform.Rotation.X(0.7)
+        let scaleTransformX = InstanceTransform.Scale.X(0.7)
         self.replicatorLayer.set(scaleTransformX)
         let scaleXResult = self.round(self.replicatorLayer.get(InstanceTransform.Scale.X.self)!, 3)
 

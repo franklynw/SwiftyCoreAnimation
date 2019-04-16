@@ -9,7 +9,30 @@
 import UIKit
 
 
-/// Wrapper for the layer's borderColor property
+/**
+ Wrapper for the CALayer's borderColor property, as UIColor
+
+ Use with Descriptors or SwiftyCoreAnimation's set/get functions
+ - KeyValueType: UIColor
+
+ ## Usage Examples ##
+ ````
+ myLayer.set(BorderColor(.green))
+ let borderColor = myLayer.get(BorderColor.self)
+ let borderColorDescriptor = Descriptor.Basic<BorderColor>.from(.clear, to: .red, duration: 1)
+ ````
+
+ Conforms to -
+ - Settable
+ - Animatable
+ - KeyValueProviding
+ - LayerProperty
+ - ShapeLayerProperty
+ - EmitterLayerProperty
+ - GradientLayerProperty
+ - ReplicatorLayerProperty
+ - TextLayerProperty
+*/
 public struct BorderColor: AnimatableLayerPropertyConformance {
     public typealias KeyValueType = UIColor
 
@@ -20,7 +43,30 @@ public struct BorderColor: AnimatableLayerPropertyConformance {
         self.value = value
     }
 
-    /// Wrapper for the layer's borderColor property, but as CGColor
+    /**
+     Wrapper for the CALayer's borderColor property
+
+     Use with Descriptors or SwiftyCoreAnimation's set/get functions
+     - KeyValueType: CGColor
+
+     ## Usage Examples ##
+     ````
+     myLayer.set(BorderColor.CGColor(UIColor.green.cgColor))
+     let borderColor = myLayer.get(BorderColor.CGColor.self)
+     let borderColorDescriptor = Descriptor.Basic<BorderColor.CGColor>.from(UIColor.clear.cgColor, to: UIColor.red.cgColor, duration: 1)
+     ````
+
+     Conforms to -
+     - Settable
+     - Animatable
+     - KeyValueProviding
+     - LayerProperty
+     - ShapeLayerProperty
+     - EmitterLayerProperty
+     - GradientLayerProperty
+     - ReplicatorLayerProperty
+     - TextLayerProperty
+    */
     public struct CGColor: AnimatableLayerPropertyConformance {
         public typealias KeyValueType = UIKit.CGColor
 

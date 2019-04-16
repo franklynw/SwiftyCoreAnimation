@@ -9,7 +9,23 @@
 import UIKit
 
 
-/// Wrapper for the emitterLayer's emitterCells property
+/**
+ Wrapper for the CAEmitterLayer's emitterCells property
+
+ Use with SwiftyCoreAnimation's set/get functions
+ - KeyValueType: [CAEmitterCell]
+
+ ## Usage Examples ##
+ ````
+ myLayer.set(EmitterCells([myEmitterCells]))
+ let emitterCells = myLayer.get(EmitterCells.self)
+ ````
+
+ Conforms to -
+ - Settable
+ - KeyValueProviding
+ - EmitterLayerProperty
+*/
 public struct EmitterCells: EmitterLayerPropertyConformance {
     public typealias KeyValueType = [CAEmitterCell]
 

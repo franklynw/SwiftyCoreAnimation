@@ -9,7 +9,28 @@
 import Foundation
 
 
-/// Wrapper for the layer's isOpaque property
+/**
+ Wrapper for the CALayer's isOpaque property
+
+ Use with SwiftyCoreAnimation's set/get functions
+ - KeyValueType: Bool
+
+ ## Usage Examples ##
+ ````
+ myLayer.set(Opaque(false))
+ let isOpaque = myLayer.get(Opaque.self)
+ ````
+
+ Conforms to -
+ - Settable
+ - KeyValueProviding
+ - LayerProperty
+ - ShapeLayerProperty
+ - EmitterLayerProperty
+ - GradientLayerProperty
+ - ReplicatorLayerProperty
+ - TextLayerProperty
+*/
 public struct Opaque: LayerPropertyConformance {
     public typealias KeyValueType = Bool
 

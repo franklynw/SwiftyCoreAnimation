@@ -69,6 +69,7 @@
                     <connections>
                         <segue destination="BYZ-38-t0r" kind="show" identifier="hello" id="kwo-mv-EIe"/>
                         <segue destination="dT6-PA-o8u" kind="show" identifier="action" id="YVF-Hn-4IA"/>
+                        <segue destination="Q3Q-Y7-U4h" kind="show" identifier="beginEnd" id="ZLR-Vg-OCw"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="E2v-Ot-Q7i" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -114,7 +115,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ewR-eA-HG2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="981.60000000000002" y="456.52173913043481"/>
+            <point key="canvasLocation" x="1604" y="1033"/>
         </scene>
         <!--Hello!-->
         <scene sceneID="tne-QT-ifu">
@@ -155,7 +156,52 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="996" y="-261"/>
+            <point key="canvasLocation" x="1604" y="-477"/>
+        </scene>
+        <!--Begin/End Actions-->
+        <scene sceneID="9Rz-Ff-KSB">
+            <objects>
+                <viewController id="Q3Q-Y7-U4h" customClass="ViewController" customModule="SwiftyAnimationDemo" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="K5E-fd-7JD">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="O4Q-j1-yTS" customClass="BeginEndActionsView" customModule="SwiftyAnimationDemo" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3sa-78-j1c">
+                                        <rect key="frame" x="16" y="647" width="343" height="0.0"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="3sa-78-j1c" secondAttribute="bottom" constant="20" id="Ky9-1k-MWl"/>
+                                    <constraint firstItem="3sa-78-j1c" firstAttribute="leading" secondItem="O4Q-j1-yTS" secondAttribute="leading" constant="16" id="MbV-AP-YJs"/>
+                                    <constraint firstAttribute="trailing" secondItem="3sa-78-j1c" secondAttribute="trailing" constant="16" id="g3a-Ly-QBO"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="O4Q-j1-yTS" firstAttribute="leading" secondItem="NgI-Z3-tIA" secondAttribute="leading" id="0bu-xb-wql"/>
+                            <constraint firstItem="O4Q-j1-yTS" firstAttribute="trailing" secondItem="NgI-Z3-tIA" secondAttribute="trailing" id="3sR-2C-Zsz"/>
+                            <constraint firstItem="O4Q-j1-yTS" firstAttribute="bottom" secondItem="NgI-Z3-tIA" secondAttribute="bottom" id="ZVq-tb-aJW"/>
+                            <constraint firstItem="O4Q-j1-yTS" firstAttribute="top" secondItem="K5E-fd-7JD" secondAttribute="top" id="ls0-Db-2G2"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="NgI-Z3-tIA"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Begin/End Actions" id="msR-MS-mec"/>
+                    <connections>
+                        <outlet property="animationsView" destination="O4Q-j1-yTS" id="Blj-tl-k6v"/>
+                        <outlet property="messageLabel" destination="3sa-78-j1c" id="Mfr-C3-Wzb"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="YNV-sq-qOo" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2460" y="-109.29535232383809"/>
         </scene>
     </scenes>
 </document>

@@ -9,7 +9,23 @@
 import Foundation
 
 
-/// Wrapper for the shapeLayer's lineDashPattern property
+/**
+ Wrapper for the CAShapeLayer's lineDashPattern property
+
+ Use with SwiftyCoreAnimation's set/get functions
+ - KeyValueType: [Int]
+
+ ## Usage Examples ##
+ ````
+ myLayer.set(LineDashPattern([1,3,2]))
+ let lineDashPattern = myLayer.get(LineDashPattern.self)
+ ````
+
+ Conforms to -
+ - Settable
+ - KeyValueProviding
+ - ShapeLayerProperty
+*/
 public struct LineDashPattern: ShapeLayerPropertyConformance {
     public typealias KeyValueType = [Int]
 

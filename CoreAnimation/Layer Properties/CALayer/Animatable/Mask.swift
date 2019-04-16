@@ -9,7 +9,30 @@
 import UIKit
 
 
-/// Wrapper for the layer's mask property
+/**
+ Wrapper for the CALayer's mask property
+
+ Use with Descriptors or SwiftyCoreAnimation's set/get functions
+ - KeyValueType: CALayer
+
+ ## Usage Examples ##
+ ````
+ myLayer.set(Mask(myMaskLayer))
+ let mask = myLayer.get(Mask.self)
+ let maskDescriptor = Descriptor.Basic<Mask>.from(myMaskLayer, to: myOtherMaskLayer, duration: 1)
+ ````
+
+ Conforms to -
+ - Settable
+ - Animatable
+ - KeyValueProviding
+ - LayerProperty
+ - ShapeLayerProperty
+ - EmitterLayerProperty
+ - GradientLayerProperty
+ - ReplicatorLayerProperty
+ - TextLayerProperty
+*/
 public struct Mask: AnimatableLayerPropertyConformance {
     public typealias KeyValueType = CALayer
 

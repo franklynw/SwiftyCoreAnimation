@@ -123,7 +123,7 @@
 		798A55F72227E3FC0086F0F9 /* Descriptor.Transition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798A55F52227E3FC0086F0F9 /* Descriptor.Transition.swift */; };
 		798A55FA2227E8990086F0F9 /* Path.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798A55F82227E8990086F0F9 /* Path.swift */; };
 		79C0BA6F2232A695001A601D /* GradientType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79C0BA6D223296EB001A601D /* GradientType.swift */; };
-		79C4C0212223E3BF00037B4B /* AnimationFinishedActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79C4C01F2223E3B900037B4B /* AnimationFinishedActions.swift */; };
+		79C4C0212223E3BF00037B4B /* AnimationActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79C4C01F2223E3B900037B4B /* AnimationActions.swift */; };
 		79C4C0292224453A00037B4B /* ContentsCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79C4C0272224453A00037B4B /* ContentsCenter.swift */; };
 		79C4C02C222445DC00037B4B /* ShouldRasterize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79C4C02A222445DC00037B4B /* ShouldRasterize.swift */; };
 		79C4C02F2224463C00037B4B /* RasterizationScale.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79C4C02D2224463C00037B4B /* RasterizationScale.swift */; };
@@ -150,7 +150,7 @@
 		79D4DE60222FB6CF005160A0 /* TransitionDescriptorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79D4DE5F222FB6CF005160A0 /* TransitionDescriptorTests.swift */; };
 		79D4DE62222FC50D005160A0 /* AnimationPropertiesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79D4DE61222FC50D005160A0 /* AnimationPropertiesTests.swift */; };
 		79D4DE6A2231099E005160A0 /* LayerAnimationAddingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79D4DE692231099E005160A0 /* LayerAnimationAddingTests.swift */; };
-		79D4DE6C223126AF005160A0 /* AnimationFinishedActionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79D4DE6B223126AF005160A0 /* AnimationFinishedActionsTests.swift */; };
+		79D4DE6C223126AF005160A0 /* AnimationActionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79D4DE6B223126AF005160A0 /* AnimationActionsTests.swift */; };
 		79D4DE6E223185D3005160A0 /* CATransactionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79D4DE6D223185D3005160A0 /* CATransactionTests.swift */; };
 /* End PBXBuildFile section */
 
@@ -285,7 +285,7 @@
 		798A55F52227E3FC0086F0F9 /* Descriptor.Transition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Descriptor.Transition.swift; sourceTree = "<group>"; };
 		798A55F82227E8990086F0F9 /* Path.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Path.swift; sourceTree = "<group>"; };
 		79C0BA6D223296EB001A601D /* GradientType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientType.swift; sourceTree = "<group>"; };
-		79C4C01F2223E3B900037B4B /* AnimationFinishedActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationFinishedActions.swift; sourceTree = "<group>"; };
+		79C4C01F2223E3B900037B4B /* AnimationActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationActions.swift; sourceTree = "<group>"; };
 		79C4C0272224453A00037B4B /* ContentsCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentsCenter.swift; sourceTree = "<group>"; };
 		79C4C02A222445DC00037B4B /* ShouldRasterize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShouldRasterize.swift; sourceTree = "<group>"; };
 		79C4C02D2224463C00037B4B /* RasterizationScale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RasterizationScale.swift; sourceTree = "<group>"; };
@@ -311,7 +311,7 @@
 		79D4DE5F222FB6CF005160A0 /* TransitionDescriptorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransitionDescriptorTests.swift; sourceTree = "<group>"; };
 		79D4DE61222FC50D005160A0 /* AnimationPropertiesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationPropertiesTests.swift; sourceTree = "<group>"; };
 		79D4DE692231099E005160A0 /* LayerAnimationAddingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayerAnimationAddingTests.swift; sourceTree = "<group>"; };
-		79D4DE6B223126AF005160A0 /* AnimationFinishedActionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationFinishedActionsTests.swift; sourceTree = "<group>"; };
+		79D4DE6B223126AF005160A0 /* AnimationActionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationActionsTests.swift; sourceTree = "<group>"; };
 		79D4DE6D223185D3005160A0 /* CATransactionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CATransactionTests.swift; sourceTree = "<group>"; };
 		79F6AD842217EEBF00FE812E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		79F6AD892217EEBF00FE812E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -637,7 +637,7 @@
 				7978C0C3221EA9650019EE2C /* ReplicatorLayerAnimationAdding.swift */,
 				7978C0C5221EA9A00019EE2C /* TextLayerAnimationAdding.swift */,
 				7978C0BB221DB90A0019EE2C /* CALayer+Extensions.swift */,
-				79C4C01F2223E3B900037B4B /* AnimationFinishedActions.swift */,
+				79C4C01F2223E3B900037B4B /* AnimationActions.swift */,
 				7943914B224240B5008346DD /* ActionLayer.swift */,
 			);
 			path = AnimationAdding;
@@ -666,7 +666,7 @@
 				79430557224404B200C9EDFC /* WaitDescriptorTests.swift */,
 				79D4DE61222FC50D005160A0 /* AnimationPropertiesTests.swift */,
 				79D4DE692231099E005160A0 /* LayerAnimationAddingTests.swift */,
-				79D4DE6B223126AF005160A0 /* AnimationFinishedActionsTests.swift */,
+				79D4DE6B223126AF005160A0 /* AnimationActionsTests.swift */,
 				79D4DE6D223185D3005160A0 /* CATransactionTests.swift */,
 				7988B87F22205A6E0093DF65 /* Info.plist */,
 			);
@@ -865,7 +865,7 @@
 				79C4C0542225611A00037B4B /* ReplicatorLayerPropertyConformance.swift in Sources */,
 				7988B89D22205ADD0093DF65 /* BorderColor.swift in Sources */,
 				7988B89E22205ADD0093DF65 /* BorderWidth.swift in Sources */,
-				79C4C0212223E3BF00037B4B /* AnimationFinishedActions.swift in Sources */,
+				79C4C0212223E3BF00037B4B /* AnimationActions.swift in Sources */,
 				792A375B2232B8A90024FC6E /* EmitterShape.swift in Sources */,
 				7988B89F22205ADD0093DF65 /* Bounds.swift in Sources */,
 				7988B8A022205ADD0093DF65 /* Contents.swift in Sources */,
@@ -971,7 +971,7 @@
 				79D4DE6E223185D3005160A0 /* CATransactionTests.swift in Sources */,
 				794305562244018E00C9EDFC /* ActionDescriptorTests.swift in Sources */,
 				79D4DE5C222EC10C005160A0 /* KeyFrameDescriptorTests.swift in Sources */,
-				79D4DE6C223126AF005160A0 /* AnimationFinishedActionsTests.swift in Sources */,
+				79D4DE6C223126AF005160A0 /* AnimationActionsTests.swift in Sources */,
 				7988B87E22205A6E0093DF65 /* BasicAnimationDescriptorTests.swift in Sources */,
 				79D4DE62222FC50D005160A0 /* AnimationPropertiesTests.swift in Sources */,
 				79D4DE60222FB6CF005160A0 /* TransitionDescriptorTests.swift in Sources */,

@@ -9,7 +9,23 @@
 import UIKit
 
 
-/// Wrapper for the emitterLayer's renderMode property
+/**
+ Wrapper for the CAEmitterLayer's renderMode property
+
+ Use with SwiftyCoreAnimation's set/get functions
+ - KeyValueType: CAEmitterLayerRenderMode
+
+ ## Usage Examples ##
+ ````
+ myLayer.set(RenderMode(.oldestFirst))
+ let renderMode = myLayer.get(RenderMode.self)
+ ````
+
+ Conforms to -
+ - Settable
+ - KeyValueProviding
+ - EmitterLayerProperty
+*/
 public struct RenderMode: EmitterLayerPropertyConformance {
     public typealias KeyValueType = CAEmitterLayerRenderMode
 

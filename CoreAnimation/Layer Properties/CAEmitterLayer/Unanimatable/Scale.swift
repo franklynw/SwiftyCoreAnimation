@@ -9,7 +9,23 @@
 import Foundation
 
 
-/// Wrapper for the emitterLayer's scale property
+/**
+ Wrapper for the CAEmitterLayer's scale property
+
+ Use with SwiftyCoreAnimation's set/get functions
+ - KeyValueType: Float
+
+ ## Usage Examples ##
+ ````
+ myLayer.set(Scale(0.5))
+ let scale = myLayer.get(Scale.self)
+ ````
+
+ Conforms to -
+ - Settable
+ - KeyValueProviding
+ - EmitterLayerProperty
+*/
 public struct Scale: EmitterLayerPropertyConformance {
     public typealias KeyValueType = Float
 

@@ -27,9 +27,13 @@ extension Properties {
 
         public typealias AnimationType = CAAnimation
 
+        /// The animation's usesSceneTimeBase property
         case usesSceneTimeBase(Bool)
+        /// The animation's fadeInDuration property
         case fadeInDuration(TimeInterval)
+        /// The animation's fadeOutDuration property
         case fadeOutDuration(TimeInterval)
+        /// The animation's animationEvents property
         case animationEvents([SCNAnimationEvent]?)
 
         public func apply(to animation: CAAnimation) {

@@ -9,7 +9,25 @@
 import UIKit
 
 
-/// Wrapper for the textLayer's foregroundColor property
+/**
+ Wrapper for the CATextLayer's foregroundColor property, as UIColor
+
+ Use with Descriptors or SwiftyCoreAnimation's set/get functions
+ - KeyValueType: UIColor
+
+ ## Usage Examples ##
+ ````
+ myLayer.set(ForegroundColor(.green))
+ let foregroundColor = myLayer.get(ForegroundColor.self)
+ let foregroundColorDescriptor = Descriptor.Basic<ForegroundColor>.from(.clear, to: .red, duration: 1)
+ ````
+
+ Conforms to -
+ - Settable
+ - Animatable
+ - KeyValueProviding
+ - TextLayerProperty
+*/
 public struct ForegroundColor: AnimatableTextLayerPropertyConformance {
     public typealias KeyValueType = UIColor
 
@@ -20,7 +38,25 @@ public struct ForegroundColor: AnimatableTextLayerPropertyConformance {
         self.value = value
     }
 
-    /// Wrapper for the textLayer's foregroundColor property, but as CGColor
+    /**
+     Wrapper for the CATextLayer's foregroundColor property
+
+     Use with Descriptors or SwiftyCoreAnimation's set/get functions
+     - KeyValueType: CGColor
+
+     ## Usage Examples ##
+     ````
+     myLayer.set(ForegroundColor.CGColor(UIColor.green.cgColor))
+     let foregroundColor = myLayer.get(ForegroundColor.CGColor.self)
+     let foregroundColorDescriptor = Descriptor.Basic<ForegroundColor.CGColor>.from(UIColor.clear.cgColor, to: UIColor.red.cgColor, duration: 1)
+     ````
+
+     Conforms to -
+     - Settable
+     - Animatable
+     - KeyValueProviding
+     - TextLayerProperty
+    */
     public struct CGColor: AnimatableTextLayerPropertyConformance {
         public typealias KeyValueType = UIKit.CGColor
 
