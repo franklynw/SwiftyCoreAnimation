@@ -9,45 +9,33 @@
 import UIKit
 
 
-public extension Array where Element: (PropertiesApplicableToBasicAnimations & PropertiesApplicableToKeyFrameAnimations & PropertiesApplicableToSpringAnimations) {
+extension Array where Element: (PropertiesApplicableToBasicAnimations & PropertiesApplicableToKeyFrameAnimations & PropertiesApplicableToSpringAnimations) {
 
-    /// Applies the properties in the array to an animation
-    ///
-    /// - Parameter animation: A CAPropertyAnimation subclass
-    public func apply<T: CAPropertyAnimation>(to animation: T) {
+    func apply<T: CAPropertyAnimation>(to animation: T) {
         self._apply(to: animation)
     }
 }
 
 
-public extension Array where Element: (PropertiesApplicableToBasicAnimations & PropertiesApplicableToKeyFrameAnimations & PropertiesApplicableToSpringAnimations & PropertiesApplicableToTransitions) {
+extension Array where Element: (PropertiesApplicableToBasicAnimations & PropertiesApplicableToKeyFrameAnimations & PropertiesApplicableToSpringAnimations & PropertiesApplicableToTransitions) {
 
-    /// Applies the properties in the array to a transition
-    ///
-    /// - Parameter transition: a CATransition
-    public func apply(to transition: CATransition) {
+    func apply(to transition: CATransition) {
         self._apply(to: transition)
     }
 }
 
 
-public extension Array where Element: PropertiesApplicableToKeyFrameAnimations {
+extension Array where Element: PropertiesApplicableToKeyFrameAnimations {
 
-    /// Applies the properties in the array to an animation
-    ///
-    /// - Parameter animation: a CAKeyframeAnimation
-    public func apply(to animation: CAKeyframeAnimation) {
+    func apply(to animation: CAKeyframeAnimation) {
         self._apply(to: animation)
     }
 }
 
 
-public extension Array where Element: PropertiesApplicableToSpringAnimations {
+extension Array where Element: PropertiesApplicableToSpringAnimations {
 
-    /// Applies the properties in the array to an animation
-    ///
-    /// - Parameter animation: a CASpringAnimation
-    public func apply(to animation: CASpringAnimation) {
+    func apply(to animation: CASpringAnimation) {
         self._apply(to: animation)
     }
 }

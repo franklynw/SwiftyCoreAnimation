@@ -13,7 +13,6 @@ public enum Properties: PropertiesApplicableToBasicAnimations,
     PropertiesApplicableToKeyFrameAnimations,
     PropertiesApplicableToSpringAnimations,
     PropertiesApplicableToTransitions,
-    PropertiesApplicableToAnimationGroups,
     AnimationPropertiesApplying,
     InternalAnimationPropertiesApplying {
 
@@ -24,7 +23,9 @@ public enum Properties: PropertiesApplicableToBasicAnimations,
 
     public typealias AnimationType = CAAnimation
 
+    /// Whether or not the animation is removed on completion
     case isRemovedOnCompletion(Bool)
+    /// The animation's timingFunction property
     case timingFunction(CAMediaTimingFunction)
 
     public func apply(to animation: AnimationType) {

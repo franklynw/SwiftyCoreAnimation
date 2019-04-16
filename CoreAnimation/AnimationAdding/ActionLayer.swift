@@ -22,7 +22,7 @@ extension CALayer {
 }
 
 
-/// Any action is invoked as soon as the animation begins - use AnimationFinishedActions for actions when the animation finishes
+/// Any action is invoked as soon as the animation begins - use AnimationActions for actions when the animation finishes
 /// Not really sure of the use cases for this yet...
 class ActionLayer: CALayer {
 

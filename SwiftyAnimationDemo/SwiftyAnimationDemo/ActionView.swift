@@ -17,7 +17,7 @@ import SwiftyCoreAnimation
  For sequences, it expands upon what is available using existing CAAnimationGroup functionality -
  'Action' descriptors can be put into the sequence - they are invoked when their turn comes in the sequence
  'Wait' descriptors can be put into the sequence - they just tell the sequence to wait before continuing to the next animation element
- Unlike CAAnimationGroup animations, each animation in the sequence can have its own animationFinished action
+ Unlike CAAnimationGroup animations, each animation in the sequence can have its own animationDidFinish action
  Both concurrent & sequence group descriptors can be added to new group descriptors
 */
 
@@ -144,7 +144,7 @@ class ActionView: UIView, AnimationsView {
         let fillColorDescriptor2 = Descriptor.Basic<FillColor>.from(.purple, to: .orange, duration: 2, otherAnimationProperties: properties)
 
         // if we just wanted the sequence, we can create it like so
-//        try? shapeLayer.addAnimationSequence(describedBy: [waitDescriptor, setFillColorActionDescriptor, fillColorDescriptor, waitDescriptor, setLineWidthActionDescriptor, lineWidthDescriptor, setFillColorActionDescriptor2, fillColorDescriptor2], animationFinished: { _, _ in
+//        try? shapeLayer.addAnimationSequence(describedBy: [waitDescriptor, setFillColorActionDescriptor, fillColorDescriptor, waitDescriptor, setLineWidthActionDescriptor, lineWidthDescriptor, setFillColorActionDescriptor2, fillColorDescriptor2], animationDidFinish: { _, _ in
 //            self.animationsViewDelegate?.showMessage("All done!")
 //        })
 
@@ -153,11 +153,11 @@ class ActionView: UIView, AnimationsView {
         let groupDescriptor = Descriptor.Group.Sequential(using: [waitDescriptor, setFillColorActionDescriptor, fillColorDescriptor, waitDescriptor, setLineWidthActionDescriptor, lineWidthDescriptor, setFillColorActionDescriptor2, fillColorDescriptor2])
 
         // if we want to run the sequence concurrently with another animation, we can put it into a concurrent animation group
-        // the main thing to note here is that the animationFinished action will be invoked after the group's duration, not the sequence's duration
+        // the main thing to note here is that the animationDidFinish action will be invoked after the concurrent group's duration, not the sequence's duration,
         // so if the action is required after all the animations finish, either set the duration of the group so it matches the sequences,
         // or add it as an actionDescriptor at the end of the animation sequence
 //        let rotateDescriptor = Descriptor.Basic<Transform.Rotation.Z>.from(0, to: CGFloat.pi * 2)
-//        try? shapeLayer.addConcurrentAnimations(describedBy: [groupDescriptor, rotateDescriptor], duration: 9, animationFinished: { _, _ in
+//        try? shapeLayer.addConcurrentAnimations(describedBy: [groupDescriptor, rotateDescriptor], duration: 9, animationDidFinish: { _, _ in
 //            self.animationsViewDelegate?.showMessage("All done!") // will be executed after setFillColorActionDescriptor & setLineWidthActionDescriptor, but before setFillColorActionDescriptor2
 //        })
 
@@ -165,13 +165,13 @@ class ActionView: UIView, AnimationsView {
         let keyFrameProperties: [Properties.KeyFrameAnimation] = [.calculationMode(.paced)]
         let translate = CGAffineTransform(translationX: width / -2, y: 0)
         ellipsePath.apply(translate)
-        let moveDescriptor = Descriptor.KeyFrame<Position>.path(ellipsePath, otherAnimationProperties: keyFrameProperties)
-        let rotateDescriptor = Descriptor.Basic<Transform.Rotation>.from(0, to: CGFloat.pi * 4)
+        let moveDescriptor = Descriptor.KeyFrame<Position>.path(ellipsePath, duration: 2, otherAnimationProperties: keyFrameProperties)
+        let rotateDescriptor = Descriptor.Basic<Transform.Rotation>.from(0, to: CGFloat.pi * 4, duration: 2)
 
-        let groupDescriptor2 = Descriptor.Group.Concurrent(using: [moveDescriptor, rotateDescriptor], duration: 2)
+        let groupDescriptor2 = Descriptor.Group.Concurrent(using: [moveDescriptor, rotateDescriptor])
 
         // then put everything into a sequence
-        try? shapeLayer.addAnimationSequence(describedBy: [groupDescriptor, waitDescriptor, groupDescriptor2], animationFinished: { [weak self] _, _ in
+        try? shapeLayer.addAnimationSequence(describedBy: [groupDescriptor, waitDescriptor, groupDescriptor2], animationDidFinish: { [weak self] _, _ in
             guard let self = self else { return }
             self.animationsViewDelegate?.showMessage("Finished move & rotate #1")
             Async.after(2, action: {
@@ -187,7 +187,7 @@ class ActionView: UIView, AnimationsView {
         do {
             try shapeLayer.addAnimationSequence(describedBy: [fillColorDescriptor, gradientColorsDescriptor])
         } catch {
-            print("Not allowed! ", error.localizedDescription)
+            print("Not allowed!", error.localizedDescription)
         }
     }
 
@@ -207,11 +207,11 @@ class ActionView: UIView, AnimationsView {
             shapeLayer.set(StrokeColor(.red))
         }
         let currentFillColor = shapeLayer.get(FillColor.self) ?? .clear
-        let fillColorDescriptor = Descriptor.Basic<FillColor>.from(currentFillColor, to: .blue)
+        let fillColorDescriptor = Descriptor.Basic<FillColor>.from(currentFillColor, to: .blue, duration: 2)
         let currentLineColor = shapeLayer.get(StrokeColor.self) ?? .clear
-        let strokeColorDescriptor = Descriptor.Basic<StrokeColor>.from(currentLineColor, to: .red)
+        let strokeColorDescriptor = Descriptor.Basic<StrokeColor>.from(currentLineColor, to: .red, duration: 2)
 
-        let colorsGroupDescriptor = Descriptor.Group.Concurrent(using: [fillColorDescriptor, strokeColorDescriptor], duration: 2)
+        let colorsGroupDescriptor = Descriptor.Group.Concurrent(using: [fillColorDescriptor, strokeColorDescriptor])
 
         let currentLineWidth = shapeLayer.get(LineWidth.self) ?? 0
         let lineWidthDescriptor = Descriptor.Basic<LineWidth>.from(currentLineWidth, to: 40, duration: 2)
@@ -227,23 +227,23 @@ class ActionView: UIView, AnimationsView {
         // create the first 'sequence' descriptor using the above descriptors
         let sequenceDescriptor = Descriptor.Group.Sequential(using: [waitDescriptor, actionDescriptor1, colorsGroupDescriptor, waitDescriptor, lineWidthDescriptor])
 
+        let sequenceDuration = sequenceDescriptor.duration
+
         let keyFrameProperties: [Properties.KeyFrameAnimation] = [.calculationMode(.paced)]
         let translate = CGAffineTransform(translationX: width / -2, y: 0)
         ellipsePath.apply(translate)
-        let moveDescriptor = Descriptor.KeyFrame<Position>.path(ellipsePath, otherAnimationProperties: keyFrameProperties)
-        let rotateDescriptor = Descriptor.Basic<Transform.Rotation>.from(0, to: CGFloat.pi * 4)
-
-        let sequenceDuration = sequenceDescriptor.duration
+        let moveDescriptor = Descriptor.KeyFrame<Position>.path(ellipsePath, duration: sequenceDuration, otherAnimationProperties: keyFrameProperties)
+        let rotateDescriptor = Descriptor.Basic<Transform.Rotation>.from(0, to: CGFloat.pi * 4, duration: sequenceDuration)
 
         // create a 'concurrent' descriptor to move & rotate
-        let concurrentDescriptor = Descriptor.Group.Concurrent(using: [moveDescriptor, rotateDescriptor], duration: sequenceDuration)
+        let concurrentDescriptor = Descriptor.Group.Concurrent(using: [moveDescriptor, rotateDescriptor])
 
         // put the two group animations together in another concurrent group (to run them at the same time)
-        let groupDescriptor = Descriptor.Group.Concurrent(using: [sequenceDescriptor, concurrentDescriptor], duration: sequenceDuration)
+        let groupDescriptor = Descriptor.Group.Concurrent(using: [sequenceDescriptor, concurrentDescriptor])
 
         let waitDescriptor2 = Descriptor.Wait(for: 1.5)
 
-        try? shapeLayer.addAnimationSequence(describedBy: [groupDescriptor, waitDescriptor2], animationFinished: { [weak self] _, _ in
+        try? shapeLayer.addAnimationSequence(describedBy: [groupDescriptor, waitDescriptor2], animationDidFinish: { [weak self] _, _ in
             guard let self = self else { return }
             self.animationsViewDelegate?.showMessage("Shrinking...")
             self.shrink()
@@ -255,10 +255,8 @@ class ActionView: UIView, AnimationsView {
         let currentScale = self.shapeLayer.get(Transform.Scale.self) ?? 1
         let scaleDescriptor = Descriptor.Basic<Transform.Scale>.from(currentScale, to: 0, duration: 0.5)
 
-        let properties: [PropertiesApplicableToBasicAnimations] = []//[Properties.MediaTiming.fillMode(.forwards), Properties.isRemovedOnCompletion(false)]
-
         self.shapeLayer.set(Transform.Scale(0))
-        self.shapeLayer.addAnimation(describedBy: scaleDescriptor, applyingOtherProperties: properties, removeExistingAnimations: true) { [weak self] _, _ in
+        self.shapeLayer.addAnimation(describedBy: scaleDescriptor, removeExistingAnimations: true) { [weak self] _, _ in
             guard let self = self else { return }
             self.animationsViewDelegate?.showMessage("Shrunk!")
             self.shapeLayer.set(FillColor(.yellow))

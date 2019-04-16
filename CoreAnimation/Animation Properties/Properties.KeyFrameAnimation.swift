@@ -26,12 +26,19 @@ extension Properties {
 
         public typealias AnimationType = CAKeyframeAnimation
 
+        /// The animation's keyTimes property
         case keyTimes([CGFloat]?)
+        /// The animation's timingFunctions property
         case timingFunctions([CAMediaTimingFunction]?)
+        /// The animation's calculationMode property
         case calculationMode(CAAnimationCalculationMode)
+        /// The animation's rotationMode property
         case rotationMode(CAAnimationRotationMode?)
+        /// The animation's tensionValues property
         case tensionValues([CGFloat]?)
+        /// The animation's continuityValues property
         case continuityValues([CGFloat]?)
+        /// The animation's biasValues property
         case biasValues([CGFloat]?)
 
         public func apply(to animation: AnimationType) {
