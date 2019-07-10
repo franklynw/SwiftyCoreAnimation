@@ -18,6 +18,27 @@ extension Descriptor {
         internal let animationProperties: [AnimationPropertiesApplicable]
         internal let propertyTypes: [BaseLayerProperty.Type]
 
+        internal var overallDuration: TimeInterval {
+
+            var animationDuration: TimeInterval = self.duration ?? 0.25
+
+            if let mediaTimingProperties = self.animationProperties.filter({ $0 is Properties.MediaTiming }) as? [Properties.MediaTiming] {
+                for property in mediaTimingProperties {
+                    if case .repeatCount(let numberOfRepeats) = property {
+                        animationDuration = TimeInterval(numberOfRepeats) * (self.duration ?? 0.25)
+                        break
+                    } else if case .repeatDuration(let duration) = property {
+                        animationDuration = duration
+                        break
+                    }
+                }
+            }
+
+            animationDuration += self.beginTime
+
+            return animationDuration
+        }
+
         /**
          A closure which is invoked immediately *before* the animation begins
 

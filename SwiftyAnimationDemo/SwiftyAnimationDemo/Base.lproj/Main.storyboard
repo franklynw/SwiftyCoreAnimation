@@ -70,11 +70,65 @@
                         <segue destination="BYZ-38-t0r" kind="show" identifier="hello" id="kwo-mv-EIe"/>
                         <segue destination="dT6-PA-o8u" kind="show" identifier="action" id="YVF-Hn-4IA"/>
                         <segue destination="Q3Q-Y7-U4h" kind="show" identifier="beginEnd" id="ZLR-Vg-OCw"/>
+                        <segue destination="Blp-j7-4aw" kind="show" identifier="random" id="FZq-hM-r01"/>
+                        <segue destination="T56-fl-YjP" kind="show" identifier="virginMoney" id="uev-HJ-yL9"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="E2v-Ot-Q7i" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="57" y="134"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="coh-qd-QxZ">
+            <objects>
+                <viewController id="T56-fl-YjP" customClass="ViewController" customModule="SwiftyAnimationDemo" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Whf-eR-kPV">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5lP-f1-U66" customClass="VMLogoView" customModule="SwiftyAnimationDemo" customModuleProvider="target">
+                                <rect key="frame" x="112.5" y="93.5" width="150" height="180"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="150" id="1nj-Re-yFh"/>
+                                    <constraint firstAttribute="height" constant="180" id="txl-Vl-oKe"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aLY-uf-vDz" customClass="VMLogoView" customModule="SwiftyAnimationDemo" customModuleProvider="target">
+                                <rect key="frame" x="147.5" y="333.5" width="80" height="100"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="80" id="G6w-Oz-A7T"/>
+                                    <constraint firstAttribute="height" constant="100" id="ZXQ-3N-E7B"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FVf-Gl-3WT" customClass="VMLogoView" customModule="SwiftyAnimationDemo" customModuleProvider="target">
+                                <rect key="frame" x="167.5" y="503.5" width="40" height="60"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="40" id="1Pq-D0-Rzz"/>
+                                    <constraint firstAttribute="height" constant="60" id="qdE-Va-3q3"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="aLY-uf-vDz" firstAttribute="centerX" secondItem="Whf-eR-kPV" secondAttribute="centerX" id="4K6-Jz-s0B"/>
+                            <constraint firstItem="5lP-f1-U66" firstAttribute="centerX" secondItem="Whf-eR-kPV" secondAttribute="centerX" id="82r-IG-cVe"/>
+                            <constraint firstItem="FVf-Gl-3WT" firstAttribute="centerY" secondItem="Whf-eR-kPV" secondAttribute="centerY" constant="200" id="Op3-DY-RiX"/>
+                            <constraint firstItem="aLY-uf-vDz" firstAttribute="centerY" secondItem="Whf-eR-kPV" secondAttribute="centerY" constant="50" id="VUc-Hz-AS0"/>
+                            <constraint firstItem="5lP-f1-U66" firstAttribute="centerY" secondItem="Whf-eR-kPV" secondAttribute="centerY" constant="-150" id="bhL-uD-Hzg"/>
+                            <constraint firstItem="FVf-Gl-3WT" firstAttribute="centerX" secondItem="Whf-eR-kPV" secondAttribute="centerX" id="zej-bF-pzi"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="FSK-CB-4Py"/>
+                    </view>
+                    <connections>
+                        <outlet property="animationsView" destination="5lP-f1-U66" id="lji-5O-165"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="OVI-cV-DOe" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="405.60000000000002" y="1124.8875562218891"/>
         </scene>
         <!--Groups & Actions-->
         <scene sceneID="yAT-XG-1RT">
@@ -116,6 +170,36 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ewR-eA-HG2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1604" y="1033"/>
+        </scene>
+        <!--Random Stuff-->
+        <scene sceneID="Nrj-CM-FQm">
+            <objects>
+                <viewController title="Random Stuff" id="Blp-j7-4aw" customClass="ViewController" customModule="SwiftyAnimationDemo" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="SAf-sB-IWN">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iU8-eR-KUq" customClass="RandomStuffView" customModule="SwiftyAnimationDemo" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="iU8-eR-KUq" firstAttribute="leading" secondItem="TVX-zW-2k6" secondAttribute="leading" id="GKd-v8-nSC"/>
+                            <constraint firstItem="iU8-eR-KUq" firstAttribute="trailing" secondItem="TVX-zW-2k6" secondAttribute="trailing" id="NON-MY-2KO"/>
+                            <constraint firstItem="iU8-eR-KUq" firstAttribute="bottom" secondItem="TVX-zW-2k6" secondAttribute="bottom" id="bDV-ff-zxF"/>
+                            <constraint firstItem="iU8-eR-KUq" firstAttribute="top" secondItem="SAf-sB-IWN" secondAttribute="top" id="xsL-Wk-Bap"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="TVX-zW-2k6"/>
+                    </view>
+                    <connections>
+                        <outlet property="animationsView" destination="iU8-eR-KUq" id="3RL-uU-4vb"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="riJ-XB-dhQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2596" y="715.59220389805103"/>
         </scene>
         <!--Hello!-->
         <scene sceneID="tne-QT-ifu">

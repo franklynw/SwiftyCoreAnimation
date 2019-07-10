@@ -8,8 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		790BF7D7223BF19A0004E9D4 /* Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = 790BF7D6223BF19A0004E9D4 /* Async.swift */; };
+		791B46DE22AFE9FD00794830 /* RandomStuffView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 791B46DD22AFE9FD00794830 /* RandomStuffView.swift */; };
 		79204E4C2263501C003859C1 /* BeginEndActionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79204E4B2263501C003859C1 /* BeginEndActionsView.swift */; };
 		7943914E224252E5008346DD /* ActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7943914D224252E5008346DD /* ActionView.swift */; };
+		7966BBE7232A24210032F0AF /* CGPoint+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7966BBE6232A24210032F0AF /* CGPoint+Extensions.swift */; };
+		7966BBE9232A44630032F0AF /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7966BBE8232A44630032F0AF /* UIColor+Extensions.swift */; };
 		796D7C65223965E8005A049B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796D7C64223965E8005A049B /* AppDelegate.swift */; };
 		796D7C67223965E8005A049B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796D7C66223965E8005A049B /* ViewController.swift */; };
 		796D7C6A223965E8005A049B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 796D7C68223965E8005A049B /* Main.storyboard */; };
@@ -54,8 +57,11 @@
 
 /* Begin PBXFileReference section */
 		790BF7D6223BF19A0004E9D4 /* Async.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Async.swift; sourceTree = "<group>"; };
+		791B46DD22AFE9FD00794830 /* RandomStuffView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomStuffView.swift; sourceTree = "<group>"; };
 		79204E4B2263501C003859C1 /* BeginEndActionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeginEndActionsView.swift; sourceTree = "<group>"; };
 		7943914D224252E5008346DD /* ActionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionView.swift; sourceTree = "<group>"; };
+		7966BBE6232A24210032F0AF /* CGPoint+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGPoint+Extensions.swift"; sourceTree = "<group>"; };
+		7966BBE8232A44630032F0AF /* UIColor+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		796D7C61223965E8005A049B /* SwiftyAnimationDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftyAnimationDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		796D7C64223965E8005A049B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		796D7C66223965E8005A049B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -131,7 +137,10 @@
 				796D7C9B2239666B005A049B /* HelloView.swift */,
 				7943914D224252E5008346DD /* ActionView.swift */,
 				79204E4B2263501C003859C1 /* BeginEndActionsView.swift */,
+				791B46DD22AFE9FD00794830 /* RandomStuffView.swift */,
 				796D7C9C2239666B005A049B /* NSAttributedString+Extensions.swift */,
+				7966BBE6232A24210032F0AF /* CGPoint+Extensions.swift */,
+				7966BBE8232A44630032F0AF /* UIColor+Extensions.swift */,
 				790BF7D6223BF19A0004E9D4 /* Async.swift */,
 				796D7C68223965E8005A049B /* Main.storyboard */,
 				796D7C6B223965EB005A049B /* Assets.xcassets */,
@@ -299,10 +308,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7966BBE7232A24210032F0AF /* CGPoint+Extensions.swift in Sources */,
 				796D7C9E2239666B005A049B /* HelloView.swift in Sources */,
+				791B46DE22AFE9FD00794830 /* RandomStuffView.swift in Sources */,
 				796D7C9F2239666B005A049B /* NSAttributedString+Extensions.swift in Sources */,
 				796D7C67223965E8005A049B /* ViewController.swift in Sources */,
 				796D7CAE223B9B26005A049B /* IntroTableViewController.swift in Sources */,
+				7966BBE9232A44630032F0AF /* UIColor+Extensions.swift in Sources */,
 				790BF7D7223BF19A0004E9D4 /* Async.swift in Sources */,
 				796D7C65223965E8005A049B /* AppDelegate.swift in Sources */,
 				79204E4C2263501C003859C1 /* BeginEndActionsView.swift in Sources */,
